@@ -9,8 +9,9 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -62,7 +63,6 @@
         }
         .active-nav i {
             color: white;
-            filter: brightness(1.5); /* Membuat ikon sedikit lebih cerah */
         }
 
         .modal-backdrop {
@@ -287,14 +287,6 @@
                         </button>
                     </div>
                 </div>
-                <div class="mb-4">
-                    <div class="relative">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <i class="fa-solid fa-search text-gray-400"></i>
-                        </div>
-                        <input type="text" id="search-panitia-input" placeholder="Cari panitia berdasarkan nama atau jabatan..." class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D32F2F] focus:border-transparent transition">
-                    </div>
-                </div>
                 <div class="bg-white rounded-xl shadow-md overflow-x-auto">
                     <table class="w-full text-left">
                         <thead class="bg-gray-100">
@@ -354,6 +346,14 @@
                         <button id="add-panitia-btn" class="bg-[#B71C1C] text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-[#D32F2F] transition-colors shadow-md flex items-center gap-2">
                             <i class="fa-solid fa-plus"></i> Tambah Panitia
                         </button>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fa-solid fa-search text-gray-400"></i>
+                        </div>
+                        <input type="text" id="search-panitia-input" placeholder="Cari panitia berdasarkan nama atau jabatan..." class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D32F2F] focus:border-transparent transition">
                     </div>
                 </div>
                 <div class="bg-white rounded-xl shadow-md overflow-x-auto">
@@ -589,9 +589,8 @@ document.addEventListener('DOMContentLoaded', () => {
    const firebaseConfig = {
   apiKey: "AIzaSyBNN2z7BvYUhU4Ws1ezYM5nsQ8S276muvw",
   authDomain: "semarak-kemerdekaan.firebaseapp.com",
-  databaseURL: "https://semarak-kemerdekaan-default-rtdb.firebaseio.com",
   projectId: "semarak-kemerdekaan",
-  storageBucket: "semarak-kemerdekaan.firebasestorage.app",
+  storageBucket: "semarak-kemerdekaan.appspot.com",
   messagingSenderId: "543406328573",
   appId: "1:543406328573:web:bb402da63417a8b2570c94"
 };
@@ -1064,7 +1063,6 @@ document.addEventListener('DOMContentLoaded', () => {
         backdrop.classList.add('hidden');
     };
 
-
     toggleButton.addEventListener('click', (e) => {
         e.stopPropagation();
         openSidebar();
@@ -1172,13 +1170,25 @@ document.addEventListener('DOMContentLoaded', () => {
         const file = fileInput.files[0];
         let avatarUrl = document.getElementById('panitia-avatar-preview').src;
 
+        // Jika sedang mengedit, simpan URL avatar lama untuk kemungkinan dihapus
+        let oldAvatarUrl = '';
+        if (id) {
+            const panitiaToEdit = panitiaData.find(p => p.id === id);
+            if (panitiaToEdit) oldAvatarUrl = panitiaToEdit.avatar;
+        }
+
         // Jika ada file baru yang dipilih, unggah ke Firebase Storage
         if (file) {
-            const filePath = `panitia-avatars/${Date.now()}_${file.name}`;
+            const filePath = `panitia-avatars/${Date.now()}_${file.name.replace(/\s/g, '_')}`;
             const fileRef = storage.ref(filePath);
             try {
                 await fileRef.put(file);
                 avatarUrl = await fileRef.getDownloadURL();
+
+                // Jika berhasil diunggah & ini adalah mode edit, hapus foto lama
+                if (id && oldAvatarUrl && oldAvatarUrl.includes('firebasestorage')) {
+                    storage.refFromURL(oldAvatarUrl).delete().catch(err => console.error("Gagal menghapus foto lama:", err));
+                }
             } catch (error) {
                 console.error("Upload failed:", error);
                 alert("Gagal mengunggah foto.");
@@ -1302,22 +1312,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (deleteBtn) {
             const id = deleteBtn.dataset.id;
             if (confirm('Apakah Anda yakin ingin menghapus anggota panitia ini?')) {
-                const panitiaDoc = panitiaData.find(p => p.id === id);
-
-                // Hapus dokumen dari Firestore
-                panitiaCollection.doc(id).delete()
-                    .then(() => {
-                        // Jika berhasil, hapus juga file gambar dari Storage
-                        if (panitiaDoc && panitiaDoc.avatar && panitiaDoc.avatar.includes('firebasestorage')) {
-                            const fileRef = storage.refFromURL(panitiaDoc.avatar);
-                            fileRef.delete().catch(error => {
-                                console.error("Gagal menghapus file dari Storage:", error);
-                            });
-                        }
-                    })
-                    .catch(error => {
-                        console.error("Gagal menghapus dokumen dari Firestore: ", error);
-                    });
+                panitiaCollection.doc(id).delete().catch(error => {
+                    console.error("Error deleting document: ", error);
+                    alert("Gagal menghapus data dari server.");
+                });
             }
         }
     });
@@ -1476,7 +1474,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('search-panitia-input').addEventListener('input', (e) => {
         const searchTerm = e.target.value.toLowerCase();
         if (searchTerm) {
-            const filteredData = panitiaData.filter(p =>
+            const filteredData = panitiaData.filter(p => 
                 p.name.toLowerCase().includes(searchTerm) || 
                 p.role.toLowerCase().includes(searchTerm)
             );
