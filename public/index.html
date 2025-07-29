@@ -1,89 +1,1631 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to Firebase Hosting</title>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manajemen Perayaan HUT RI ke-80</title>
 
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/12.0.0/firebase-app-compat.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/12.0.0/firebase-auth-compat.js"></script>
-    <script defer src="/__/firebase/12.0.0/firebase-database-compat.js"></script>
-    <script defer src="/__/firebase/12.0.0/firebase-firestore-compat.js"></script>
-    <script defer src="/__/firebase/12.0.0/firebase-functions-compat.js"></script>
-    <script defer src="/__/firebase/12.0.0/firebase-messaging-compat.js"></script>
-    <script defer src="/__/firebase/12.0.0/firebase-storage-compat.js"></script>
-    <script defer src="/__/firebase/12.0.0/firebase-analytics-compat.js"></script>
-    <script defer src="/__/firebase/12.0.0/firebase-remote-config-compat.js"></script>
-    <script defer src="/__/firebase/12.0.0/firebase-performance-compat.js"></script>
-    <!-- 
-      initialize the SDK after all desired features are loaded, set useEmulator to false
-      to avoid connecting the SDK to running emulators.
-    -->
-    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 
-    <style media="screen">
-      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
-      #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
-      #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
-      #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
-      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
-      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
-      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
-      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
-      @media (max-width: 600px) {
-        body, #message { margin-top: 0; background: white; box-shadow: none; }
-        body { border-top: 16px solid #ffa100; }
-      }
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8F9FA;
+            overflow-x: hidden;
+        }
+
+        /* Tata letak Sidebar yang disempurnakan */
+        .sidebar {
+            width: 260px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            z-index: 50;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .sidebar-open {
+            transform: translateX(0);
+        }
+
+        /* Di layar besar (desktop), sidebar akan selalu terlihat */
+        @media (min-width: 1024px) {
+            .sidebar {
+                transform: translateX(0);
+            }
+            #main-content {
+                margin-left: 260px;
+            }
+            #sidebar-backdrop {
+                display: none;
+            }
+            #header-toggle-button {
+                display: none;
+            }
+        }
+
+        .active-nav {
+            background-color: #D32F2F;
+            color: white;
+            border-radius: 8px;
+        }
+        .active-nav i {
+            color: white;
+        }
+
+        .modal-backdrop {
+            background-color: rgba(0,0,0,0.5);
+            transition: opacity 0.3s ease;
+        }
+        .modal-content {
+            transition: transform 0.3s ease;
+        }
+
+        /* Penyesuaian padding tabel agar lebih rapi */
+        th, td {
+            padding: 12px 16px;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 40vh;
+            max-height: 400px;
+        }
+        @media (max-width: 768px) {
+            .chart-container {
+                height: 50vh;
+            }
+        }
     </style>
-  </head>
-  <body>
-    <div id="message">
-      <h2>Welcome</h2>
-      <h1>Firebase Hosting Setup Complete</h1>
-      <p>You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go build something extraordinary!</p>
-      <a target="_blank" href="https://firebase.google.com/docs/hosting/">Open Hosting Documentation</a>
-    </div>
-    <p id="load">Firebase SDK Loading&hellip;</p>
+</head>
+<body class="bg-gray-50 text-gray-800">
 
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const loadEl = document.querySelector('#load');
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-        // // The Firebase SDK is initialized and available here!
-        //
-        // firebase.auth().onAuthStateChanged(user => { });
-        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-        // firebase.firestore().doc('/foo/bar').get().then(() => { });
-        // firebase.functions().httpsCallable('yourFunction')().then(() => { });
-        // firebase.messaging().requestPermission().then(() => { });
-        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-        // firebase.analytics(); // call to activate
-        // firebase.analytics().logEvent('tutorial_completed');
-        // firebase.performance(); // call to activate
-        //
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+    <div id="login-overlay" class="fixed inset-0 bg-gray-100 z-[100] flex items-center justify-center p-4">
+        <div class="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg text-center">
+            <img src="https://i.ibb.co/zV4HhFq/logo-hut-ri-80.png" alt="Logo HUT RI 80" class="mx-auto mb-4 h-24">
+            <h1 class="text-2xl font-bold text-[#B71C1C] mb-2">Sistem Manajemen Acara</h1>
+            <p class="text-gray-600 mb-6">Peringatan HUT Kemerdekaan RI ke-80</p>
+            <form id="login-form">
+                <div class="mb-4 text-left">
+                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <input type="email" id="email" placeholder="Masukkan email Anda" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D32F2F] focus:border-transparent transition" required>
+                </div>
+                <div class="mb-6 text-left">
+                    <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Kata Sandi</label>
+                    <div class="relative">
+                        <input type="password" id="password" placeholder="Masukkan kata sandi" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D32F2F] focus:border-transparent transition pr-10" required>
+                        <button type="button" id="toggle-password" class="absolute inset-y-0 right-0 px-3 flex items-center text-gray-500 hover:text-gray-700 transition-colors">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="text-right mb-6">
+                    <a href="#" id="forgot-password-link" class="text-sm text-red-600 hover:text-red-800 hover:underline">
+                        Lupa Kata Sandi?
+                    </a>
+                </div>
+                <div id="login-error" class="text-red-500 text-sm mb-4 text-left hidden"></div>
+                <button type="submit" class="w-full bg-[#B71C1C] text-white py-3 rounded-lg font-semibold hover:bg-[#D32F2F] transition-colors shadow-md">Masuk</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="app-container" class="hidden">
+        <div id="sidebar-backdrop" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
+
+        <aside id="sidebar" class="sidebar bg-[#212529] text-white p-4 flex flex-col">
+            <div class="flex items-center justify-between mb-8">
+                <div class="flex items-center gap-3 overflow-hidden">
+                    <img src="https://i.ibb.co/zV4HhFq/logo-hut-ri-80.png" alt="Logo" class="h-10 flex-shrink-0">
+                    <span class="font-bold text-lg whitespace-nowrap">HUT RI ke-80</span>
+                </div>
+            </div>
+
+            <nav class="flex-grow">
+                <ul>
+                    <li><a href="#dashboard" class="nav-link active-nav flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
+                        <i class="fa-solid fa-tachometer-alt fa-fw w-6 text-center"></i><span>Dashboard</span>
+                    </a></li>
+                    <li class="mt-2"><a href="#uang-masuk" class="nav-link flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
+                        <i class="fa-solid fa-arrow-down fa-fw w-6 text-center"></i><span>Uang Masuk</span>
+                    </a></li>
+                    <li class="mt-2"><a href="#uang-keluar" class="nav-link flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
+                        <i class="fa-solid fa-arrow-up fa-fw w-6 text-center"></i><span>Uang Keluar</span>
+                    </a></li>
+                    <li class="mt-2"><a href="#uang-muka" class="nav-link flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
+                        <i class="fa-solid fa-file-invoice-dollar fa-fw w-6 text-center"></i><span>Uang Muka</span>
+                    </a></li>
+                    <li class="mt-2"><a href="#panitia" class="nav-link flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
+                        <i class="fa-solid fa-users-cog fa-fw w-6 text-center"></i><span>Kelola Panitia</span>
+                    </a></li>
+                    <li class="mt-2"><a href="#lomba" class="nav-link flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
+                        <i class="fa-solid fa-trophy fa-fw w-6 text-center"></i><span>Kelola Lomba</span>
+                    </a></li>
+                    <li class="mt-2"><a href="#struktur" class="nav-link flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
+                        <i class="fa-solid fa-sitemap fa-fw w-6 text-center"></i><span>Struktur Panitia</span>
+                    </a></li>
+                </ul>
+            </nav>
+
+            <div>
+                <a href="#" id="logout-button" class="nav-link flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
+                    <i class="fa-solid fa-sign-out-alt fa-fw w-6 text-center"></i><span>Keluar</span>
+                </a>
+            </div>
+        </aside>
+
+        <main id="main-content" class="p-4 md:p-8 transition-all duration-300">
+            <header class="flex items-center mb-8 lg:hidden">
+                <button id="header-toggle-button" class="text-2xl text-gray-600">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </header>
+
+            <section id="dashboard" class="content-section">
+                <h1 class="text-3xl font-bold mb-2">Dashboard</h1>
+                <p class="text-gray-600 mb-8">Ringkasan acara dan data penting perayaan HUT RI ke-80.</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-white p-6 rounded-xl shadow-md flex items-center gap-4">
+                        <div class="bg-red-100 p-3 rounded-full"><i class="fa-solid fa-users text-2xl text-red-600"></i></div>
+                        <div>
+                            <p class="text-gray-500">Total Panitia</p>
+                            <p id="stat-panitia" class="text-2xl font-bold">0</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md flex items-center gap-4">
+                        <div class="bg-yellow-100 p-3 rounded-full"><i class="fa-solid fa-trophy text-2xl text-yellow-600"></i></div>
+                        <div>
+                            <p class="text-gray-500">Jumlah Lomba</p>
+                            <p id="stat-lomba" class="text-2xl font-bold">0</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md flex items-center gap-4">
+                        <div class="bg-green-100 p-3 rounded-full"><i class="fa-solid fa-wallet text-2xl text-green-600"></i></div>
+                        <div>
+                            <p class="text-gray-500">Dana Masuk</p>
+                            <p id="stat-dana-masuk" class="text-2xl font-bold">Rp 0</p>
+                        </div>
+                    </div>
+                     <div class="bg-white p-6 rounded-xl shadow-md flex items-center gap-4">
+                        <div class="bg-blue-100 p-3 rounded-full"><i class="fa-solid fa-receipt text-2xl text-blue-600"></i></div>
+                        <div>
+                            <p class="text-gray-500">Dana Keluar</p>
+                            <p id="stat-dana-keluar" class="text-2xl font-bold">Rp 0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-md mb-8">
+                    <h2 class="text-xl font-bold mb-4">Ringkasan Dana Acara</h2>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <tbody id="ringkasan-dana-dashboard-table-body">
+                                <!-- Baris tabel akan dibuat oleh JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <h2 class="text-xl font-bold mb-4">Grafik Keuangan Acara</h2>
+                    <div class="chart-container">
+                        <canvas id="financeChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="mt-8 bg-white p-6 rounded-xl shadow-md">
+                    <h2 class="text-xl font-bold mb-4">Sisa Pembayaran Uang Muka</h2>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="font-semibold">Pemberi</th>
+                                    <th class="font-semibold">Jumlah Sisa</th>
+                                </tr>
+                            </thead>
+                            <tbody id="sisa-uang-muka-dashboard-table-body">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section id="uang-masuk" class="content-section hidden">
+                <div class="flex flex-wrap justify-between items-center mb-8 gap-4">
+                    <div>
+                        <h1 class="text-3xl font-bold">Data Uang Masuk</h1>
+                        <p class="text-gray-600">Rincian semua pemasukan dana untuk acara.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <button id="export-uang-masuk-btn" class="write-access bg-green-600 text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-green-700 transition-colors shadow-md flex items-center gap-2" style="display: none;">
+                            <i class="fa-solid fa-file-csv"></i> Ekspor CSV
+                        </button>
+                        <button id="add-uang-masuk-btn" class="write-access bg-[#B71C1C] text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-[#D32F2F] transition-colors shadow-md flex items-center gap-2" style="display: none;">
+                            <i class="fa-solid fa-plus"></i> Tambah Uang Masuk
+                        </button>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow-md overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead class="bg-gray-100">
+                            <tr>
+                                <th class="font-semibold">Sumber Dana</th>
+                                <th class="font-semibold">Jumlah</th>
+                                <th class="font-semibold text-center aksi-header" style="display: none;">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="uang-masuk-table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="uang-keluar" class="content-section hidden">
+                <div class="flex flex-wrap justify-between items-center mb-8 gap-4">
+                    <div>
+                        <h1 class="text-3xl font-bold">Data Uang Keluar</h1>
+                        <p class="text-gray-600">Rincian semua pengeluaran dana untuk acara.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <button id="export-uang-keluar-btn" class="write-access bg-green-600 text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-green-700 transition-colors shadow-md flex items-center gap-2" style="display: none;">
+                            <i class="fa-solid fa-file-csv"></i> Ekspor CSV
+                        </button>
+                        <button id="add-uang-keluar-btn" class="write-access bg-[#B71C1C] text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-[#D32F2F] transition-colors shadow-md flex items-center gap-2" style="display: none;">
+                            <i class="fa-solid fa-plus"></i> Tambah Uang Keluar
+                        </button>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow-md overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead class="bg-gray-100">
+                            <tr>
+                                <th class="font-semibold">Alokasi Dana</th>
+                                <th class="font-semibold">Jumlah</th>
+                                <th class="font-semibold text-center aksi-header" style="display: none;">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="uang-keluar-table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="uang-muka" class="content-section hidden">
+                <div class="flex flex-wrap justify-between items-center mb-8 gap-4">
+                    <div>
+                        <h1 class="text-3xl font-bold">Data Uang Muka</h1>
+                        <p class="text-gray-600">Catat dan kelola semua uang muka yang diterima.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <button id="export-uang-muka-btn" class="write-access bg-green-600 text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-green-700 transition-colors shadow-md flex items-center gap-2" style="display: none;">
+                            <i class="fa-solid fa-file-csv"></i> Ekspor CSV
+                        </button>
+                        <button id="add-uang-muka-btn" class="write-access bg-[#B71C1C] text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-[#D32F2F] transition-colors shadow-md flex items-center gap-2" style="display: none;">
+                            <i class="fa-solid fa-plus"></i> Tambah Uang Muka
+                        </button>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow-md overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead class="bg-gray-100">
+                            <tr>
+                                <th class="font-semibold">Pemberi</th>
+                                <th class="font-semibold">Total Harga</th>
+                                <th class="font-semibold">Uang Muka</th>
+                                <th class="font-semibold">Status</th>
+                                <th class="font-semibold text-center aksi-header" style="display: none;">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="uang-muka-table-body"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="panitia" class="content-section hidden">
+                <div class="flex flex-wrap justify-between items-center mb-8 gap-4">
+                    <div>
+                        <h1 class="text-3xl font-bold">Kelola Panitia</h1>
+                        <p class="text-gray-600">Tambah, edit, atau hapus data anggota panitia.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <button id="export-panitia-btn" class="write-access bg-green-600 text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-green-700 transition-colors shadow-md flex items-center gap-2" style="display: none;">
+                            <i class="fa-solid fa-file-csv"></i> Ekspor CSV
+                        </button>
+                        <button id="add-panitia-btn" class="write-access bg-[#B71C1C] text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-[#D32F2F] transition-colors shadow-md flex items-center gap-2" style="display: none;">
+                            <i class="fa-solid fa-plus"></i> Tambah Panitia
+                        </button>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fa-solid fa-search text-gray-400"></i>
+                        </div>
+                        <input type="text" id="search-panitia-input" placeholder="Cari panitia berdasarkan nama atau jabatan..." class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D32F2F] focus:border-transparent transition">
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow-md overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead class="bg-gray-100">
+                            <tr>
+                                <th class="font-semibold w-20">Foto</th>
+                                <th class="font-semibold">Nama</th>
+                                <th class="font-semibold">Jabatan</th>
+                                <th class="font-semibold text-center aksi-header" style="display: none;">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="panitia-table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="lomba" class="content-section hidden">
+                <div class="flex flex-wrap justify-between items-center mb-8 gap-4">
+                    <div>
+                        <h1 class="text-3xl font-bold">Kelola Perlombaan</h1>
+                        <p class="text-gray-600">Tambah, edit, atau hapus data perlombaan.</p>
+                    </div>
+                    <button id="add-lomba-btn" class="write-access bg-[#B71C1C] text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-[#D32F2F] transition-colors shadow-md flex items-center gap-2" style="display: none;">
+                        <i class="fa-solid fa-plus"></i> Tambah Lomba
+                    </button>
+                </div>
+                <div class="bg-white rounded-xl shadow-md overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead class="bg-gray-100">
+                            <tr>
+                                <th class="font-semibold">Nama Lomba</th>
+                                <th class="font-semibold">Kategori</th>
+                                <th class="font-semibold">Jadwal</th>
+                                <th class="font-semibold">PIC</th>
+                                <th class="font-semibold">Status</th>
+                                <th class="font-semibold text-center aksi-header" style="display: none;">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lomba-table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="struktur" class="content-section hidden">
+                 <h1 class="text-3xl font-bold mb-2">Struktur Panitia</h1>
+                 <p class="text-gray-600 mb-8">Visualisasi hierarki dan jabatan dalam kepanitiaan.</p>
+                 <div id="struktur-container"></div>
+            </section>
+
+        </main>
+    </div>
+
+    <div id="modal-panitia" class="modal-backdrop fixed inset-0 z-[60] hidden items-center justify-center p-4">
+        <div class="modal-content bg-white w-full max-w-md p-6 rounded-2xl shadow-lg transform scale-95">
+            <div class="flex justify-between items-center mb-4">
+                <h2 id="modal-panitia-title" class="text-2xl font-bold text-[#B71C1C]">Tambah Panitia</h2>
+                <button class="close-modal text-gray-500 hover:text-gray-800 text-3xl">&times;</button>
+            </div>
+            <form id="panitia-form">
+                <input type="hidden" id="panitia-id">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Foto Panitia</label>
+                    <div class="flex items-center gap-4">
+                        <img id="panitia-avatar-preview" src="" alt="Pratinjau Avatar" class="w-16 h-16 rounded-full object-cover bg-gray-200 border">
+                        <input type="file" id="panitia-avatar-input" accept="image/*" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-red-50 file:text-red-700 hover:file:bg-red-100 cursor-pointer">
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label for="panitia-name" class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
+                    <input type="text" id="panitia-name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D32F2F] focus:border-transparent transition" required>
+                </div>
+                <div class="mb-6">
+                    <label for="panitia-role" class="block text-sm font-medium text-gray-700 mb-1">Jabatan</label>
+                    <input type="text" id="panitia-role" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D32F2F] focus:border-transparent transition" required>
+                </div>
+                <div class="flex justify-end gap-4">
+                    <button type="button" class="close-modal px-5 py-2.5 rounded-lg bg-gray-200 hover:bg-gray-300 transition">Batal</button>
+                    <button type="submit" class="bg-[#B71C1C] text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-[#D32F2F] transition-colors shadow-md">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="modal-lomba" class="modal-backdrop fixed inset-0 z-[60] hidden items-center justify-center p-4">
+        <div class="modal-content bg-white w-full max-w-md p-6 rounded-2xl shadow-lg transform scale-95">
+            <div class="flex justify-between items-center mb-4">
+                <h2 id="modal-lomba-title" class="text-2xl font-bold text-[#B71C1C]">Tambah Lomba</h2>
+                <button class="close-modal text-gray-500 hover:text-gray-800 text-3xl">&times;</button>
+            </div>
+            <form id="lomba-form">
+                <input type="hidden" id="lomba-id">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label for="lomba-name" class="block text-sm font-medium text-gray-700 mb-1">Nama Lomba</label>
+                        <input type="text" id="lomba-name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D32F2F] focus:border-transparent transition" required>
+                    </div>
+                    <div>
+                        <label for="lomba-category" class="block text-sm font-medium text-gray-700 mb-1">Kategori</label>
+                        <select id="lomba-category" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D32F2F] focus:border-transparent transition" required>
+                            <option>Anak-anak</option>
+                            <option>Remaja</option>
+                            <option>Dewasa</option>
+                            <option>Bapak-bapak</option>
+                            <option>Ibu-ibu</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                         <label for="lomba-schedule" class="block text-sm font-medium text-gray-700 mb-1">Jadwal</label>
+                         <input type="text" id="lomba-schedule" placeholder="cth: 17 Ags, 09:00" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D32F2F] focus:border-transparent transition" required>
+                    </div>
+                     <div>
+                        <label for="lomba-pic" class="block text-sm font-medium text-gray-700 mb-1">Penanggung Jawab</label>
+                        <select id="lomba-pic" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D32F2F] focus:border-transparent transition" required>
+                        </select>
+                    </div>
+                </div>
+                 <div class="mb-6">
+                    <label for="lomba-status" class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                    <select id="lomba-status" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D32F2F] focus:border-transparent transition" required>
+                        <option>Segera</option>
+                        <option>Berlangsung</option>
+                        <option>Selesai</option>
+                    </select>
+                </div>
+                <div class="flex justify-end gap-4">
+                    <button type="button" class="close-modal px-5 py-2.5 rounded-lg bg-gray-200 hover:bg-gray-300 transition">Batal</button>
+                    <button type="submit" class="bg-[#B71C1C] text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-[#D32F2F] transition-colors shadow-md">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="modal-uang-masuk" class="modal-backdrop fixed inset-0 z-[60] hidden items-center justify-center p-4">
+        <div class="modal-content bg-white w-full max-w-md p-6 rounded-2xl shadow-lg transform scale-95">
+            <div class="flex justify-between items-center mb-4">
+                <h2 id="modal-uang-masuk-title" class="text-2xl font-bold text-[#B71C1C]">Tambah Uang Masuk</h2>
+                <button class="close-modal text-gray-500 hover:text-gray-800 text-3xl">&times;</button>
+            </div>
+            <form id="uang-masuk-form">
+                <input type="hidden" id="uang-masuk-id">
+                <div class="mb-4">
+                    <label for="uang-masuk-source" class="block text-sm font-medium text-gray-700 mb-1">Sumber Dana</label>
+                    <input type="text" id="uang-masuk-source" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D32F2F] focus:border-transparent transition" required>
+                </div>
+                <div class="mb-6">
+                    <label for="uang-masuk-amount" class="block text-sm font-medium text-gray-700 mb-1">Jumlah (IDR)</label>
+                    <input type="number" id="uang-masuk-amount" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D32F2F] focus:border-transparent transition" required min="0">
+                </div>
+                <div class="flex justify-end gap-4">
+                    <button type="button" class="close-modal px-5 py-2.5 rounded-lg bg-gray-200 hover:bg-gray-300 transition">Batal</button>
+                    <button type="submit" class="bg-[#B71C1C] text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-[#D32F2F] transition-colors shadow-md">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="modal-uang-keluar" class="modal-backdrop fixed inset-0 z-[60] hidden items-center justify-center p-4">
+        <div class="modal-content bg-white w-full max-w-md p-6 rounded-2xl shadow-lg transform scale-95">
+            <div class="flex justify-between items-center mb-4">
+                <h2 id="modal-uang-keluar-title" class="text-2xl font-bold text-[#B71C1C]">Tambah Uang Keluar</h2>
+                <button class="close-modal text-gray-500 hover:text-gray-800 text-3xl">&times;</button>
+            </div>
+            <form id="uang-keluar-form">
+                <input type="hidden" id="uang-keluar-id">
+                <div class="mb-4">
+                    <label for="uang-keluar-allocation" class="block text-sm font-medium text-gray-700 mb-1">Alokasi Dana</label>
+                    <input type="text" id="uang-keluar-allocation" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D32F2F] focus:border-transparent transition" required>
+                </div>
+                <div class="mb-6">
+                    <label for="uang-keluar-amount" class="block text-sm font-medium text-gray-700 mb-1">Jumlah (IDR)</label>
+                    <input type="number" id="uang-keluar-amount" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D32F2F] focus:border-transparent transition" required min="0">
+                </div>
+                <div class="flex justify-end gap-4">
+                    <button type="button" class="close-modal px-5 py-2.5 rounded-lg bg-gray-200 hover:bg-gray-300 transition">Batal</button>
+                    <button type="submit" class="bg-[#B71C1C] text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-[#D32F2F] transition-colors shadow-md">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="modal-uang-muka" class="modal-backdrop fixed inset-0 z-[60] hidden items-center justify-center p-4">
+        <div class="modal-content bg-white w-full max-w-md p-6 rounded-2xl shadow-lg transform scale-95">
+            <div class="flex justify-between items-center mb-4">
+                <h2 id="modal-uang-muka-title" class="text-2xl font-bold text-[#B71C1C]">Tambah Uang Muka</h2>
+                <button class="close-modal text-gray-500 hover:text-gray-800 text-3xl">&times;</button>
+            </div>
+            <form id="uang-muka-form">
+                <input type="hidden" id="uang-muka-id">
+                <div class="mb-4">
+                    <label for="uang-muka-provider" class="block text-sm font-medium text-gray-700 mb-1">Pemberi Uang Muka</label>
+                    <input type="text" id="uang-muka-provider" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D32F2F] focus:border-transparent transition" required>
+                </div>
+                <div class="mb-4">
+                    <label for="uang-muka-total-harga" class="block text-sm font-medium text-gray-700 mb-1">Total Harga (IDR)</label>
+                    <input type="number" id="uang-muka-total-harga" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D32F2F] focus:border-transparent transition" required min="0">
+                </div>
+                <div class="mb-4">
+                    <label for="uang-muka-amount" class="block text-sm font-medium text-gray-700 mb-1">Jumlah Uang Muka (IDR)</label>
+                    <input type="number" id="uang-muka-amount" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D32F2F] focus:border-transparent transition" required min="0">
+                </div>
+                <div class="mb-6">
+                    <label for="uang-muka-status" class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                    <select id="uang-muka-status" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D32F2F] focus:border-transparent transition" required>
+                        <option>Belum Lunas</option>
+                        <option>Lunas</option>
+                    </select>
+                </div>
+                <div class="flex justify-end gap-4">
+                    <button type="button" class="close-modal px-5 py-2.5 rounded-lg bg-gray-200 hover:bg-gray-300 transition">Batal</button>
+                    <button type="submit" class="bg-[#B71C1C] text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-[#D32F2F] transition-colors shadow-md">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="modal-forgot-password" class="modal-backdrop fixed inset-0 z-[110] hidden items-center justify-center p-4">
+        <div class="modal-content bg-white w-full max-w-md p-6 rounded-2xl shadow-lg transform scale-95">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-2xl font-bold text-[#B71C1C]">Reset Kata Sandi</h2>
+                <button class="close-modal text-gray-500 hover:text-gray-800 text-3xl">&times;</button>
+            </div>
+            <form id="forgot-password-form">
+                <p class="text-gray-600 mb-4">Masukkan alamat email Anda. Kami akan mengirimkan tautan untuk mereset kata sandi Anda.</p>
+                <div id="forgot-password-message" class="text-sm mb-4 text-left hidden"></div>
+                <div class="mb-6">
+                    <label for="forgot-email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <input type="email" id="forgot-email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D32F2F] focus:border-transparent transition" required>
+                </div>
+                <div class="flex justify-end gap-4">
+                    <button type="button" class="close-modal px-5 py-2.5 rounded-lg bg-gray-200 hover:bg-gray-300 transition">Batal</button>
+                    <button type="submit" class="bg-[#B71C1C] text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-[#D32F2F] transition-colors shadow-md">Kirim Email Reset</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    // --- KONFIGURASI FIREBASE ---
+    // GANTI DENGAN KONFIGURASI DARI PROYEK FIREBASE ANDA
+   const firebaseConfig = {
+  apiKey: "AIzaSyBNN2z7BvYUhU4Ws1ezYM5nsQ8S276muvw",
+  authDomain: "semarak-kemerdekaan.firebaseapp.com",
+  projectId: "semarak-kemerdekaan",
+  storageBucket: "semarak-kemerdekaan.appspot.com",
+  messagingSenderId: "543406328573",
+  appId: "1:543406328573:web:bb402da63417a8b2570c94"
+};
+
+    // Inisialisasi Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const auth = firebase.auth();
+    const storage = firebase.storage();
+    // Membuat referensi untuk setiap koleksi data di Firestore
+    const panitiaCollection = db.collection('panitia');
+    const usersCollection = db.collection('users');
+    const lombaCollection = db.collection('lomba');
+    const uangMasukCollection = db.collection('uangMasuk');
+    const uangKeluarCollection = db.collection('uangKeluar');
+    const uangMukaCollection = db.collection('uangMuka');
+
+    // Variabel lokal untuk menampung data dari Firebase
+    let panitiaData = [];
+    let currentUserRole = 'visitor'; // Default ke peran paling restriktif
+    let lombaData = [];
+    let uangMasukData = [];
+    let uangKeluarData = [];
+    let uangMukaData = [];
+
+    const sidebar = document.getElementById('sidebar');
+    const backdrop = document.getElementById('sidebar-backdrop');
+    const toggleButton = document.getElementById('header-toggle-button');
+    let financeChartInstance = null;
+
+    // Variabel untuk menyimpan fungsi unsubscribe dari listener Firebase
+    let unsubscribePanitia = () => {};
+    let unsubscribeLomba = () => {};
+    let unsubscribeUangMasuk = () => {};
+    let unsubscribeUangKeluar = () => {};
+    let unsubscribeUangMuka = () => {};
+
+    const DEFAULT_AVATAR = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2NkY2RjZCI+PHBhdGggZD0iTTEyIDEyYzIuMjEgMCA0LTEuNzkgNC00cy0xLjc5LTQtNC00LTQgMS43OS00IDQgMS43OSA0IDQgNHptMCAyYy0yLjY3IDAtOCAxLjM0LTggNHYyYzAgLjg4Ljc1IDEuNTggMS42NiAxLjU4aDEyLjY4Yy45MSAwIDEuNjYtLjcgMS42Ni0xLjU4di0yYzAtMi42Ni01LjMzLTQtOC00eiIvPjwvc3ZnPg==';
+
+    // Fungsi baru untuk mendengarkan perubahan data panitia secara real-time
+    const listenToPanitiaUpdates = () => {
+        return panitiaCollection.onSnapshot(snapshot => {
+            const panitiaFromServer = [];
+            snapshot.forEach(doc => {
+                panitiaFromServer.push({ id: doc.id, ...doc.data() });
+            });
+            panitiaData = panitiaFromServer;
+            renderPanitiaTable();
+            updatePanitiaStat();
+            renderStruktur();
+            populatePICDropdown();
+        });
+    };
+
+    const listenToLombaUpdates = () => {
+        return lombaCollection.onSnapshot(snapshot => {
+            lombaData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            renderLombaTable();
+            document.getElementById('stat-lomba').textContent = lombaData.length;
+        });
+    };
+
+    const listenToUangMasukUpdates = () => {
+        return uangMasukCollection.onSnapshot(snapshot => {
+            uangMasukData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            renderUangMasukTable();
+            updateTotalDana();
+            initFinanceChart();
+        });
+    };
+
+    const listenToUangKeluarUpdates = () => {
+        return uangKeluarCollection.onSnapshot(snapshot => {
+            uangKeluarData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            renderUangKeluarTable();
+            updateTotalDana();
+            initFinanceChart();
+        });
+    };
+
+    const listenToUangMukaUpdates = () => {
+        return uangMukaCollection.onSnapshot(snapshot => {
+            uangMukaData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            renderUangMukaTable();
+            renderSisaUangMukaDashboardTable();
+        });
+    };
+
+    const updateUIAccess = (role) => {
+        const hasWriteAccess = role === 'admin' || role === 'editor';
+        const displayStyle = hasWriteAccess ? '' : 'none';
+
+        document.querySelectorAll('.write-access').forEach(el => {
+            el.style.display = displayStyle;
+        });
+
+        document.querySelectorAll('.aksi-header').forEach(el => {
+            el.style.display = displayStyle;
+        });
+
+        // Panggil ulang render tabel untuk menampilkan/menyembunyikan kolom aksi
+        renderPanitiaTable();
+        renderLombaTable();
+        renderUangMasukTable();
+        renderUangKeluarTable();
+        renderUangMukaTable();
+    };
+
+    // Fungsi loadData tidak lagi diperlukan karena data dimuat secara real-time
+    // oleh fungsi-fungsi listenTo...Updates
+
+
+    const formatCurrency = (amount) => {
+        return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(amount);
+    };
+
+    const exportToCsv = (filename, data, headers) => {
+        if (!data || !data.length) {
+            alert('Tidak ada data untuk diekspor.');
+            return;
+        }
+
+        const columnDelimiter = ',';
+        const lineDelimiter = '\n';
+        const keys = Object.keys(data[0]);
+        const columnHeaders = headers || keys;
+
+        const csvHeader = columnHeaders.join(columnDelimiter);
+        const csvRows = data.map(item => {
+            return keys.map(key => {
+                let cell = item[key] === null || item[key] === undefined ? '' : item[key];
+                // Escape double quotes by doubling them and wrap cell in quotes if it contains a comma, double quote, or newline
+                cell = cell.toString().replace(/"/g, '""');
+                if (cell.search(/("|,|\n)/g) >= 0) {
+                    cell = `"${cell}"`;
+                }
+                return cell;
+            }).join(columnDelimiter);
+        });
+
+        const csvString = [csvHeader, ...csvRows].join(lineDelimiter);
+        const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+
+        const link = document.createElement('a');
+        const url = URL.createObjectURL(blob);
+        link.setAttribute('href', url);
+        link.setAttribute('download', filename);
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
+    const updateTotalDana = () => {
+        const totalMasuk = uangMasukData.reduce((sum, item) => sum + item.amount, 0);
+        const totalKeluar = uangKeluarData.reduce((sum, item) => sum + item.amount, 0);
+        const sisaDana = totalMasuk - totalKeluar;
+
+        // Perbarui kartu statistik
+        document.getElementById('stat-dana-masuk').textContent = formatCurrency(totalMasuk);
+        document.getElementById('stat-dana-keluar').textContent = formatCurrency(totalKeluar);
+
+        // Perbarui tabel ringkasan dana di dashboard
+        const tableBody = document.getElementById('ringkasan-dana-dashboard-table-body');
+        if (!tableBody) return;
+
+        const sisaDanaClass = sisaDana >= 0 ? 'text-green-600' : 'text-red-600';
+
+        tableBody.innerHTML = `
+            <tr class="border-b">
+                <td class="py-3 font-medium text-gray-600">Total Pemasukan</td>
+                <td class="py-3 text-right font-semibold text-green-600">${formatCurrency(totalMasuk)}</td>
+            </tr>
+            <tr class="border-b">
+                <td class="py-3 font-medium text-gray-600">Total Pengeluaran</td>
+                <td class="py-3 text-right font-semibold text-red-600">${formatCurrency(totalKeluar)}</td>
+            </tr>
+            <tr>
+                <td class="pt-3 font-bold text-gray-800 text-lg">Sisa Dana</td>
+                <td class="pt-3 text-right font-bold text-lg ${sisaDanaClass}">${formatCurrency(sisaDana)}</td>
+            </tr>
+        `;
+    };
+
+    const updatePanitiaStat = () => {
+        document.getElementById('stat-panitia').textContent = panitiaData.length;
+    };
+
+    const renderPanitiaTable = (dataToRender = panitiaData) => {
+        const tableBody = document.getElementById('panitia-table-body');
+        tableBody.innerHTML = '';
+        dataToRender.forEach(p => {
+            const row = document.createElement('tr');
+            row.className = 'border-b border-gray-200 hover:bg-gray-50';
+            row.innerHTML = `
+                <td class="w-20 py-2">
+                    <img src="${p.avatar || DEFAULT_AVATAR}" alt="Avatar ${p.name}" class="w-12 h-12 rounded-full object-cover">
+                </td>
+                <td>${p.name}</td>
+                <td class="text-gray-600">${p.role}</td>
+            `;
+            if (currentUserRole === 'admin' || currentUserRole === 'editor') {
+                row.innerHTML += `
+                    <td class="text-center aksi-cell">
+                        <button class="edit-panitia-btn text-blue-600 hover:text-blue-800 p-2" data-id="${p.id}"><i class="fa-solid fa-edit"></i></button>
+                        <button class="delete-panitia-btn text-red-600 hover:text-red-800 p-2" data-id="${p.id}"><i class="fa-solid fa-trash"></i></button>
+                    </td>`;
+            }
+            tableBody.appendChild(row);
+        });
+    };
+
+    const renderUangMasukTable = () => {
+        const tableBody = document.getElementById('uang-masuk-table-body');
+        tableBody.innerHTML = '';
+        uangMasukData.forEach(item => {
+            const row = document.createElement('tr');
+            row.className = 'border-b border-gray-200 hover:bg-gray-50';
+            row.innerHTML = `
+                <td>${item.source}</td>
+                <td class="text-gray-600">${formatCurrency(item.amount)}</td>
+            `;
+            if (currentUserRole === 'admin' || currentUserRole === 'editor') {
+                row.innerHTML += `
+                    <td class="text-center aksi-cell">
+                        <button class="edit-uang-masuk-btn text-blue-600 hover:text-blue-800 p-2" data-id="${item.id}"><i class="fa-solid fa-edit"></i></button>
+                        <button class="delete-uang-masuk-btn text-red-600 hover:text-red-800 p-2" data-id="${item.id}"><i class="fa-solid fa-trash"></i></button>
+                    </td>`;
+            }
+            tableBody.appendChild(row);
+        });
+    };
+
+    const renderUangKeluarTable = () => {
+        const tableBody = document.getElementById('uang-keluar-table-body');
+        tableBody.innerHTML = '';
+        uangKeluarData.forEach(item => {
+            const row = document.createElement('tr');
+            row.className = 'border-b border-gray-200 hover:bg-gray-50';
+            row.innerHTML = `
+                <td>${item.allocation}</td>
+                <td class="text-gray-600">${formatCurrency(item.amount)}</td>
+            `;
+            if (currentUserRole === 'admin' || currentUserRole === 'editor') {
+                row.innerHTML += `
+                    <td class="text-center aksi-cell">
+                        <button class="edit-uang-keluar-btn text-blue-600 hover:text-blue-800 p-2" data-id="${item.id}"><i class="fa-solid fa-edit"></i></button>
+                        <button class="delete-uang-keluar-btn text-red-600 hover:text-red-800 p-2" data-id="${item.id}"><i class="fa-solid fa-trash"></i></button>
+                    </td>`;
+            }
+            tableBody.appendChild(row);
+        });
+    };
+
+    const renderUangMukaTable = () => {
+        const tableBody = document.getElementById('uang-muka-table-body');
+        tableBody.innerHTML = '';
+        uangMukaData.forEach(item => {
+            let statusClass = '';
+            switch (item.status.toLowerCase()) {
+                case 'lunas': statusClass = 'bg-green-100 text-green-800'; break;
+                case 'belum lunas': statusClass = 'bg-yellow-100 text-yellow-800'; break;
+            }
+            const row = document.createElement('tr');
+            row.className = 'border-b border-gray-200 hover:bg-gray-50';
+            row.innerHTML = `
+                <td>${item.provider}</td>
+                <td class="text-gray-600">${formatCurrency(item.totalHarga)}</td>
+                <td class="text-gray-600">${formatCurrency(item.amount)}</td>
+                <td><span class="px-2 py-1 text-sm font-medium rounded-full ${statusClass}">${item.status}</span></td>
+            `;
+            if (currentUserRole === 'admin' || currentUserRole === 'editor') {
+                row.innerHTML += `
+                    <td class="text-center aksi-cell">
+                        <button class="edit-uang-muka-btn text-blue-600 hover:text-blue-800 p-2" data-id="${item.id}"><i class="fa-solid fa-edit"></i></button>
+                        <button class="delete-uang-muka-btn text-red-600 hover:text-red-800 p-2" data-id="${item.id}"><i class="fa-solid fa-trash"></i></button>
+                    </td>`;
+            }
+            tableBody.appendChild(row);
+        });
+    };
+
+    const renderSisaUangMukaDashboardTable = () => {
+        const tableBody = document.getElementById('sisa-uang-muka-dashboard-table-body');
+        if (!tableBody) return;
+        
+        const sisaUangMuka = uangMukaData.filter(item => item.status === 'Belum Lunas');
+        tableBody.innerHTML = '';
+
+        if (sisaUangMuka.length === 0) {
+            tableBody.innerHTML = `<tr><td colspan="2" class="text-center text-gray-500 py-4">Tidak ada sisa pembayaran uang muka.</td></tr>`;
+            return;
+        }
+
+        sisaUangMuka.forEach(item => {
+            const row = document.createElement('tr');
+            row.className = 'border-b border-gray-200';
+            row.innerHTML = `
+                <td>${item.provider}</td>
+                <td class="text-gray-600">${formatCurrency(item.totalHarga - item.amount)}</td>
+            `;
+            tableBody.appendChild(row);
+        });
+    };
+
+
+    const renderLombaTable = (dataToRender = lombaData) => {
+        const tableBody = document.getElementById('lomba-table-body');
+        tableBody.innerHTML = '';
+        dataToRender.forEach(l => {
+            let statusClass = '';
+            switch (l.status.toLowerCase()) {
+                case 'selesai': statusClass = 'bg-green-100 text-green-800'; break;
+                case 'berlangsung': statusClass = 'bg-yellow-100 text-yellow-800'; break;
+                case 'segera': statusClass = 'bg-blue-100 text-blue-800'; break;
+            }
+            const row = document.createElement('tr');
+            row.className = 'border-b border-gray-200 hover:bg-gray-50';
+            row.innerHTML = `
+                <td>${l.name}</td>
+                <td class="text-gray-600">${l.category}</td>
+                <td class="text-gray-600">${l.schedule}</td>
+                <td class="text-gray-600">${l.pic}</td>
+                <td><span class="px-2 py-1 text-sm font-medium rounded-full ${statusClass}">${l.status}</span></td>
+            `;
+            if (currentUserRole === 'admin' || currentUserRole === 'editor') {
+                row.innerHTML += `
+                    <td class="text-center aksi-cell">
+                        <button class="edit-lomba-btn text-blue-600 hover:text-blue-800 p-2" data-id="${l.id}"><i class="fa-solid fa-edit"></i></button>
+                        <button class="delete-lomba-btn text-red-600 hover:text-red-800 p-2" data-id="${l.id}"><i class="fa-solid fa-trash"></i></button>
+                    </td>`;
+            }
+            tableBody.appendChild(row);
+        });
+    };
+
+    const renderStruktur = () => {
+        const createPanitiaCardHTML = (panitia) => {
+            // Added max-w-xs to prevent cards from becoming too wide on flex layouts
+            return `
+                <div class="bg-white p-5 rounded-xl shadow-lg text-center flex flex-col items-center transform hover:scale-105 transition-transform duration-300 w-full max-w-xs">
+                    <img src="${panitia.avatar || DEFAULT_AVATAR}" alt="Avatar ${panitia.name}" class="w-24 h-24 rounded-full mb-4 object-cover border-4 border-red-200">
+                    <h3 class="font-bold text-lg text-gray-800">${panitia.name}</h3>
+                    <p class="text-red-700 font-semibold">${panitia.role}</p>
+                </div>
+            `;
+        };
+
+        const container = document.getElementById('struktur-container');
+        container.innerHTML = ''; // Clear previous content
+        container.className = 'flex flex-col gap-12'; // Add vertical gap between sections
+
+        const createSectionHTML = (title, members) => {
+            if (members.length === 0) return '';
+
+            const cardsHTML = members.map(createPanitiaCardHTML).join('');
+            return `
+                <div>
+                    <h2 class="text-2xl font-bold text-center mb-6 text-gray-700 border-b-2 border-red-200 pb-2">${title}</h2>
+                    <div class="flex flex-wrap justify-center items-start gap-8">
+                        ${cardsHTML}
+                    </div>
+                </div>
+            `;
+        };
+
+        // Categorize panitia members
+        const proklamator = panitiaData.filter(p => p.role.toLowerCase() === 'proklamator');
+        const pimpinan = panitiaData.filter(p => p.role.toLowerCase().includes('ketua'));
+        const timInti = panitiaData.filter(p => ['sekretaris', 'bendahara'].includes(p.role.toLowerCase()));
+        const koordinator = panitiaData.filter(p => p.role.toLowerCase().includes('koordinator'));
+        
+        // Get IDs of categorized members to find the rest
+        const categorizedIds = new Set([
+            ...proklamator.map(p => p.id),
+            ...pimpinan.map(p => p.id),
+            ...timInti.map(p => p.id),
+            ...koordinator.map(p => p.id)
+        ]);
+        const anggotaLain = panitiaData.filter(p => !categorizedIds.has(p.id));
+
+        // Build the final HTML and render it
+        container.innerHTML = 
+            createSectionHTML('Proklamator', proklamator) +
+            createSectionHTML('Pimpinan Acara', pimpinan) +
+            createSectionHTML('Tim Inti', timInti) +
+            createSectionHTML('Koordinator Lapangan', koordinator) +
+            createSectionHTML('Anggota', anggotaLain);
+    };
+
+    const populatePICDropdown = () => {
+        const picSelect = document.getElementById('lomba-pic');
+        picSelect.innerHTML = '<option value="" disabled selected>Pilih PIC</option>';
+        panitiaData.forEach(p => {
+            const option = document.createElement('option');
+            option.value = p.name;
+            option.textContent = p.name;
+            picSelect.appendChild(option);
+        });
+    };
+
+    const showModal = (modalId) => {
+        const modal = document.getElementById(modalId);
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        setTimeout(() => {
+            modal.classList.remove('opacity-0');
+            modal.querySelector('.modal-content').classList.remove('scale-95');
+        }, 10);
+    };
+
+    const hideModal = (modalId) => {
+        const modal = document.getElementById(modalId);
+        modal.classList.add('opacity-0');
+        modal.querySelector('.modal-content').classList.add('scale-95');
+        setTimeout(() => {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }, 300);
+    };
+
+    const initFinanceChart = () => {
+        if (financeChartInstance) {
+            financeChartInstance.destroy();
+        }
+
+        const labels = Array.from(new Set([...uangMasukData.map(item => item.source), ...uangKeluarData.map(item => item.allocation)]));
+        const pemasukanDataForChart = labels.map(label => uangMasukData.filter(item => item.source === label).reduce((sum, item) => sum + item.amount, 0));
+        const pengeluaranDataForChart = labels.map(label => uangKeluarData.filter(item => item.allocation === label).reduce((sum, item) => sum + item.amount, 0));
+
+
+        const ctx = document.getElementById('financeChart').getContext('2d');
+        financeChartInstance = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Pemasukan',
+                    data: pemasukanDataForChart,
+                    backgroundColor: 'rgba(211, 47, 47, 0.7)',
+                    borderColor: 'rgba(211, 47, 47, 1)',
+                    borderWidth: 1,
+                    borderRadius: 5
+                }, {
+                    label: 'Pengeluaran',
+                    data: pengeluaranDataForChart,
+                    backgroundColor: 'rgba(255, 193, 7, 0.7)',
+                    borderColor: 'rgba(255, 193, 7, 1)',
+                    borderWidth: 1,
+                    borderRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) { return formatCurrency(value); }
+                        }
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) label += ': ';
+                                if (context.parsed.y !== null) label += formatCurrency(context.parsed.y);
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    };
+    const navigate = (hash) => {
+        document.querySelectorAll('.content-section').forEach(section => section.classList.add('hidden'));
+        document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active-nav'));
+
+        const targetSection = document.querySelector(hash);
+        const targetLink = document.querySelector(`.nav-link[href="${hash}"]`);
+
+        if (targetSection) {
+            targetSection.classList.remove('hidden');
+            if(hash === '#dashboard' && document.getElementById('financeChart').offsetParent !== null) {
+                initFinanceChart();
+            }
+        }
+        if (targetLink) {
+            targetLink.classList.add('active-nav');
+        }
+
+        // Tutup sidebar di mobile setelah navigasi
+        if(window.innerWidth < 1024) {
+            closeSidebar();
+        }
+    };
+
+    const openSidebar = () => {
+        sidebar.classList.add('sidebar-open');
+        backdrop.classList.remove('hidden');
+    };
+
+    const closeSidebar = () => {
+        sidebar.classList.remove('sidebar-open');
+        backdrop.classList.add('hidden');
+    };
+
+    toggleButton.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openSidebar();
+    });
+
+    backdrop.addEventListener('click', closeSidebar);
+
+    window.addEventListener('hashchange', () => navigate(window.location.hash || '#dashboard'));
+
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const hash = new URL(link.href).hash;
+            if (window.location.hash === hash && document.querySelector(hash) && !document.querySelector(hash).classList.contains('hidden')) {
+                 if(window.innerWidth < 1024) closeSidebar();
+                 return;
+            }
+            window.location.hash = hash;
+        });
+    });
+
+    document.getElementById('add-panitia-btn').addEventListener('click', () => {
+        document.getElementById('panitia-form').reset();
+        document.getElementById('panitia-id').value = '';
+        document.getElementById('modal-panitia-title').textContent = 'Tambah Panitia';
+        document.getElementById('panitia-avatar-preview').src = DEFAULT_AVATAR;
+        showModal('modal-panitia');
+    });
+
+    document.getElementById('export-panitia-btn').addEventListener('click', () => {
+        const dataToExport = panitiaData.map(({ name, role }) => ({ name, role }));
+        exportToCsv('data-panitia.csv', dataToExport, ['Nama', 'Jabatan']);
+    });
+
+    document.getElementById('export-uang-masuk-btn').addEventListener('click', () => {
+        const dataToExport = uangMasukData.map(({ source, amount }) => ({ source, amount }));
+        exportToCsv('data-uang-masuk.csv', dataToExport, ['Sumber Dana', 'Jumlah']);
+    });
+
+    document.getElementById('export-uang-keluar-btn').addEventListener('click', () => {
+        const dataToExport = uangKeluarData.map(({ allocation, amount }) => ({ allocation, amount }));
+        exportToCsv('data-uang-keluar.csv', dataToExport, ['Alokasi Dana', 'Jumlah']);
+    });
+
+    document.getElementById('export-uang-muka-btn').addEventListener('click', () => {
+        const dataToExport = uangMukaData.map(({ provider, totalHarga, amount, status }) => ({ provider, totalHarga, amount, status }));
+        exportToCsv('data-uang-muka.csv', dataToExport, ['Pemberi', 'Total Harga', 'Uang Muka', 'Status']);
+    });
+
+    document.getElementById('add-lomba-btn').addEventListener('click', () => {
+        document.getElementById('lomba-form').reset();
+        document.getElementById('lomba-id').value = '';
+        document.getElementById('modal-lomba-title').textContent = 'Tambah Lomba';
+        populatePICDropdown();
+        showModal('modal-lomba');
+    });
+
+    // Add Uang Masuk button handler
+    document.getElementById('add-uang-masuk-btn').addEventListener('click', () => {
+        document.getElementById('uang-masuk-form').reset();
+        document.getElementById('uang-masuk-id').value = '';
+        document.getElementById('modal-uang-masuk-title').textContent = 'Tambah Uang Masuk';
+        showModal('modal-uang-masuk');
+    });
+
+    // Add Uang Keluar button handler
+    document.getElementById('add-uang-keluar-btn').addEventListener('click', () => {
+        document.getElementById('uang-keluar-form').reset();
+        document.getElementById('uang-keluar-id').value = '';
+        document.getElementById('modal-uang-keluar-title').textContent = 'Tambah Uang Keluar';
+        showModal('modal-uang-keluar');
+    });
+
+    document.getElementById('add-uang-muka-btn').addEventListener('click', () => {
+        document.getElementById('uang-muka-form').reset();
+        document.getElementById('uang-muka-id').value = '';
+        document.getElementById('modal-uang-muka-title').textContent = 'Tambah Uang Muka';
+        showModal('modal-uang-muka');
+    });
+
+
+    document.querySelectorAll('.close-modal').forEach(btn => {
+        btn.addEventListener('click', (e) => hideModal(e.target.closest('.modal-backdrop').id));
+    });
+
+    document.getElementById('panitia-avatar-input').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                document.getElementById('panitia-avatar-preview').src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    document.getElementById('panitia-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const id = document.getElementById('panitia-id').value;
+        const name = document.getElementById('panitia-name').value.trim();
+        const role = document.getElementById('panitia-role').value.trim();
+        if (!name || !role) return;
+
+        const fileInput = document.getElementById('panitia-avatar-input');
+        const file = fileInput.files[0];
+        let avatarUrl = document.getElementById('panitia-avatar-preview').src;
+
+        // Jika sedang mengedit, simpan URL avatar lama untuk kemungkinan dihapus
+        let oldAvatarUrl = '';
+        if (id) {
+            const panitiaToEdit = panitiaData.find(p => p.id === id);
+            if (panitiaToEdit) oldAvatarUrl = panitiaToEdit.avatar;
+        }
+
+        // Jika ada file baru yang dipilih, unggah ke Firebase Storage
+        if (file) {
+            const filePath = `panitia-avatars/${Date.now()}_${file.name.replace(/\s/g, '_')}`;
+            const fileRef = storage.ref(filePath);
+            try {
+                await fileRef.put(file);
+                avatarUrl = await fileRef.getDownloadURL();
+
+                // Jika berhasil diunggah & ini adalah mode edit, hapus foto lama
+                if (id && oldAvatarUrl && oldAvatarUrl.includes('firebasestorage')) {
+                    storage.refFromURL(oldAvatarUrl).delete().catch(err => console.error("Gagal menghapus foto lama:", err));
+                }
+            } catch (error) {
+                console.error("Upload failed:", error);
+                alert("Gagal mengunggah foto.");
+                return; // Hentikan proses jika unggah gagal
+            }
+        }
+
+        // Simpan data ke Firestore dengan URL avatar yang benar
+        const panitiaDoc = { name, role, avatar: avatarUrl };
+        try {
+            const savePromise = id ? panitiaCollection.doc(id).set(panitiaDoc, { merge: true }) : panitiaCollection.add(panitiaDoc);
+            await savePromise;
+            hideModal('modal-panitia');
+            fileInput.value = '';
+        } catch (error) {
+            console.error("Error saving to Firestore: ", error);
+            alert("Gagal menyimpan data ke server.");
+        }
+    });
+
+    document.getElementById('lomba-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const id = document.getElementById('lomba-id').value;
+        const name = document.getElementById('lomba-name').value.trim();
+        const category = document.getElementById('lomba-category').value;
+        const schedule = document.getElementById('lomba-schedule').value.trim();
+        const pic = document.getElementById('lomba-pic').value;
+        const status = document.getElementById('lomba-status').value;
+
+        if (!name || !category || !schedule || !pic || !status) return;
+
+        const lombaDoc = { name, category, schedule, pic, status };
+        const savePromise = id ? lombaCollection.doc(id).set(lombaDoc, { merge: true }) : lombaCollection.add(lombaDoc);
+
+        savePromise.then(() => {
+            hideModal('modal-lomba');
+        }).catch(error => {
+            console.error("Error saving lomba: ", error);
+            alert("Gagal menyimpan data lomba ke server.");
+        });
+    });
+
+    // Uang Masuk Form Submission
+    document.getElementById('uang-masuk-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const id = document.getElementById('uang-masuk-id').value;
+        const source = document.getElementById('uang-masuk-source').value.trim();
+        const amount = parseInt(document.getElementById('uang-masuk-amount').value);
+
+        if (!source || isNaN(amount) || amount < 0) return;
+
+        const uangMasukDoc = { source, amount };
+        const savePromise = id ? uangMasukCollection.doc(id).set(uangMasukDoc, { merge: true }) : uangMasukCollection.add(uangMasukDoc);
+
+        savePromise.then(() => {
+            hideModal('modal-uang-masuk');
+        }).catch(error => {
+            console.error("Error saving uang masuk: ", error);
+            alert("Gagal menyimpan data uang masuk ke server.");
+        });
+    });
+
+    // Uang Keluar Form Submission
+    document.getElementById('uang-keluar-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const id = document.getElementById('uang-keluar-id').value;
+        const allocation = document.getElementById('uang-keluar-allocation').value.trim();
+        const amount = parseInt(document.getElementById('uang-keluar-amount').value);
+
+        if (!allocation || isNaN(amount) || amount < 0) return;
+
+        const uangKeluarDoc = { allocation, amount };
+        const savePromise = id ? uangKeluarCollection.doc(id).set(uangKeluarDoc, { merge: true }) : uangKeluarCollection.add(uangKeluarDoc);
+
+        savePromise.then(() => {
+            hideModal('modal-uang-keluar');
+        }).catch(error => {
+            console.error("Error saving uang keluar: ", error);
+            alert("Gagal menyimpan data uang keluar ke server.");
+        });
+    });
+
+    // Uang Muka Form Submission
+    document.getElementById('uang-muka-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const id = document.getElementById('uang-muka-id').value;
+        const provider = document.getElementById('uang-muka-provider').value.trim();
+        const totalHarga = parseInt(document.getElementById('uang-muka-total-harga').value);
+        const amount = parseInt(document.getElementById('uang-muka-amount').value);
+        const status = document.getElementById('uang-muka-status').value;
+
+        if (!provider || isNaN(totalHarga) || totalHarga < 0 || isNaN(amount) || amount < 0) return;
+
+        const uangMukaDoc = { provider, totalHarga, amount, status };
+        const savePromise = id ? uangMukaCollection.doc(id).set(uangMukaDoc, { merge: true }) : uangMukaCollection.add(uangMukaDoc);
+
+        savePromise.then(() => {
+            hideModal('modal-uang-muka');
+        }).catch(error => {
+            console.error("Error saving uang muka: ", error);
+            alert("Gagal menyimpan data uang muka ke server.");
+        });
+    });
+
+
+    document.getElementById('panitia-table-body').addEventListener('click', (e) => {
+        const editBtn = e.target.closest('.edit-panitia-btn');
+        const deleteBtn = e.target.closest('.delete-panitia-btn');
+
+        if (editBtn) {
+            const id = editBtn.dataset.id;
+            const panitia = panitiaData.find(p => p.id == id);
+            document.getElementById('panitia-id').value = panitia.id;
+            document.getElementById('panitia-name').value = panitia.name;
+            document.getElementById('panitia-role').value = panitia.role;
+            document.getElementById('modal-panitia-title').textContent = 'Edit Panitia';
+            document.getElementById('panitia-avatar-preview').src = panitia.avatar || DEFAULT_AVATAR;
+            showModal('modal-panitia');
+        }
+
+        if (deleteBtn) {
+            const id = deleteBtn.dataset.id;
+            if (confirm('Apakah Anda yakin ingin menghapus anggota panitia ini?')) {
+                panitiaCollection.doc(id).delete().catch(error => {
+                    console.error("Error deleting document: ", error);
+                    alert("Gagal menghapus data dari server.");
+                });
+            }
+        }
+    });
+
+    document.getElementById('lomba-table-body').addEventListener('click', (e) => {
+        const editBtn = e.target.closest('.edit-lomba-btn');
+        const deleteBtn = e.target.closest('.delete-lomba-btn');
+
+        if (editBtn) {
+            const id = editBtn.dataset.id;
+            const lomba = lombaData.find(l => l.id == id);
+            document.getElementById('lomba-id').value = lomba.id;
+            document.getElementById('lomba-name').value = lomba.name;
+            document.getElementById('lomba-category').value = lomba.category;
+            document.getElementById('lomba-schedule').value = lomba.schedule;
+            populatePICDropdown();
+            document.getElementById('lomba-pic').value = lomba.pic;
+            document.getElementById('lomba-status').value = lomba.status;
+            document.getElementById('modal-lomba-title').textContent = 'Edit Lomba';
+            showModal('modal-lomba');
+        }
+
+        if (deleteBtn) {
+            const id = deleteBtn.dataset.id;
+            if (confirm('Apakah Anda yakin ingin menghapus lomba ini?')) {
+                lombaCollection.doc(id).delete().catch(error => {
+                    console.error("Error deleting lomba: ", error);
+                });
+            }
+        }
+    });
+
+    // Uang Masuk Table Actions
+    document.getElementById('uang-masuk-table-body').addEventListener('click', (e) => {
+        const editBtn = e.target.closest('.edit-uang-masuk-btn');
+        const deleteBtn = e.target.closest('.delete-uang-masuk-btn');
+
+        if (editBtn) {
+            const id = editBtn.dataset.id;
+            const item = uangMasukData.find(u => u.id == id);
+            document.getElementById('uang-masuk-id').value = item.id;
+            document.getElementById('uang-masuk-source').value = item.source;
+            document.getElementById('uang-masuk-amount').value = item.amount;
+            document.getElementById('modal-uang-masuk-title').textContent = 'Edit Uang Masuk';
+            showModal('modal-uang-masuk');
+        }
+
+        if (deleteBtn) {
+            const id = deleteBtn.dataset.id;
+            if (confirm('Apakah Anda yakin ingin menghapus data uang masuk ini?')) {
+                uangMasukCollection.doc(id).delete().catch(error => {
+                    console.error("Error deleting uang masuk: ", error);
+                });
+            }
+        }
+    });
+
+    // Uang Keluar Table Actions
+    document.getElementById('uang-keluar-table-body').addEventListener('click', (e) => {
+        const editBtn = e.target.closest('.edit-uang-keluar-btn');
+        const deleteBtn = e.target.closest('.delete-uang-keluar-btn');
+
+        if (editBtn) {
+            const id = editBtn.dataset.id;
+            const item = uangKeluarData.find(u => u.id == id);
+            document.getElementById('uang-keluar-id').value = item.id;
+            document.getElementById('uang-keluar-allocation').value = item.allocation;
+            document.getElementById('uang-keluar-amount').value = item.amount;
+            document.getElementById('modal-uang-keluar-title').textContent = 'Edit Uang Keluar';
+            showModal('modal-uang-keluar');
+        }
+
+        if (deleteBtn) {
+            const id = deleteBtn.dataset.id;
+            if (confirm('Apakah Anda yakin ingin menghapus data uang keluar ini?')) {
+                uangKeluarCollection.doc(id).delete().catch(error => {
+                    console.error("Error deleting uang keluar: ", error);
+                });
+            }
+        }
+    });
+
+    // Uang Muka Table Actions
+    document.getElementById('uang-muka-table-body').addEventListener('click', (e) => {
+        const editBtn = e.target.closest('.edit-uang-muka-btn');
+        const deleteBtn = e.target.closest('.delete-uang-muka-btn');
+
+        if (editBtn) {
+            const id = editBtn.dataset.id;
+            const item = uangMukaData.find(u => u.id == id);
+            document.getElementById('uang-muka-id').value = item.id;
+            document.getElementById('uang-muka-provider').value = item.provider;
+            document.getElementById('uang-muka-total-harga').value = item.totalHarga;
+            document.getElementById('uang-muka-amount').value = item.amount;
+            document.getElementById('uang-muka-status').value = item.status;
+            document.getElementById('modal-uang-muka-title').textContent = 'Edit Uang Muka';
+            showModal('modal-uang-muka');
+        }
+
+        if (deleteBtn) {
+            const id = deleteBtn.dataset.id;
+            if (confirm('Apakah Anda yakin ingin menghapus data uang muka ini?')) {
+                uangMukaCollection.doc(id).delete().catch(error => {
+                    console.error("Error deleting uang muka: ", error);
+                });
+            }
+        }
+    });
+
+
+
+
+
+    const passwordInput = document.getElementById('password');
+    const togglePasswordButton = document.getElementById('toggle-password');
+
+    togglePasswordButton.addEventListener('click', function() {
+        // Toggle the type attribute
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+
+        // Toggle the icon
+        const icon = this.querySelector('i');
+        icon.classList.toggle('fa-eye');
+        icon.classList.toggle('fa-eye-slash');
+    });
+
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const errorDiv = document.getElementById('login-error');
+        errorDiv.classList.add('hidden');
 
         try {
-          let app = firebase.app();
-          let features = [
-            'auth', 
-            'database', 
-            'firestore',
-            'functions',
-            'messaging', 
-            'storage', 
-            'analytics', 
-            'remoteConfig',
-            'performance',
-          ].filter(feature => typeof app[feature] === 'function');
-          loadEl.textContent = `Firebase SDK loaded with ${features.join(', ')}`;
-        } catch (e) {
-          console.error(e);
-          loadEl.textContent = 'Error loading the Firebase SDK, check the console.';
+            await auth.signInWithEmailAndPassword(email, password);
+            // onAuthStateChanged akan menangani tampilan UI
+        } catch (error) {
+            console.error("Login failed:", error);
+            errorDiv.textContent = 'Email atau kata sandi salah.';
+            errorDiv.classList.remove('hidden');
         }
-      });
-    </script>
-  </body>
+    });
+
+    document.getElementById('logout-button').addEventListener('click', async (e) => {
+        e.preventDefault();
+        try {
+            await auth.signOut();
+            // onAuthStateChanged akan menangani tampilan UI
+        } catch (error) {
+            console.error("Logout failed:", error);
+        }
+    });
+
+    document.getElementById('forgot-password-link').addEventListener('click', (e) => {
+        e.preventDefault();
+        showModal('modal-forgot-password');
+    });
+
+    document.getElementById('forgot-password-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('forgot-email').value;
+        const messageDiv = document.getElementById('forgot-password-message');
+        messageDiv.classList.add('hidden');
+
+        try {
+            await auth.sendPasswordResetEmail(email);
+            messageDiv.textContent = 'Email untuk reset kata sandi telah dikirim. Silakan periksa kotak masuk Anda.';
+            messageDiv.className = 'text-sm mb-4 text-left text-green-600';
+            messageDiv.classList.remove('hidden');
+        } catch (error) {
+            console.error("Password reset failed:", error);
+            messageDiv.textContent = 'Gagal mengirim email. Pastikan alamat email sudah benar.';
+            messageDiv.className = 'text-sm mb-4 text-left text-red-600';
+            messageDiv.classList.remove('hidden');
+        }
+    });
+
+    // Listener utama untuk status autentikasi
+    auth.onAuthStateChanged(async (user) => {
+        // Hentikan semua listener sebelumnya untuk mencegah duplikasi
+        unsubscribePanitia();
+        unsubscribeLomba();
+        unsubscribeUangMasuk();
+        unsubscribeUangKeluar();
+        unsubscribeUangMuka();
+
+        if (user) {
+            // Pengguna sudah login
+            try {
+                const userDoc = await usersCollection.doc(user.uid).get();
+                if (userDoc.exists) {
+                    currentUserRole = userDoc.data().role || 'visitor';
+                } else {
+                    currentUserRole = 'visitor'; // Default jika tidak ada dokumen peran
+                    console.warn(`User with UID ${user.uid} does not have a role document.`);
+                }
+            } catch (error) {
+                console.error("Error fetching user role:", error);
+                currentUserRole = 'visitor';
+            }
+            
+            updateUIAccess(currentUserRole);
+
+            document.getElementById('login-overlay').classList.add('hidden');
+            document.getElementById('app-container').classList.remove('hidden');
+            
+            // Mulai listener baru
+            unsubscribePanitia = listenToPanitiaUpdates();
+            unsubscribeLomba = listenToLombaUpdates();
+            unsubscribeUangMasuk = listenToUangMasukUpdates();
+            unsubscribeUangKeluar = listenToUangKeluarUpdates();
+            unsubscribeUangMuka = listenToUangMukaUpdates();
+
+            navigate(window.location.hash || '#dashboard');
+        } else {
+            // Pengguna sudah logout
+            currentUserRole = 'visitor';
+            updateUIAccess(currentUserRole);
+            document.getElementById('login-overlay').classList.remove('hidden');
+            document.getElementById('app-container').classList.add('hidden');
+            window.location.hash = '';
+        }
+    });
+
+    document.getElementById('search-panitia-input').addEventListener('input', (e) => {
+        const searchTerm = e.target.value.toLowerCase();
+        if (searchTerm) {
+            const filteredData = panitiaData.filter(p => 
+                p.name.toLowerCase().includes(searchTerm) || 
+                p.role.toLowerCase().includes(searchTerm)
+            );
+            renderPanitiaTable(filteredData);
+        } else {
+            renderPanitiaTable(); // Render semua data jika pencarian kosong
+        }
+    });
+
+    // Panggil navigasi awal setelah login disimulasikan (jika ada hash)
+    if (window.location.hash) {
+        navigate(window.location.hash);
+    }
+});
+
+
+</script>
+
+
+
+
+</body>
+
 </html>
