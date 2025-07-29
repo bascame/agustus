@@ -1,0 +1,9 @@
+const firebaseConfig = {
+  apiKey: "AIzaSyBNN2z7BvYUhU4Ws1ezYM5nsQ8S276muvw",
+  authDomain: "semarak-kemerdekaan.firebaseapp.com",
+  databaseURL: "https://semarak-kemerdekaan-default-rtdb.firebaseio.com",
+  projectId: "semarak-kemerdekaan",
+  storageBucket: "semarak-kemerdekaan.firebasestorage.app",
+  messagingSenderId: "543406328573",
+  appId: "1:543406328573:web:bb402da63417a8b2570c94"
+};
