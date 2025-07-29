@@ -1474,7 +1474,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('search-panitia-input').addEventListener('input', (e) => {
         const searchTerm = e.target.value.toLowerCase();
         if (searchTerm) {
-            const filteredData = panitiaData.filter(p => 
+            const filteredData = panitiaData.filter(p =>
                 p.name.toLowerCase().includes(searchTerm) || 
                 p.role.toLowerCase().includes(searchTerm)
             );
