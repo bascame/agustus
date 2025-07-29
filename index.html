@@ -598,6 +598,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Inisialisasi Firebase
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
+    const storage = firebase.storage();
     // Membuat referensi untuk setiap koleksi data di Firestore
     const panitiaCollection = db.collection('panitia');
     const lombaCollection = db.collection('lomba');
@@ -1158,7 +1159,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    document.getElementById('panitia-form').addEventListener('submit', (e) => {
+    document.getElementById('panitia-form').addEventListener('submit', async (e) => {
         e.preventDefault();
         const id = document.getElementById('panitia-id').value;
         const name = document.getElementById('panitia-name').value.trim();
@@ -1167,31 +1168,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const fileInput = document.getElementById('panitia-avatar-input');
         const file = fileInput.files[0];
+        let avatarUrl = document.getElementById('panitia-avatar-preview').src;
 
-        const savePanitiaToFirestore = async (avatarUrl) => {
-            const panitiaDoc = { name, role, avatar: avatarUrl };
+        // Jika ada file baru yang dipilih, unggah ke Firebase Storage
+        if (file) {
+            const filePath = `panitia-avatars/${Date.now()}_${file.name}`;
+            const fileRef = storage.ref(filePath);
             try {
-                if (id) { // Edit
-                    await panitiaCollection.doc(id).set(panitiaDoc, { merge: true });
-                } else { // Add
-                    await panitiaCollection.add(panitiaDoc);
-                }
+                await fileRef.put(file);
+                avatarUrl = await fileRef.getDownloadURL();
             } catch (error) {
-                console.error("Error saving to Firestore: ", error);
-                alert("Gagal menyimpan data ke server.");
-            } 
-            
+                console.error("Upload failed:", error);
+                alert("Gagal mengunggah foto.");
+                return; // Hentikan proses jika unggah gagal
+            }
+        }
+
+        // Simpan data ke Firestore dengan URL avatar yang benar
+        const panitiaDoc = { name, role, avatar: avatarUrl };
+        try {
+            const savePromise = id ? panitiaCollection.doc(id).set(panitiaDoc, { merge: true }) : panitiaCollection.add(panitiaDoc);
+            await savePromise;
             hideModal('modal-panitia');
             fileInput.value = '';
-        };
-
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = (e) => savePanitia(e.target.result);
-            reader.readAsDataURL(file);
-        } else { // Jika tidak ada file baru yang diunggah
-            const existingAvatar = document.getElementById('panitia-avatar-preview').src;
-            savePanitiaToFirestore(existingAvatar);
+        } catch (error) {
+            console.error("Error saving to Firestore: ", error);
+            alert("Gagal menyimpan data ke server.");
         }
     });
 
@@ -1298,10 +1300,22 @@ document.addEventListener('DOMContentLoaded', () => {
         if (deleteBtn) {
             const id = deleteBtn.dataset.id;
             if (confirm('Apakah Anda yakin ingin menghapus anggota panitia ini?')) {
-                panitiaCollection.doc(id).delete().catch(error => {
-                    console.error("Error deleting document: ", error);
-                    alert("Gagal menghapus data dari server.");
-                });
+                const panitiaDoc = panitiaData.find(p => p.id === id);
+
+                // Hapus dokumen dari Firestore
+                panitiaCollection.doc(id).delete()
+                    .then(() => {
+                        // Jika berhasil, hapus juga file gambar dari Storage
+                        if (panitiaDoc && panitiaDoc.avatar && panitiaDoc.avatar.includes('firebasestorage')) {
+                            const fileRef = storage.refFromURL(panitiaDoc.avatar);
+                            fileRef.delete().catch(error => {
+                                console.error("Gagal menghapus file dari Storage:", error);
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Gagal menghapus dokumen dari Firestore: ", error);
+                    });
             }
         }
     });
