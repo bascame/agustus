@@ -25,7 +25,7 @@
             overflow-x: hidden;
         }
 
-        /* Tata letak Sidebar yang disempurnakan */
+        /* Enhanced Sidebar Layout */
         .sidebar {
             width: 260px;
             position: fixed;
@@ -41,7 +41,7 @@
             transform: translateX(0);
         }
 
-        /* Di layar besar (desktop), sidebar akan selalu terlihat */
+        /* On large screens (desktop), the sidebar is always visible */
         @media (min-width: 1024px) {
             .sidebar {
                 transform: translateX(0);
@@ -74,7 +74,7 @@
             transition: transform 0.3s ease;
         }
 
-        /* Penyesuaian padding tabel agar lebih rapi */
+        /* Table padding for a cleaner look */
         th, td {
             padding: 12px 16px;
         }
@@ -94,7 +94,7 @@
             }
         }
 
-        /* Gaya untuk ikon sortir tabel */
+        /* Styles for table sort icons */
         .sortable .sort-icon::after {
             content: '\f0dc'; /* fa-sort */
             font-family: "Font Awesome 6 Free";
@@ -159,37 +159,48 @@
 
             <nav class="flex-grow">
                 <ul>
+                    <!-- Main Menu -->
                     <li><a href="#dashboard" class="nav-link active-nav flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
                         <i class="fa-solid fa-tachometer-alt fa-fw w-6 text-center"></i><span>Dashboard</span>
                     </a></li>
-                    <li class="mt-2"><a href="#uang-masuk" class="nav-link flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
+
+                    <!-- Finance Group -->
+                    <li class="px-3 pt-4 pb-2 text-xs font-bold text-gray-500 uppercase">Keuangan</li>
+                    <li><a href="#uang-masuk" class="nav-link flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
                         <i class="fa-solid fa-arrow-down fa-fw w-6 text-center"></i><span>Uang Masuk</span>
                     </a></li>
-                    <li class="mt-2"><a href="#uang-keluar" class="nav-link flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
+                    <li class="mt-1"><a href="#uang-keluar" class="nav-link flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
                         <i class="fa-solid fa-arrow-up fa-fw w-6 text-center"></i><span>Uang Keluar</span>
                     </a></li>
-                    <li class="mt-2"><a href="#uang-muka" class="nav-link flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
+                    <li class="mt-1"><a href="#uang-muka" class="nav-link flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
                         <i class="fa-solid fa-file-invoice-dollar fa-fw w-6 text-center"></i><span>Uang Muka</span>
                     </a></li>
-                    <li class="mt-2"><a href="#panitia" class="nav-link flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
-                        <i class="fa-solid fa-users-cog fa-fw w-6 text-center"></i><span>Kelola Panitia</span>
-                    </a></li>
-                    <li class="mt-2"><a href="#lomba" class="nav-link flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
+
+                    <!-- Event Management Group -->
+                    <li class="px-3 pt-4 pb-2 text-xs font-bold text-gray-500 uppercase">Manajemen Acara</li>
+                    <li><a href="#lomba" class="nav-link flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
                         <i class="fa-solid fa-trophy fa-fw w-6 text-center"></i><span>Kelola Lomba</span>
                     </a></li>
-                    <li class="mt-2"><a href="#struktur" class="nav-link flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
+                    <li class="mt-1"><a href="#panitia" class="nav-link flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
+                        <i class="fa-solid fa-users-cog fa-fw w-6 text-center"></i><span>Kelola Panitia</span>
+                    </a></li>
+                    <li class="mt-1"><a href="#struktur" class="nav-link flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
                         <i class="fa-solid fa-sitemap fa-fw w-6 text-center"></i><span>Struktur Panitia</span>
                     </a></li>
-                    <li class="mt-2 border-t border-gray-700 pt-2"><a href="#profil" class="nav-link flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
+                    
+                    <!-- Settings & User Group -->
+                    <li class="border-t border-gray-700 mt-4 pt-2"></li>
+                    <li><a href="#profil" class="nav-link flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
                         <i class="fa-solid fa-user-circle fa-fw w-6 text-center"></i><span>Profil Pengguna</span>
                     </a></li>
-                    <li id="nav-logs" class="mt-2 border-t border-gray-700 pt-2" style="display: none;"><a href="#logs" class="nav-link flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
+                    <li id="nav-logs" class="mt-1" style="display: none;"><a href="#logs" class="nav-link flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
                         <i class="fa-solid fa-history fa-fw w-6 text-center"></i><span>Log Aktivitas</span>
                     </a></li>
                 </ul>
             </nav>
 
-            <div>
+            <!-- Logout Button -->
+            <div class="border-t border-gray-700 pt-2">
                 <a href="#" id="logout-button" class="nav-link flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
                     <i class="fa-solid fa-sign-out-alt fa-fw w-6 text-center"></i><span>Keluar</span>
                 </a>
@@ -243,252 +254,7 @@
                     <div class="overflow-x-auto">
                         <table class="w-full">
                             <tbody id="ringkasan-dana-dashboard-table-body">
-                                <!-- Baris tabel akan dibuat oleh JavaScript -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="bg-white p-6 rounded-xl shadow-md">
-                    <h2 class="text-xl font-bold mb-4">Grafik Keuangan Acara</h2>
-                    <div class="chart-container">
-                        <canvas id="financeChart"></canvas>
-                    </div>
-                </div>
-
-                <div class="mt-8 bg-white p-6 rounded-xl shadow-md">
-                    <h2 class="text-xl font-bold mb-4">Sisa Pembayaran Uang Muka</h2>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left">
-                            <thead class="bg-gray-100">
-                                <tr>
-                                    <th class="font-semibold">Pemberi</th>
-                                    <th class="font-semibold">Jumlah Sisa</th>
-                                </tr>
-                            </thead>
-                            <tbody id="sisa-uang-muka-dashboard-table-body">
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
-
-            <section id="uang-masuk" class="content-section hidden">
-                <div class="flex flex-wrap justify-between items-center mb-8 gap-4">
-                    <div>
-                        <h1 class="text-3xl font-bold">Data Uang Masuk</h1>
-                        <p class="text-gray-600">Rincian semua pemasukan dana untuk acara.</p>
-                    </div>
-                    <div class="flex flex-wrap gap-2">
-                        <button id="export-uang-masuk-btn" class="write-access bg-green-600 text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-green-700 transition-colors shadow-md flex items-center gap-2" style="display: none;">
-                            <i class="fa-solid fa-file-csv"></i> Ekspor CSV
-                        </button>
-                        <button id="add-uang-masuk-btn" class="write-access bg-[#B71C1C] text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-[#D32F2F] transition-colors shadow-md flex items-center gap-2" style="display: none;">
-                            <i class="fa-solid fa-plus"></i> Tambah Uang Masuk
-                        </button>
-                    </div>
-                </div>
-                <div class="bg-white rounded-xl shadow-md overflow-x-auto">
-                    <table class="w-full text-left">
-                        <thead class="bg-gray-100">
-                            <tr>
-                                <th class="font-semibold">Sumber Dana</th>
-                                <th class="font-semibold">Jumlah</th>
-                                <th class="font-semibold text-center aksi-header" style="display: none;">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody id="uang-masuk-table-body">
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-
-            <section id="uang-keluar" class="content-section hidden">
-                <div class="flex flex-wrap justify-between items-center mb-8 gap-4">
-                    <div>
-                        <h1 class="text-3xl font-bold">Data Uang Keluar</h1>
-                        <p class="text-gray-600">Rincian semua pengeluaran dana untuk acara.</p>
-                    </div>
-                    <div class="flex flex-wrap gap-2">
-                        <button id="export-uang-keluar-btn" class="write-access bg-green-600 text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-green-700 transition-colors shadow-md flex items-center gap-2" style="display: none;">
-                            <i class="fa-solid fa-file-csv"></i> Ekspor CSV
-                        </button>
-                        <button id="add-uang-keluar-btn" class="write-access bg-[#B71C1C] text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-[#D32F2F] transition-colors shadow-md flex items-center gap-2" style="display: none;">
-                            <i class="fa-solid fa-plus"></i> Tambah Uang Keluar
-                        </button>
-                    </div>
-                </div>
-                <div class="bg-white rounded-xl shadow-md overflow-x-auto">
-                    <table class="w-full text-left">
-                        <thead class="bg-gray-100">
-                            <tr>
-                                <th class="font-semibold">Alokasi Dana</th>
-                                <th class="font-semibold">Jumlah</th>
-                                <th class="font-semibold text-center aksi-header" style="display: none;">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody id="uang-keluar-table-body">
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-
-            <section id="uang-muka" class="content-section hidden">
-                <div class="flex flex-wrap justify-between items-center mb-8 gap-4">
-                    <div>
-                        <h1 class="text-3xl font-bold">Data Uang Muka</h1>
-                        <p class="text-gray-600">Catat dan kelola semua uang muka yang diterima.</p>
-                    </div>
-                    <div class="flex flex-wrap gap-2">
-                        <button id="export-uang-muka-btn" class="write-access bg-green-600 text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-green-700 transition-colors shadow-md flex items-center gap-2" style="display: none;">
-                            <i class="fa-solid fa-file-csv"></i> Ekspor CSV
-                        </button>
-                        <button id="add-uang-muka-btn" class="write-access bg-[#B71C1C] text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-[#D32F2F] transition-colors shadow-md flex items-center gap-2" style="display: none;">
-                            <i class="fa-solid fa-plus"></i> Tambah Uang Muka
-                        </button>
-                    </div>
-                </div>
-                <div class="bg-white rounded-xl shadow-md overflow-x-auto">
-                    <table class="w-full text-left">
-                        <thead class="bg-gray-100">
-                            <tr>
-                                <th class="font-semibold">Pemberi</th>
-                                <th class="font-semibold">Total Harga</th>
-                                <th class="font-semibold">U
-            }
-        }
-    </style>
-</head>
-<body class="bg-gray-50 text-gray-800">
-
-    <div id="login-overlay" class="fixed inset-0 bg-gray-100 z-[100] flex items-center justify-center p-4">
-        <div class="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg text-center">
-            <img src="https://i.ibb.co/zV4HhFq/logo-hut-ri-80.png" alt="Logo HUT RI 80" class="mx-auto mb-4 h-24">
-            <h1 class="text-2xl font-bold text-[#B71C1C] mb-2">Sistem Manajemen Acara</h1>
-            <p class="text-gray-600 mb-6">Peringatan HUT Kemerdekaan RI ke-80</p>
-            <form id="login-form">
-                <div class="mb-4 text-left">
-                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                    <input type="email" id="email" placeholder="Masukkan email Anda" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D32F2F] focus:border-transparent transition" required>
-                </div>
-                <div class="mb-6 text-left">
-                    <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Kata Sandi</label>
-                    <div class="relative">
-                        <input type="password" id="password" placeholder="Masukkan kata sandi" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D32F2F] focus:border-transparent transition pr-10" required>
-                        <button type="button" id="toggle-password" class="absolute inset-y-0 right-0 px-3 flex items-center text-gray-500 hover:text-gray-700 transition-colors">
-                            <i class="fas fa-eye"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="text-right mb-6">
-                    <a href="#" id="forgot-password-link" class="text-sm text-red-600 hover:text-red-800 hover:underline">
-                        Lupa Kata Sandi?
-                    </a>
-                </div>
-                <div id="login-error" class="text-red-500 text-sm mb-4 text-left hidden"></div>
-                <button type="submit" class="w-full bg-[#B71C1C] text-white py-3 rounded-lg font-semibold hover:bg-[#D32F2F] transition-colors shadow-md">Masuk</button>
-            </form>
-        </div>
-    </div>
-
-    <div id="app-container" class="hidden">
-        <div id="sidebar-backdrop" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
-
-        <aside id="sidebar" class="sidebar bg-[#212529] text-white p-4 flex flex-col">
-            <div class="flex items-center justify-between mb-8">
-                <div class="flex items-center gap-3 overflow-hidden">
-                    <img src="https://i.ibb.co/zV4HhFq/logo-hut-ri-80.png" alt="Logo" class="h-10 flex-shrink-0">
-                    <span class="font-bold text-lg whitespace-nowrap">HUT RI ke-80</span>
-                </div>
-            </div>
-
-            <nav class="flex-grow">
-                <ul>
-                    <li><a href="#dashboard" class="nav-link active-nav flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
-                        <i class="fa-solid fa-tachometer-alt fa-fw w-6 text-center"></i><span>Dashboard</span>
-                    </a></li>
-                    <li class="mt-2"><a href="#uang-masuk" class="nav-link flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
-                        <i class="fa-solid fa-arrow-down fa-fw w-6 text-center"></i><span>Uang Masuk</span>
-                    </a></li>
-                    <li class="mt-2"><a href="#uang-keluar" class="nav-link flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
-                        <i class="fa-solid fa-arrow-up fa-fw w-6 text-center"></i><span>Uang Keluar</span>
-                    </a></li>
-                    <li class="mt-2"><a href="#uang-muka" class="nav-link flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
-                        <i class="fa-solid fa-file-invoice-dollar fa-fw w-6 text-center"></i><span>Uang Muka</span>
-                    </a></li>
-                    <li class="mt-2"><a href="#panitia" class="nav-link flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
-                        <i class="fa-solid fa-users-cog fa-fw w-6 text-center"></i><span>Kelola Panitia</span>
-                    </a></li>
-                    <li class="mt-2"><a href="#lomba" class="nav-link flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
-                        <i class="fa-solid fa-trophy fa-fw w-6 text-center"></i><span>Kelola Lomba</span>
-                    </a></li>
-                    <li class="mt-2"><a href="#struktur" class="nav-link flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
-                        <i class="fa-solid fa-sitemap fa-fw w-6 text-center"></i><span>Struktur Panitia</span>
-                    </a></li>
-                    <li class="mt-2 border-t border-gray-700 pt-2"><a href="#profil" class="nav-link flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
-                        <i class="fa-solid fa-user-circle fa-fw w-6 text-center"></i><span>Profil Pengguna</span>
-                    </a></li>
-                    <li id="nav-logs" class="mt-2 border-t border-gray-700 pt-2" style="display: none;"><a href="#logs" class="nav-link flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
-                        <i class="fa-solid fa-history fa-fw w-6 text-center"></i><span>Log Aktivitas</span>
-                    </a></li>
-                </ul>
-            </nav>
-
-            <div>
-                <a href="#" id="logout-button" class="nav-link flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
-                    <i class="fa-solid fa-sign-out-alt fa-fw w-6 text-center"></i><span>Keluar</span>
-                </a>
-            </div>
-        </aside>
-
-        <main id="main-content" class="p-4 md:p-8 transition-all duration-300">
-            <header class="flex items-center mb-8 lg:hidden">
-                <button id="header-toggle-button" class="text-2xl text-gray-600">
-                    <i class="fas fa-bars"></i>
-                </button>
-            </header>
-
-            <section id="dashboard" class="content-section">
-                <h1 class="text-3xl font-bold mb-2">Dashboard</h1>
-                <p class="text-gray-600 mb-8">Ringkasan acara dan data penting perayaan HUT RI ke-80.</p>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                    <div class="bg-white p-6 rounded-xl shadow-md flex items-center gap-4">
-                        <div class="bg-red-100 p-3 rounded-full"><i class="fa-solid fa-users text-2xl text-red-600"></i></div>
-                        <div>
-                            <p class="text-gray-500">Total Panitia</p>
-                            <p id="stat-panitia" class="text-2xl font-bold">0</p>
-                        </div>
-                    </div>
-                    <div class="bg-white p-6 rounded-xl shadow-md flex items-center gap-4">
-                        <div class="bg-yellow-100 p-3 rounded-full"><i class="fa-solid fa-trophy text-2xl text-yellow-600"></i></div>
-                        <div>
-                            <p class="text-gray-500">Jumlah Lomba</p>
-                            <p id="stat-lomba" class="text-2xl font-bold">0</p>
-                        </div>
-                    </div>
-                    <div class="bg-white p-6 rounded-xl shadow-md flex items-center gap-4">
-                        <div class="bg-green-100 p-3 rounded-full"><i class="fa-solid fa-wallet text-2xl text-green-600"></i></div>
-                        <div>
-                            <p class="text-gray-500">Dana Masuk</p>
-                            <p id="stat-dana-masuk" class="text-2xl font-bold">Rp 0</p>
-                        </div>
-                    </div>
-                     <div class="bg-white p-6 rounded-xl shadow-md flex items-center gap-4">
-                        <div class="bg-blue-100 p-3 rounded-full"><i class="fa-solid fa-receipt text-2xl text-blue-600"></i></div>
-                        <div>
-                            <p class="text-gray-500">Dana Keluar</p>
-                            <p id="stat-dana-keluar" class="text-2xl font-bold">Rp 0</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-white p-6 rounded-xl shadow-md mb-8">
-                    <h2 class="text-xl font-bold mb-4">Ringkasan Dana Acara</h2>
-                    <div class="overflow-x-auto">
-                        <table class="w-full">
-                            <tbody id="ringkasan-dana-dashboard-table-body">
-                                <!-- Baris tabel akan dibuat oleh JavaScript -->
+                                <!-- Table rows will be generated by JavaScript -->
                             </tbody>
                         </table>
                     </div>
@@ -727,7 +493,7 @@
                 <h1 class="text-3xl font-bold mb-8">Profil Pengguna</h1>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <!-- Informasi Profil -->
+                    <!-- Profile Information -->
                     <div class="bg-white p-6 rounded-xl shadow-md">
                         <h2 class="text-xl font-bold mb-4">Informasi Akun</h2>
                         <div class="space-y-4">
@@ -742,7 +508,7 @@
                         </div>
                     </div>
 
-                    <!-- Ubah Kata Sandi -->
+                    <!-- Change Password -->
                     <div class="bg-white p-6 rounded-xl shadow-md">
                         <h2 class="text-xl font-bold mb-4">Ubah Kata Sandi</h2>
                         <form id="change-password-form">
@@ -951,9 +717,9 @@
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- KONFIGURASI FIREBASE ---
-    // GANTI DENGAN KONFIGURASI DARI PROYEK FIREBASE ANDA
-    const firebaseConfig = {
+    // --- FIREBASE CONFIGURATION ---
+    // IMPORTANT: REPLACE WITH YOUR FIREBASE PROJECT CONFIGURATION
+   const firebaseConfig = {
   apiKey: "AIzaSyCqXp4cinuCbxM541av2v7OWuZjGaEf1Sc",
   authDomain: "civil-empire-461419-f4.firebaseapp.com",
   databaseURL: "https://civil-empire-461419-f4-default-rtdb.asia-southeast1.firebasedatabase.app",
@@ -963,12 +729,12 @@ document.addEventListener('DOMContentLoaded', () => {
   appId: "1:129090724195:web:a18f5525a12bc1adfa7356"
 };
 
-    // Inisialisasi Firebase
+    // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
     const auth = firebase.auth();
     const storage = firebase.storage();
-    // Membuat referensi untuk setiap koleksi data di Firestore
+    // Create references for each collection in Firestore
     const panitiaCollection = db.collection('panitia');
     const usersCollection = db.collection('users');
     const lombaCollection = db.collection('lomba');
@@ -977,16 +743,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const uangMukaCollection = db.collection('uangMuka');
     const logsCollection = db.collection('logs');
 
-    // Variabel lokal untuk menampung data dari Firebase
+    // Local variables to hold data from Firebase
     let panitiaData = [];
-    let currentUserRole = 'visitor'; // Default ke peran paling restriktif
+    let currentUserRole = 'visitor'; // Default to the most restrictive role
     let lombaData = [];
     let uangMasukData = [];
     let uangKeluarData = [];
     let uangMukaData = [];
     let logsData = [];
 
-    // State untuk sorting tabel log
+    // State for log table sorting
     let logSortConfig = { key: 'timestamp', direction: 'desc' };
     let logDateFilter = { start: null, end: null };
 
@@ -995,7 +761,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const toggleButton = document.getElementById('header-toggle-button');
     let financeChartInstance = null;
 
-    // Variabel untuk menyimpan fungsi unsubscribe dari listener Firebase
+    // Variables to store unsubscribe functions from Firebase listeners
     let unsubscribePanitia = () => {};
     let unsubscribeLomba = () => {};
     let unsubscribeUangMasuk = () => {};
@@ -1005,7 +771,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const DEFAULT_AVATAR = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2NkY2RjZCI+PHBhdGggZD0iTTEyIDEyYzIuMjEgMCA0LTEuNzkgNC00cy0xLjc5LTQtNC00LTQgMS43OS00IDQgMS43OSA0IDQgNHptMCAyYy0yLjY3IDAtOCAxLjM0LTggNHYyYzAgLjg4Ljc1IDEuNTggMS42NiAxLjU4aDEyLjY4Yy45MSAwIDEuNjYtLjcgMS42Ni0xLjU4di0yYzAtMi42Ni01LjMzLTQtOC00eiIvPjwvc3ZnPg==';
 
-    // Fungsi baru untuk mendengarkan perubahan data panitia secara real-time
+    // Function to listen to real-time updates for panitia data
     const listenToPanitiaUpdates = () => {
         return panitiaCollection.onSnapshot(snapshot => {
             const panitiaFromServer = [];
@@ -1070,23 +836,19 @@ document.addEventListener('DOMContentLoaded', () => {
             el.style.display = displayStyle;
         });
 
-        document.querySelectorAll('.aksi-header').forEach(el => {
-            el.style.display = displayStyle;
+        document.querySelectorAll('.aksi-header, .aksi-cell').forEach(el => {
+            el.style.display = hasWriteAccess ? '' : 'none';
         });
 
         document.getElementById('nav-logs').style.display = isAdmin ? '' : 'none';
 
-        // Panggil ulang render tabel untuk menampilkan/menyembunyikan kolom aksi
+        // Re-render tables to show/hide action columns
         renderPanitiaTable();
         renderLombaTable();
         renderUangMasukTable();
         renderUangKeluarTable();
         renderUangMukaTable();
     };
-
-    // Fungsi loadData tidak lagi diperlukan karena data dimuat secara real-time
-    // oleh fungsi-fungsi listenTo...Updates
-
 
     const formatCurrency = (amount) => {
         return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(amount);
@@ -1107,7 +869,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const csvRows = data.map(item => {
             return keys.map(key => {
                 let cell = item[key] === null || item[key] === undefined ? '' : item[key];
-                // Escape double quotes by doubling them and wrap cell in quotes if it contains a comma, double quote, or newline
                 cell = cell.toString().replace(/"/g, '""');
                 if (cell.search(/("|,|\n)/g) >= 0) {
                     cell = `"${cell}"`;
@@ -1134,11 +895,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const totalKeluar = uangKeluarData.reduce((sum, item) => sum + item.amount, 0);
         const sisaDana = totalMasuk - totalKeluar;
 
-        // Perbarui kartu statistik
         document.getElementById('stat-dana-masuk').textContent = formatCurrency(totalMasuk);
         document.getElementById('stat-dana-keluar').textContent = formatCurrency(totalKeluar);
 
-        // Perbarui tabel ringkasan dana di dashboard
         const tableBody = document.getElementById('ringkasan-dana-dashboard-table-body');
         if (!tableBody) return;
 
@@ -1170,20 +929,22 @@ document.addEventListener('DOMContentLoaded', () => {
         dataToRender.forEach(p => {
             const row = document.createElement('tr');
             row.className = 'border-b border-gray-200 hover:bg-gray-50';
+            let actionButtons = '';
+            if (currentUserRole === 'admin' || currentUserRole === 'editor') {
+                actionButtons = `
+                    <td class="text-center aksi-cell">
+                        <button class="edit-panitia-btn text-blue-600 hover:text-blue-800 p-2" data-id="${p.id}"><i class="fa-solid fa-edit"></i></button>
+                        <button class="delete-panitia-btn text-red-600 hover:text-red-800 p-2" data-id="${p.id}"><i class="fa-solid fa-trash"></i></button>
+                    </td>`;
+            }
             row.innerHTML = `
                 <td class="w-20 py-2">
                     <img src="${p.avatar || DEFAULT_AVATAR}" alt="Avatar ${p.name}" class="w-12 h-12 rounded-full object-cover">
                 </td>
                 <td>${p.name}</td>
                 <td class="text-gray-600">${p.role}</td>
+                ${actionButtons}
             `;
-            if (currentUserRole === 'admin' || currentUserRole === 'editor') {
-                row.innerHTML += `
-                    <td class="text-center aksi-cell">
-                        <button class="edit-panitia-btn text-blue-600 hover:text-blue-800 p-2" data-id="${p.id}"><i class="fa-solid fa-edit"></i></button>
-                        <button class="delete-panitia-btn text-red-600 hover:text-red-800 p-2" data-id="${p.id}"><i class="fa-solid fa-trash"></i></button>
-                    </td>`;
-            }
             tableBody.appendChild(row);
         });
     };
@@ -1194,17 +955,19 @@ document.addEventListener('DOMContentLoaded', () => {
         uangMasukData.forEach(item => {
             const row = document.createElement('tr');
             row.className = 'border-b border-gray-200 hover:bg-gray-50';
-            row.innerHTML = `
-                <td>${item.source}</td>
-                <td class="text-gray-600">${formatCurrency(item.amount)}</td>
-            `;
-            if (currentUserRole === 'admin' || currentUserRole === 'editor') {
-                row.innerHTML += `
+            let actionButtons = '';
+             if (currentUserRole === 'admin' || currentUserRole === 'editor') {
+                actionButtons = `
                     <td class="text-center aksi-cell">
                         <button class="edit-uang-masuk-btn text-blue-600 hover:text-blue-800 p-2" data-id="${item.id}"><i class="fa-solid fa-edit"></i></button>
                         <button class="delete-uang-masuk-btn text-red-600 hover:text-red-800 p-2" data-id="${item.id}"><i class="fa-solid fa-trash"></i></button>
                     </td>`;
             }
+            row.innerHTML = `
+                <td>${item.source}</td>
+                <td class="text-gray-600">${formatCurrency(item.amount)}</td>
+                ${actionButtons}
+            `;
             tableBody.appendChild(row);
         });
     };
@@ -1215,17 +978,19 @@ document.addEventListener('DOMContentLoaded', () => {
         uangKeluarData.forEach(item => {
             const row = document.createElement('tr');
             row.className = 'border-b border-gray-200 hover:bg-gray-50';
-            row.innerHTML = `
-                <td>${item.allocation}</td>
-                <td class="text-gray-600">${formatCurrency(item.amount)}</td>
-            `;
-            if (currentUserRole === 'admin' || currentUserRole === 'editor') {
-                row.innerHTML += `
+             let actionButtons = '';
+             if (currentUserRole === 'admin' || currentUserRole === 'editor') {
+                actionButtons = `
                     <td class="text-center aksi-cell">
                         <button class="edit-uang-keluar-btn text-blue-600 hover:text-blue-800 p-2" data-id="${item.id}"><i class="fa-solid fa-edit"></i></button>
                         <button class="delete-uang-keluar-btn text-red-600 hover:text-red-800 p-2" data-id="${item.id}"><i class="fa-solid fa-trash"></i></button>
                     </td>`;
             }
+            row.innerHTML = `
+                <td>${item.allocation}</td>
+                <td class="text-gray-600">${formatCurrency(item.amount)}</td>
+                ${actionButtons}
+            `;
             tableBody.appendChild(row);
         });
     };
@@ -1241,19 +1006,21 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             const row = document.createElement('tr');
             row.className = 'border-b border-gray-200 hover:bg-gray-50';
-            row.innerHTML = `
-                <td>${item.provider}</td>
-                <td class="text-gray-600">${formatCurrency(item.totalHarga)}</td>
-                <td class="text-gray-600">${formatCurrency(item.amount)}</td>
-                <td><span class="px-2 py-1 text-sm font-medium rounded-full ${statusClass}">${item.status}</span></td>
-            `;
+            let actionButtons = '';
             if (currentUserRole === 'admin' || currentUserRole === 'editor') {
-                row.innerHTML += `
+                actionButtons = `
                     <td class="text-center aksi-cell">
                         <button class="edit-uang-muka-btn text-blue-600 hover:text-blue-800 p-2" data-id="${item.id}"><i class="fa-solid fa-edit"></i></button>
                         <button class="delete-uang-muka-btn text-red-600 hover:text-red-800 p-2" data-id="${item.id}"><i class="fa-solid fa-trash"></i></button>
                     </td>`;
             }
+            row.innerHTML = `
+                <td>${item.provider}</td>
+                <td class="text-gray-600">${formatCurrency(item.totalHarga)}</td>
+                <td class="text-gray-600">${formatCurrency(item.amount)}</td>
+                <td><span class="px-2 py-1 text-sm font-medium rounded-full ${statusClass}">${item.status}</span></td>
+                ${actionButtons}
+            `;
             tableBody.appendChild(row);
         });
     };
@@ -1262,7 +1029,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const tableBody = document.getElementById('logs-table-body');
         tableBody.innerHTML = '';
 
-        // --- Logika Filter Tanggal ---
         let filteredLogs = [...logsData];
         if (logDateFilter.start && logDateFilter.end) {
             filteredLogs = filteredLogs.filter(log => {
@@ -1277,12 +1043,10 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // --- Logika Pengurutan ---
         const sortedLogs = filteredLogs.sort((a, b) => {
             let valA = a[logSortConfig.key];
             let valB = b[logSortConfig.key];
 
-            // Menangani Firestore Timestamps secara khusus
             if (logSortConfig.key === 'timestamp') {
                 valA = a.timestamp ? a.timestamp.toMillis() : 0;
                 valB = b.timestamp ? b.timestamp.toMillis() : 0;
@@ -1297,7 +1061,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return logSortConfig.direction === 'desc' ? comparison * -1 : comparison;
         });
 
-        // --- Perbarui UI Header Tabel ---
         document.querySelectorAll('#logs .sortable').forEach(header => {
             header.classList.remove('sorted-asc', 'sorted-desc');
             if (header.dataset.sort === logSortConfig.key) {
@@ -1361,20 +1124,22 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             const row = document.createElement('tr');
             row.className = 'border-b border-gray-200 hover:bg-gray-50';
+             let actionButtons = '';
+             if (currentUserRole === 'admin' || currentUserRole === 'editor') {
+                actionButtons = `
+                    <td class="text-center aksi-cell">
+                        <button class="edit-lomba-btn text-blue-600 hover:text-blue-800 p-2" data-id="${l.id}"><i class="fa-solid fa-edit"></i></button>
+                        <button class="delete-lomba-btn text-red-600 hover:text-red-800 p-2" data-id="${l.id}"><i class="fa-solid fa-trash"></i></button>
+                    </td>`;
+            }
             row.innerHTML = `
                 <td>${l.name}</td>
                 <td class="text-gray-600">${l.category}</td>
                 <td class="text-gray-600">${l.schedule}</td>
                 <td class="text-gray-600">${l.pic}</td>
                 <td><span class="px-2 py-1 text-sm font-medium rounded-full ${statusClass}">${l.status}</span></td>
+                ${actionButtons}
             `;
-            if (currentUserRole === 'admin' || currentUserRole === 'editor') {
-                row.innerHTML += `
-                    <td class="text-center aksi-cell">
-                        <button class="edit-lomba-btn text-blue-600 hover:text-blue-800 p-2" data-id="${l.id}"><i class="fa-solid fa-edit"></i></button>
-                        <button class="delete-lomba-btn text-red-600 hover:text-red-800 p-2" data-id="${l.id}"><i class="fa-solid fa-trash"></i></button>
-                    </td>`;
-            }
             tableBody.appendChild(row);
         });
     };
@@ -1391,7 +1156,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const renderStruktur = () => {
         const createPanitiaCardHTML = (panitia) => {
-            // Added max-w-xs to prevent cards from becoming too wide on flex layouts
             return `
                 <div class="bg-white p-5 rounded-xl shadow-lg text-center flex flex-col items-center transform hover:scale-105 transition-transform duration-300 w-full max-w-xs">
                     <img src="${panitia.avatar || DEFAULT_AVATAR}" alt="Avatar ${panitia.name}" class="w-24 h-24 rounded-full mb-4 object-cover border-4 border-red-200">
@@ -1402,12 +1166,11 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         const container = document.getElementById('struktur-container');
-        container.innerHTML = ''; // Clear previous content
-        container.className = 'flex flex-col gap-12'; // Add vertical gap between sections
+        container.innerHTML = '';
+        container.className = 'flex flex-col gap-12';
 
         const createSectionHTML = (title, members) => {
             if (members.length === 0) return '';
-
             const cardsHTML = members.map(createPanitiaCardHTML).join('');
             return `
                 <div>
@@ -1419,13 +1182,11 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
         };
 
-        // Categorize panitia members
         const proklamator = panitiaData.filter(p => p.role.toLowerCase() === 'proklamator');
         const pimpinan = panitiaData.filter(p => p.role.toLowerCase().includes('ketua'));
         const timInti = panitiaData.filter(p => ['sekretaris', 'bendahara'].includes(p.role.toLowerCase()));
         const koordinator = panitiaData.filter(p => p.role.toLowerCase().includes('koordinator'));
         
-        // Get IDs of categorized members to find the rest
         const categorizedIds = new Set([
             ...proklamator.map(p => p.id),
             ...pimpinan.map(p => p.id),
@@ -1434,7 +1195,6 @@ document.addEventListener('DOMContentLoaded', () => {
         ]);
         const anggotaLain = panitiaData.filter(p => !categorizedIds.has(p.id));
 
-        // Build the final HTML and render it
         container.innerHTML = 
             createSectionHTML('Proklamator', proklamator) +
             createSectionHTML('Pimpinan Acara', pimpinan) +
@@ -1459,14 +1219,12 @@ document.addEventListener('DOMContentLoaded', () => {
         modal.classList.remove('hidden');
         modal.classList.add('flex');
         setTimeout(() => {
-            modal.classList.remove('opacity-0');
             modal.querySelector('.modal-content').classList.remove('scale-95');
         }, 10);
     };
 
     const hideModal = (modalId) => {
         const modal = document.getElementById(modalId);
-        modal.classList.add('opacity-0');
         modal.querySelector('.modal-content').classList.add('scale-95');
         setTimeout(() => {
             modal.classList.add('hidden');
@@ -1548,7 +1306,6 @@ document.addEventListener('DOMContentLoaded', () => {
             targetLink.classList.add('active-nav');
         }
 
-        // Tutup sidebar di mobile setelah navigasi
         if(window.innerWidth < 1024) {
             closeSidebar();
         }
@@ -1621,7 +1378,6 @@ document.addEventListener('DOMContentLoaded', () => {
         showModal('modal-lomba');
     });
 
-    // Add Uang Masuk button handler
     document.getElementById('add-uang-masuk-btn').addEventListener('click', () => {
         document.getElementById('uang-masuk-form').reset();
         document.getElementById('uang-masuk-id').value = '';
@@ -1629,7 +1385,6 @@ document.addEventListener('DOMContentLoaded', () => {
         showModal('modal-uang-masuk');
     });
 
-    // Add Uang Keluar button handler
     document.getElementById('add-uang-keluar-btn').addEventListener('click', () => {
         document.getElementById('uang-keluar-form').reset();
         document.getElementById('uang-keluar-id').value = '';
@@ -1671,14 +1426,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const file = fileInput.files[0];
         let avatarUrl = document.getElementById('panitia-avatar-preview').src;
 
-        // Jika sedang mengedit, simpan URL avatar lama untuk kemungkinan dihapus
         let oldAvatarUrl = '';
         if (id) {
             const panitiaToEdit = panitiaData.find(p => p.id === id);
             if (panitiaToEdit) oldAvatarUrl = panitiaToEdit.avatar;
         }
 
-        // Jika ada file baru yang dipilih, unggah ke Firebase Storage
         if (file) {
             const filePath = `panitia-avatars/${Date.now()}_${file.name.replace(/\s/g, '_')}`;
             const fileRef = storage.ref(filePath);
@@ -1686,18 +1439,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 await fileRef.put(file);
                 avatarUrl = await fileRef.getDownloadURL();
 
-                // Jika berhasil diunggah & ini adalah mode edit, hapus foto lama
                 if (id && oldAvatarUrl && oldAvatarUrl.includes('firebasestorage')) {
-                    storage.refFromURL(oldAvatarUrl).delete().catch(err => console.error("Gagal menghapus foto lama:", err));
+                    storage.refFromURL(oldAvatarUrl).delete().catch(err => console.error("Failed to delete old photo:", err));
                 }
             } catch (error) {
                 console.error("Upload failed:", error);
                 alert("Gagal mengunggah foto.");
-                return; // Hentikan proses jika unggah gagal
+                return;
             }
         }
 
-        // Simpan data ke Firestore dengan URL avatar yang benar
         const panitiaDoc = { name, role, avatar: avatarUrl };
         try {
             const savePromise = id ? panitiaCollection.doc(id).set(panitiaDoc, { merge: true }) : panitiaCollection.add(panitiaDoc);
@@ -1732,7 +1483,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Uang Masuk Form Submission
     document.getElementById('uang-masuk-form').addEventListener('submit', (e) => {
         e.preventDefault();
         const id = document.getElementById('uang-masuk-id').value;
@@ -1752,7 +1502,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Uang Keluar Form Submission
     document.getElementById('uang-keluar-form').addEventListener('submit', (e) => {
         e.preventDefault();
         const id = document.getElementById('uang-keluar-id').value;
@@ -1772,7 +1521,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Uang Muka Form Submission
     document.getElementById('uang-muka-form').addEventListener('submit', (e) => {
         e.preventDefault();
         const id = document.getElementById('uang-muka-id').value;
@@ -1849,7 +1597,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Uang Masuk Table Actions
     document.getElementById('uang-masuk-table-body').addEventListener('click', (e) => {
         const editBtn = e.target.closest('.edit-uang-masuk-btn');
         const deleteBtn = e.target.closest('.delete-uang-masuk-btn');
@@ -1874,7 +1621,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Uang Keluar Table Actions
     document.getElementById('uang-keluar-table-body').addEventListener('click', (e) => {
         const editBtn = e.target.closest('.edit-uang-keluar-btn');
         const deleteBtn = e.target.closest('.delete-uang-keluar-btn');
@@ -1899,7 +1645,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Uang Muka Table Actions
     document.getElementById('uang-muka-table-body').addEventListener('click', (e) => {
         const editBtn = e.target.closest('.edit-uang-muka-btn');
         const deleteBtn = e.target.closest('.delete-uang-muka-btn');
@@ -1926,19 +1671,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-
-
-
-
     const passwordInput = document.getElementById('password');
     const togglePasswordButton = document.getElementById('toggle-password');
 
     togglePasswordButton.addEventListener('click', function() {
-        // Toggle the type attribute
         const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
         passwordInput.setAttribute('type', type);
-
-        // Toggle the icon
         const icon = this.querySelector('i');
         icon.classList.toggle('fa-eye');
         icon.classList.toggle('fa-eye-slash');
@@ -1953,7 +1691,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             await auth.signInWithEmailAndPassword(email, password);
-            // onAuthStateChanged akan menangani tampilan UI
         } catch (error) {
             console.error("Login failed:", error);
             errorDiv.textContent = 'Email atau kata sandi salah.';
@@ -1965,7 +1702,6 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         try {
             await auth.signOut();
-            // onAuthStateChanged akan menangani tampilan UI
         } catch (error) {
             console.error("Logout failed:", error);
         }
@@ -1995,9 +1731,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Listener utama untuk status autentikasi
     auth.onAuthStateChanged(async (user) => {
-        // Hentikan semua listener sebelumnya untuk mencegah duplikasi
         unsubscribePanitia();
         unsubscribeLomba();
         unsubscribeUangMasuk();
@@ -2006,13 +1740,12 @@ document.addEventListener('DOMContentLoaded', () => {
         unsubscribeLogs();
 
         if (user) {
-            // Pengguna sudah login
             try {
                 const userDoc = await usersCollection.doc(user.uid).get();
                 if (userDoc.exists) {
                     currentUserRole = userDoc.data().role || 'visitor';
                 } else {
-                    currentUserRole = 'visitor'; // Default jika tidak ada dokumen peran
+                    currentUserRole = 'visitor';
                     console.warn(`User with UID ${user.uid} does not have a role document.`);
                 }
             } catch (error) {
@@ -2026,11 +1759,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 unsubscribeLogs = listenToLogsUpdates();
             }
 
-            renderUserProfile(); // Tampilkan data profil saat login
+            renderUserProfile();
             document.getElementById('login-overlay').classList.add('hidden');
             document.getElementById('app-container').classList.remove('hidden');
             
-            // Mulai listener baru
             unsubscribePanitia = listenToPanitiaUpdates();
             unsubscribeLomba = listenToLombaUpdates();
             unsubscribeUangMasuk = listenToUangMasukUpdates();
@@ -2039,7 +1771,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             navigate(window.location.hash || '#dashboard');
         } else {
-            // Pengguna sudah logout
             currentUserRole = 'visitor';
             updateUIAccess(currentUserRole);
             document.getElementById('login-overlay').classList.remove('hidden');
@@ -2082,7 +1813,7 @@ document.addEventListener('DOMContentLoaded', () => {
             );
             renderPanitiaTable(filteredData);
         } else {
-            renderPanitiaTable(); // Render semua data jika pencarian kosong
+            renderPanitiaTable();
         }
     });
 
@@ -2096,38 +1827,34 @@ document.addEventListener('DOMContentLoaded', () => {
             );
             renderLombaTable(filteredData);
         } else {
-            renderLombaTable(); // Render semua data jika pencarian kosong
+            renderLombaTable();
         }
     });
 
-    // Event listener untuk mengurutkan tabel log
     document.querySelector('#logs thead').addEventListener('click', (e) => {
         const header = e.target.closest('.sortable');
         if (!header) return;
 
         const sortKey = header.dataset.sort;
         if (logSortConfig.key === sortKey) {
-            // Balikkan arah jika kolom yang sama diklik
             logSortConfig.direction = logSortConfig.direction === 'asc' ? 'desc' : 'asc';
         } else {
-            // Ganti kolom, default ke arah menaik (asc)
             logSortConfig.key = sortKey;
             logSortConfig.direction = 'asc';
         }
-        renderLogsTable(); // Render ulang tabel dengan urutan baru
+        renderLogsTable();
     });
 
-    // Event listener untuk filter tanggal pada tabel log
     document.getElementById('log-filter-btn').addEventListener('click', () => {
         const startDateInput = document.getElementById('log-start-date').value;
         const endDateInput = document.getElementById('log-end-date').value;
 
         if (startDateInput && endDateInput) {
             const startDate = new Date(startDateInput);
-            startDate.setHours(0, 0, 0, 0); // Set ke awal hari
+            startDate.setHours(0, 0, 0, 0);
 
             const endDate = new Date(endDateInput);
-            endDate.setHours(23, 59, 59, 999); // Set ke akhir hari
+            endDate.setHours(23, 59, 59, 999);
 
             logDateFilter = { start: startDate, end: endDate };
             renderLogsTable();
@@ -2143,18 +1870,11 @@ document.addEventListener('DOMContentLoaded', () => {
         renderLogsTable();
     });
 
-    // Panggil navigasi awal setelah login disimulasikan (jika ada hash)
     if (window.location.hash) {
         navigate(window.location.hash);
     }
 });
-
-
 </script>
 
-
-
-
 </body>
-
 </html>
