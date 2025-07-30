@@ -116,6 +116,11 @@
                         </button>
                     </div>
                 </div>
+                <div class="text-right mb-6">
+                    <a href="#" id="forgot-password-link" class="text-sm text-red-600 hover:text-red-800 hover:underline">
+                        Lupa Kata Sandi?
+                    </a>
+                </div>
                 <div id="login-error" class="text-red-500 text-sm mb-4 text-left hidden"></div>
                 <button type="submit" class="w-full bg-[#B71C1C] text-white py-3 rounded-lg font-semibold hover:bg-[#D32F2F] transition-colors shadow-md">Masuk</button>
             </form>
@@ -155,6 +160,9 @@
                     </a></li>
                     <li class="mt-2"><a href="#struktur" class="nav-link flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
                         <i class="fa-solid fa-sitemap fa-fw w-6 text-center"></i><span>Struktur Panitia</span>
+                    </a></li>
+                    <li class="mt-2 border-t border-gray-700 pt-2"><a href="#profil" class="nav-link flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
+                        <i class="fa-solid fa-user-circle fa-fw w-6 text-center"></i><span>Profil Pengguna</span>
                     </a></li>
                 </ul>
             </nav>
@@ -250,10 +258,10 @@
                         <p class="text-gray-600">Rincian semua pemasukan dana untuk acara.</p>
                     </div>
                     <div class="flex flex-wrap gap-2">
-                        <button id="export-uang-masuk-btn" class="bg-green-600 text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-green-700 transition-colors shadow-md flex items-center gap-2">
+                        <button id="export-uang-masuk-btn" class="write-access bg-green-600 text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-green-700 transition-colors shadow-md flex items-center gap-2" style="display: none;">
                             <i class="fa-solid fa-file-csv"></i> Ekspor CSV
                         </button>
-                        <button id="add-uang-masuk-btn" class="bg-[#B71C1C] text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-[#D32F2F] transition-colors shadow-md flex items-center gap-2">
+                        <button id="add-uang-masuk-btn" class="write-access bg-[#B71C1C] text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-[#D32F2F] transition-colors shadow-md flex items-center gap-2" style="display: none;">
                             <i class="fa-solid fa-plus"></i> Tambah Uang Masuk
                         </button>
                     </div>
@@ -264,7 +272,7 @@
                             <tr>
                                 <th class="font-semibold">Sumber Dana</th>
                                 <th class="font-semibold">Jumlah</th>
-                                <th class="font-semibold text-center">Aksi</th>
+                                <th class="font-semibold text-center aksi-header" style="display: none;">Aksi</th>
                             </tr>
                         </thead>
                         <tbody id="uang-masuk-table-body">
@@ -280,10 +288,10 @@
                         <p class="text-gray-600">Rincian semua pengeluaran dana untuk acara.</p>
                     </div>
                     <div class="flex flex-wrap gap-2">
-                        <button id="export-uang-keluar-btn" class="bg-green-600 text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-green-700 transition-colors shadow-md flex items-center gap-2">
+                        <button id="export-uang-keluar-btn" class="write-access bg-green-600 text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-green-700 transition-colors shadow-md flex items-center gap-2" style="display: none;">
                             <i class="fa-solid fa-file-csv"></i> Ekspor CSV
                         </button>
-                        <button id="add-uang-keluar-btn" class="bg-[#B71C1C] text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-[#D32F2F] transition-colors shadow-md flex items-center gap-2">
+                        <button id="add-uang-keluar-btn" class="write-access bg-[#B71C1C] text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-[#D32F2F] transition-colors shadow-md flex items-center gap-2" style="display: none;">
                             <i class="fa-solid fa-plus"></i> Tambah Uang Keluar
                         </button>
                     </div>
@@ -294,7 +302,7 @@
                             <tr>
                                 <th class="font-semibold">Alokasi Dana</th>
                                 <th class="font-semibold">Jumlah</th>
-                                <th class="font-semibold text-center">Aksi</th>
+                                <th class="font-semibold text-center aksi-header" style="display: none;">Aksi</th>
                             </tr>
                         </thead>
                         <tbody id="uang-keluar-table-body">
@@ -310,10 +318,10 @@
                         <p class="text-gray-600">Catat dan kelola semua uang muka yang diterima.</p>
                     </div>
                     <div class="flex flex-wrap gap-2">
-                        <button id="export-uang-muka-btn" class="bg-green-600 text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-green-700 transition-colors shadow-md flex items-center gap-2">
+                        <button id="export-uang-muka-btn" class="write-access bg-green-600 text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-green-700 transition-colors shadow-md flex items-center gap-2" style="display: none;">
                             <i class="fa-solid fa-file-csv"></i> Ekspor CSV
                         </button>
-                        <button id="add-uang-muka-btn" class="bg-[#B71C1C] text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-[#D32F2F] transition-colors shadow-md flex items-center gap-2">
+                        <button id="add-uang-muka-btn" class="write-access bg-[#B71C1C] text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-[#D32F2F] transition-colors shadow-md flex items-center gap-2" style="display: none;">
                             <i class="fa-solid fa-plus"></i> Tambah Uang Muka
                         </button>
                     </div>
@@ -326,7 +334,7 @@
                                 <th class="font-semibold">Total Harga</th>
                                 <th class="font-semibold">Uang Muka</th>
                                 <th class="font-semibold">Status</th>
-                                <th class="font-semibold text-center">Aksi</th>
+                                <th class="font-semibold text-center aksi-header" style="display: none;">Aksi</th>
                             </tr>
                         </thead>
                         <tbody id="uang-muka-table-body"></tbody>
@@ -341,10 +349,10 @@
                         <p class="text-gray-600">Tambah, edit, atau hapus data anggota panitia.</p>
                     </div>
                     <div class="flex flex-wrap gap-2">
-                        <button id="export-panitia-btn" class="bg-green-600 text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-green-700 transition-colors shadow-md flex items-center gap-2">
+                        <button id="export-panitia-btn" class="write-access bg-green-600 text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-green-700 transition-colors shadow-md flex items-center gap-2" style="display: none;">
                             <i class="fa-solid fa-file-csv"></i> Ekspor CSV
                         </button>
-                        <button id="add-panitia-btn" class="bg-[#B71C1C] text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-[#D32F2F] transition-colors shadow-md flex items-center gap-2">
+                        <button id="add-panitia-btn" class="write-access bg-[#B71C1C] text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-[#D32F2F] transition-colors shadow-md flex items-center gap-2" style="display: none;">
                             <i class="fa-solid fa-plus"></i> Tambah Panitia
                         </button>
                     </div>
@@ -364,7 +372,7 @@
                                 <th class="font-semibold w-20">Foto</th>
                                 <th class="font-semibold">Nama</th>
                                 <th class="font-semibold">Jabatan</th>
-                                <th class="font-semibold text-center">Aksi</th>
+                                <th class="font-semibold text-center aksi-header" style="display: none;">Aksi</th>
                             </tr>
                         </thead>
                         <tbody id="panitia-table-body">
@@ -379,7 +387,7 @@
                         <h1 class="text-3xl font-bold">Kelola Perlombaan</h1>
                         <p class="text-gray-600">Tambah, edit, atau hapus data perlombaan.</p>
                     </div>
-                    <button id="add-lomba-btn" class="bg-[#B71C1C] text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-[#D32F2F] transition-colors shadow-md flex items-center gap-2">
+                    <button id="add-lomba-btn" class="write-access bg-[#B71C1C] text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-[#D32F2F] transition-colors shadow-md flex items-center gap-2" style="display: none;">
                         <i class="fa-solid fa-plus"></i> Tambah Lomba
                     </button>
                 </div>
@@ -392,7 +400,7 @@
                                 <th class="font-semibold">Jadwal</th>
                                 <th class="font-semibold">PIC</th>
                                 <th class="font-semibold">Status</th>
-                                <th class="font-semibold text-center">Aksi</th>
+                                <th class="font-semibold text-center aksi-header" style="display: none;">Aksi</th>
                             </tr>
                         </thead>
                         <tbody id="lomba-table-body">
@@ -407,6 +415,41 @@
                  <div id="struktur-container"></div>
             </section>
 
+            <section id="profil" class="content-section hidden">
+                <h1 class="text-3xl font-bold mb-8">Profil Pengguna</h1>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Informasi Profil -->
+                    <div class="bg-white p-6 rounded-xl shadow-md">
+                        <h2 class="text-xl font-bold mb-4">Informasi Akun</h2>
+                        <div class="space-y-4">
+                            <div>
+                                <p class="text-sm font-medium text-gray-500">Alamat Email</p>
+                                <p id="profil-email" class="text-lg text-gray-800"></p>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-gray-500">Peran (Role)</p>
+                                <p id="profil-role" class="text-lg font-bold text-red-700 capitalize"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ubah Kata Sandi -->
+                    <div class="bg-white p-6 rounded-xl shadow-md">
+                        <h2 class="text-xl font-bold mb-4">Ubah Kata Sandi</h2>
+                        <form id="change-password-form">
+                            <div id="change-password-message" class="text-sm mb-4 text-left hidden"></div>
+                            <div class="space-y-4">
+                                <div>
+                                    <label for="new-password" class="block text-sm font-medium text-gray-700 mb-1">Kata Sandi Baru</label>
+                                    <input type="password" id="new-password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D32F2F] focus:border-transparent transition" required>
+                                </div>
+                                <button type="submit" class="w-full bg-[#B71C1C] text-white py-2.5 px-5 rounded-lg font-semibold hover:bg-[#D32F2F] transition-colors shadow-md">Ubah Kata Sandi</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
         </main>
     </div>
 
@@ -575,34 +618,50 @@
         </div>
     </div>
 
+    <div id="modal-forgot-password" class="modal-backdrop fixed inset-0 z-[110] hidden items-center justify-center p-4">
+        <div class="modal-content bg-white w-full max-w-md p-6 rounded-2xl shadow-lg transform scale-95">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-2xl font-bold text-[#B71C1C]">Reset Kata Sandi</h2>
+                <button class="close-modal text-gray-500 hover:text-gray-800 text-3xl">&times;</button>
+            </div>
+            <form id="forgot-password-form">
+                <p class="text-gray-600 mb-4">Masukkan alamat email Anda. Kami akan mengirimkan tautan untuk mereset kata sandi Anda.</p>
+                <div id="forgot-password-message" class="text-sm mb-4 text-left hidden"></div>
+                <div class="mb-6">
+                    <label for="forgot-email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <input type="email" id="forgot-email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D32F2F] focus:border-transparent transition" required>
+                </div>
+                <div class="flex justify-end gap-4">
+                    <button type="button" class="close-modal px-5 py-2.5 rounded-lg bg-gray-200 hover:bg-gray-300 transition">Batal</button>
+                    <button type="submit" class="bg-[#B71C1C] text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-[#D32F2F] transition-colors shadow-md">Kirim Email Reset</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 
-    // Cek status login saat halaman dimuat
-    if (sessionStorage.getItem('isLoggedIn') === 'true') {
-        document.getElementById('login-overlay').classList.add('hidden');
-        document.getElementById('app-container').classList.remove('hidden');
-    }
-
     // --- KONFIGURASI FIREBASE ---
     // GANTI DENGAN KONFIGURASI DARI PROYEK FIREBASE ANDA
-    const firebaseConfig = {
-  apiKey: "AIzaSyCqXp4cinuCbxM541av2v7OWuZjGaEf1Sc",
-  authDomain: "civil-empire-461419-f4.firebaseapp.com",
-  databaseURL: "https://civil-empire-461419-f4-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "civil-empire-461419-f4",
-  storageBucket: "civil-empire-461419-f4.firebasestorage.app",
-  messagingSenderId: "129090724195",
-  appId: "1:129090724195:web:26e6de45e67719dcfa7356"
+   const firebaseConfig = {
+  apiKey: "AIzaSyBNN2z7BvYUhU4Ws1ezYM5nsQ8S276muvw",
+  authDomain: "semarak-kemerdekaan.firebaseapp.com",
+  projectId: "semarak-kemerdekaan",
+  storageBucket: "semarak-kemerdekaan.appspot.com",
+  messagingSenderId: "543406328573",
+  appId: "1:543406328573:web:bb402da63417a8b2570c94"
 };
 
     // Inisialisasi Firebase
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
+    const auth = firebase.auth();
     const storage = firebase.storage();
     // Membuat referensi untuk setiap koleksi data di Firestore
     const panitiaCollection = db.collection('panitia');
+    const usersCollection = db.collection('users');
     const lombaCollection = db.collection('lomba');
     const uangMasukCollection = db.collection('uangMasuk');
     const uangKeluarCollection = db.collection('uangKeluar');
@@ -610,6 +669,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Variabel lokal untuk menampung data dari Firebase
     let panitiaData = [];
+    let currentUserRole = 'visitor'; // Default ke peran paling restriktif
     let lombaData = [];
     let uangMasukData = [];
     let uangKeluarData = [];
@@ -620,11 +680,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const toggleButton = document.getElementById('header-toggle-button');
     let financeChartInstance = null;
 
+    // Variabel untuk menyimpan fungsi unsubscribe dari listener Firebase
+    let unsubscribePanitia = () => {};
+    let unsubscribeLomba = () => {};
+    let unsubscribeUangMasuk = () => {};
+    let unsubscribeUangKeluar = () => {};
+    let unsubscribeUangMuka = () => {};
+
     const DEFAULT_AVATAR = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2NkY2RjZCI+PHBhdGggZD0iTTEyIDEyYzIuMjEgMCA0LTEuNzkgNC00cy0xLjc5LTQtNC00LTQgMS43OS00IDQgMS43OSA0IDQgNHptMCAyYy0yLjY3IDAtOCAxLjM0LTggNHYyYzAgLjg4Ljc1IDEuNTggMS42NiAxLjU4aDEyLjY4Yy45MSAwIDEuNjYtLjcgMS42Ni0xLjU4di0yYzAtMi42Ni01LjMzLTQtOC00eiIvPjwvc3ZnPg==';
 
     // Fungsi baru untuk mendengarkan perubahan data panitia secara real-time
     const listenToPanitiaUpdates = () => {
-        panitiaCollection.onSnapshot(snapshot => {
+        return panitiaCollection.onSnapshot(snapshot => {
             const panitiaFromServer = [];
             snapshot.forEach(doc => {
                 panitiaFromServer.push({ id: doc.id, ...doc.data() });
@@ -638,7 +705,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const listenToLombaUpdates = () => {
-        lombaCollection.onSnapshot(snapshot => {
+        return lombaCollection.onSnapshot(snapshot => {
             lombaData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             renderLombaTable();
             document.getElementById('stat-lomba').textContent = lombaData.length;
@@ -646,7 +713,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const listenToUangMasukUpdates = () => {
-        uangMasukCollection.onSnapshot(snapshot => {
+        return uangMasukCollection.onSnapshot(snapshot => {
             uangMasukData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             renderUangMasukTable();
             updateTotalDana();
@@ -655,7 +722,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const listenToUangKeluarUpdates = () => {
-        uangKeluarCollection.onSnapshot(snapshot => {
+        return uangKeluarCollection.onSnapshot(snapshot => {
             uangKeluarData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             renderUangKeluarTable();
             updateTotalDana();
@@ -664,13 +731,32 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const listenToUangMukaUpdates = () => {
-        uangMukaCollection.onSnapshot(snapshot => {
+        return uangMukaCollection.onSnapshot(snapshot => {
             uangMukaData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             renderUangMukaTable();
             renderSisaUangMukaDashboardTable();
         });
     };
 
+    const updateUIAccess = (role) => {
+        const hasWriteAccess = role === 'admin' || role === 'editor';
+        const displayStyle = hasWriteAccess ? '' : 'none';
+
+        document.querySelectorAll('.write-access').forEach(el => {
+            el.style.display = displayStyle;
+        });
+
+        document.querySelectorAll('.aksi-header').forEach(el => {
+            el.style.display = displayStyle;
+        });
+
+        // Panggil ulang render tabel untuk menampilkan/menyembunyikan kolom aksi
+        renderPanitiaTable();
+        renderLombaTable();
+        renderUangMasukTable();
+        renderUangKeluarTable();
+        renderUangMukaTable();
+    };
 
     // Fungsi loadData tidak lagi diperlukan karena data dimuat secara real-time
     // oleh fungsi-fungsi listenTo...Updates
@@ -764,11 +850,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 </td>
                 <td>${p.name}</td>
                 <td class="text-gray-600">${p.role}</td>
-                <td class="text-center">
-                    <button class="edit-panitia-btn text-blue-600 hover:text-blue-800 p-2" data-id="${p.id}"><i class="fa-solid fa-edit"></i></button>
-                    <button class="delete-panitia-btn text-red-600 hover:text-red-800 p-2" data-id="${p.id}"><i class="fa-solid fa-trash"></i></button>
-                </td>
             `;
+            if (currentUserRole === 'admin' || currentUserRole === 'editor') {
+                row.innerHTML += `
+                    <td class="text-center aksi-cell">
+                        <button class="edit-panitia-btn text-blue-600 hover:text-blue-800 p-2" data-id="${p.id}"><i class="fa-solid fa-edit"></i></button>
+                        <button class="delete-panitia-btn text-red-600 hover:text-red-800 p-2" data-id="${p.id}"><i class="fa-solid fa-trash"></i></button>
+                    </td>`;
+            }
             tableBody.appendChild(row);
         });
     };
@@ -782,15 +871,16 @@ document.addEventListener('DOMContentLoaded', () => {
             row.innerHTML = `
                 <td>${item.source}</td>
                 <td class="text-gray-600">${formatCurrency(item.amount)}</td>
-                <td class="text-center">
-                    <button class="edit-uang-masuk-btn text-blue-600 hover:text-blue-800 p-2" data-id="${item.id}"><i class="fa-solid fa-edit"></i></button>
-                    <button class="delete-uang-masuk-btn text-red-600 hover:text-red-800 p-2" data-id="${item.id}"><i class="fa-solid fa-trash"></i></button>
-                </td>
             `;
+            if (currentUserRole === 'admin' || currentUserRole === 'editor') {
+                row.innerHTML += `
+                    <td class="text-center aksi-cell">
+                        <button class="edit-uang-masuk-btn text-blue-600 hover:text-blue-800 p-2" data-id="${item.id}"><i class="fa-solid fa-edit"></i></button>
+                        <button class="delete-uang-masuk-btn text-red-600 hover:text-red-800 p-2" data-id="${item.id}"><i class="fa-solid fa-trash"></i></button>
+                    </td>`;
+            }
             tableBody.appendChild(row);
         });
-        updateTotalDana();
-         initFinanceChart(); // Re-render chart on data change
     };
 
     const renderUangKeluarTable = () => {
@@ -802,15 +892,16 @@ document.addEventListener('DOMContentLoaded', () => {
             row.innerHTML = `
                 <td>${item.allocation}</td>
                 <td class="text-gray-600">${formatCurrency(item.amount)}</td>
-                <td class="text-center">
-                    <button class="edit-uang-keluar-btn text-blue-600 hover:text-blue-800 p-2" data-id="${item.id}"><i class="fa-solid fa-edit"></i></button>
-                    <button class="delete-uang-keluar-btn text-red-600 hover:text-red-800 p-2" data-id="${item.id}"><i class="fa-solid fa-trash"></i></button>
-                </td>
             `;
+            if (currentUserRole === 'admin' || currentUserRole === 'editor') {
+                row.innerHTML += `
+                    <td class="text-center aksi-cell">
+                        <button class="edit-uang-keluar-btn text-blue-600 hover:text-blue-800 p-2" data-id="${item.id}"><i class="fa-solid fa-edit"></i></button>
+                        <button class="delete-uang-keluar-btn text-red-600 hover:text-red-800 p-2" data-id="${item.id}"><i class="fa-solid fa-trash"></i></button>
+                    </td>`;
+            }
             tableBody.appendChild(row);
         });
-        updateTotalDana();
-         initFinanceChart(); // Re-render chart on data change
     };
 
     const renderUangMukaTable = () => {
@@ -829,11 +920,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td class="text-gray-600">${formatCurrency(item.totalHarga)}</td>
                 <td class="text-gray-600">${formatCurrency(item.amount)}</td>
                 <td><span class="px-2 py-1 text-sm font-medium rounded-full ${statusClass}">${item.status}</span></td>
-                <td class="text-center">
-                    <button class="edit-uang-muka-btn text-blue-600 hover:text-blue-800 p-2" data-id="${item.id}"><i class="fa-solid fa-edit"></i></button>
-                    <button class="delete-uang-muka-btn text-red-600 hover:text-red-800 p-2" data-id="${item.id}"><i class="fa-solid fa-trash"></i></button>
-                </td>
             `;
+            if (currentUserRole === 'admin' || currentUserRole === 'editor') {
+                row.innerHTML += `
+                    <td class="text-center aksi-cell">
+                        <button class="edit-uang-muka-btn text-blue-600 hover:text-blue-800 p-2" data-id="${item.id}"><i class="fa-solid fa-edit"></i></button>
+                        <button class="delete-uang-muka-btn text-red-600 hover:text-red-800 p-2" data-id="${item.id}"><i class="fa-solid fa-trash"></i></button>
+                    </td>`;
+            }
             tableBody.appendChild(row);
         });
     };
@@ -862,10 +956,10 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
 
-    const renderLombaTable = () => {
+    const renderLombaTable = (dataToRender = lombaData) => {
         const tableBody = document.getElementById('lomba-table-body');
         tableBody.innerHTML = '';
-        lombaData.forEach(l => {
+        dataToRender.forEach(l => {
             let statusClass = '';
             switch (l.status.toLowerCase()) {
                 case 'selesai': statusClass = 'bg-green-100 text-green-800'; break;
@@ -880,14 +974,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td class="text-gray-600">${l.schedule}</td>
                 <td class="text-gray-600">${l.pic}</td>
                 <td><span class="px-2 py-1 text-sm font-medium rounded-full ${statusClass}">${l.status}</span></td>
-                <td class="text-center">
-                    <button class="edit-lomba-btn text-blue-600 hover:text-blue-800 p-2" data-id="${l.id}"><i class="fa-solid fa-edit"></i></button>
-                    <button class="delete-lomba-btn text-red-600 hover:text-red-800 p-2" data-id="${l.id}"><i class="fa-solid fa-trash"></i></button>
-                </td>
             `;
+            if (currentUserRole === 'admin' || currentUserRole === 'editor') {
+                row.innerHTML += `
+                    <td class="text-center aksi-cell">
+                        <button class="edit-lomba-btn text-blue-600 hover:text-blue-800 p-2" data-id="${l.id}"><i class="fa-solid fa-edit"></i></button>
+                        <button class="delete-lomba-btn text-red-600 hover:text-red-800 p-2" data-id="${l.id}"><i class="fa-solid fa-trash"></i></button>
+                    </td>`;
+            }
             tableBody.appendChild(row);
         });
-        document.getElementById('stat-lomba').textContent = lombaData.length;
+    };
+
+    const renderUserProfile = () => {
+        const user = auth.currentUser;
+        if (user) {
+            document.getElementById('profil-email').textContent = user.email || 'Tidak ada email';
+            const roleElement = document.getElementById('profil-role');
+            roleElement.textContent = currentUserRole;
+            roleElement.className = 'text-lg font-bold text-red-700 capitalize'; // Reset class
+        }
     };
 
     const renderStruktur = () => {
@@ -1445,32 +1551,128 @@ document.addEventListener('DOMContentLoaded', () => {
         icon.classList.toggle('fa-eye-slash');
     });
 
-    document.getElementById('login-form').addEventListener('submit', (e) => {
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
         e.preventDefault();
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
         const errorDiv = document.getElementById('login-error');
+        errorDiv.classList.add('hidden');
 
-        // Validasi kredensial sederhana
-        if (email === 'panitia@hutri.id' && password === '12345678') {
-            sessionStorage.setItem('isLoggedIn', 'true');
-            errorDiv.classList.add('hidden');
-            document.getElementById('login-overlay').classList.add('hidden');
-            document.getElementById('app-container').classList.remove('hidden');
-            navigate(window.location.hash || '#dashboard');
-        } else {
-            errorDiv.textContent = 'Email atau kata sandi yang Anda masukkan salah.';
+        try {
+            await auth.signInWithEmailAndPassword(email, password);
+            // onAuthStateChanged akan menangani tampilan UI
+        } catch (error) {
+            console.error("Login failed:", error);
+            errorDiv.textContent = 'Email atau kata sandi salah.';
             errorDiv.classList.remove('hidden');
         }
     });
 
-    document.getElementById('logout-button').addEventListener('click', (e) => {
+    document.getElementById('logout-button').addEventListener('click', async (e) => {
         e.preventDefault();
-        sessionStorage.removeItem('isLoggedIn');
-        document.getElementById('login-overlay').classList.remove('hidden');
+        try {
+            await auth.signOut();
+            // onAuthStateChanged akan menangani tampilan UI
+        } catch (error) {
+            console.error("Logout failed:", error);
+        }
+    });
 
-        document.getElementById('app-container').classList.add('hidden');
-        window.location.hash = '';
+    document.getElementById('forgot-password-link').addEventListener('click', (e) => {
+        e.preventDefault();
+        showModal('modal-forgot-password');
+    });
+
+    document.getElementById('forgot-password-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('forgot-email').value;
+        const messageDiv = document.getElementById('forgot-password-message');
+        messageDiv.classList.add('hidden');
+
+        try {
+            await auth.sendPasswordResetEmail(email);
+            messageDiv.textContent = 'Email untuk reset kata sandi telah dikirim. Silakan periksa kotak masuk Anda.';
+            messageDiv.className = 'text-sm mb-4 text-left text-green-600';
+            messageDiv.classList.remove('hidden');
+        } catch (error) {
+            console.error("Password reset failed:", error);
+            messageDiv.textContent = 'Gagal mengirim email. Pastikan alamat email sudah benar.';
+            messageDiv.className = 'text-sm mb-4 text-left text-red-600';
+            messageDiv.classList.remove('hidden');
+        }
+    });
+
+    // Listener utama untuk status autentikasi
+    auth.onAuthStateChanged(async (user) => {
+        // Hentikan semua listener sebelumnya untuk mencegah duplikasi
+        unsubscribePanitia();
+        unsubscribeLomba();
+        unsubscribeUangMasuk();
+        unsubscribeUangKeluar();
+        unsubscribeUangMuka();
+
+        if (user) {
+            // Pengguna sudah login
+            try {
+                const userDoc = await usersCollection.doc(user.uid).get();
+                if (userDoc.exists) {
+                    currentUserRole = userDoc.data().role || 'visitor';
+                } else {
+                    currentUserRole = 'visitor'; // Default jika tidak ada dokumen peran
+                    console.warn(`User with UID ${user.uid} does not have a role document.`);
+                }
+            } catch (error) {
+                console.error("Error fetching user role:", error);
+                currentUserRole = 'visitor';
+            }
+            
+            updateUIAccess(currentUserRole);
+
+            renderUserProfile(); // Tampilkan data profil saat login
+            document.getElementById('login-overlay').classList.add('hidden');
+            document.getElementById('app-container').classList.remove('hidden');
+            
+            // Mulai listener baru
+            unsubscribePanitia = listenToPanitiaUpdates();
+            unsubscribeLomba = listenToLombaUpdates();
+            unsubscribeUangMasuk = listenToUangMasukUpdates();
+            unsubscribeUangKeluar = listenToUangKeluarUpdates();
+            unsubscribeUangMuka = listenToUangMukaUpdates();
+
+            navigate(window.location.hash || '#dashboard');
+        } else {
+            // Pengguna sudah logout
+            currentUserRole = 'visitor';
+            updateUIAccess(currentUserRole);
+            document.getElementById('login-overlay').classList.remove('hidden');
+            document.getElementById('app-container').classList.add('hidden');
+            window.location.hash = '';
+        }
+    });
+
+    document.getElementById('change-password-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const newPassword = document.getElementById('new-password').value;
+        const messageDiv = document.getElementById('change-password-message');
+        const user = auth.currentUser;
+
+        if (!user) {
+            alert("Sesi Anda telah berakhir. Silakan login kembali.");
+            return;
+        }
+
+        try {
+            await user.updatePassword(newPassword);
+            messageDiv.textContent = 'Kata sandi berhasil diubah.';
+            messageDiv.className = 'text-sm mb-4 text-left text-green-600';
+            messageDiv.classList.remove('hidden');
+            document.getElementById('change-password-form').reset();
+        } catch (error) {
+            console.error("Password update failed:", error);
+            messageDiv.textContent = 'Gagal mengubah kata sandi. Silakan logout dan login kembali untuk mencoba lagi.';
+            messageDiv.className = 'text-sm mb-4 text-left text-red-600';
+            messageDiv.classList.remove('hidden');
+        }
     });
 
     document.getElementById('search-panitia-input').addEventListener('input', (e) => {
@@ -1485,18 +1687,6 @@ document.addEventListener('DOMContentLoaded', () => {
             renderPanitiaTable(); // Render semua data jika pencarian kosong
         }
     });
-
-    // Inisialisasi awal
-    // Mulai mendengarkan semua update data dari Firebase secara real-time
-    listenToPanitiaUpdates();
-    listenToLombaUpdates();
-    listenToUangMasukUpdates();
-    listenToUangKeluarUpdates();
-    listenToUangMukaUpdates();
-
-    // Fungsi render dan update lainnya akan dipanggil secara otomatis
-    // oleh fungsi 'listenTo' di atas setiap kali ada perubahan data.
-    updateTotalDana();
 
     // Panggil navigasi awal setelah login disimulasikan (jika ada hash)
     if (window.location.hash) {
