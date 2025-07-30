@@ -1,39 +1,258 @@
-const functions = require("firebase-functions");
-const admin = require("firebase-admin");
-admin.initializeApp();
+--- a/home/agustus/agustus/functions/index.js
++++ b/home/agustus/agustus/functions/index.js
+@@ -1,23 +1,24 @@
+ const functions = require("firebase-functions");
+ 
++// Note: This is a hypothetical file to demonstrate fixes.
++
+ exports.myFunction = functions.https.onCall((data, context) => {
+-
+-  // Error: padded-blocks (blank line above)
+-
++  // Fix: Removed blank line at the start of the bloc--- a/home/agustus/agustus/functions/index.js
++++ b/home/agustus/agustus/functions/index.js
+@@ -1,23 +1,24 @@
+ const functions = require("firebase-functions");
+ 
++// Note: This is a hypothetical file to demonstrate fixes.
++
+ exports.myFunction = functions.https.onCall((data, context) => {
+-
+-  // Error: padded-blocks (blank line above)
+-
++  // Fix: Removed blank line at the start of the block.
+   if (!context.auth) {
+-    // Errors: indent, quotes, trailing spaces, and missing comma-dangle
+-    throw new functions.https.HttpsError(
+-      'failed-precondition', 
+-      'The function must be called while authenticated.'
++    // Fix: Indentation, quotes, and trailing comma are now correct.
++    throw new functions.https.HttpsError(
++      "failed-precondition",
++      "The function must be called while authenticated.",
+     );
+   }
+-  
+-  // Error: no-trailing-spaces (on the blank line above)
+-  
++
+   const uid = context.auth.uid;
+-  // Error: This next line is too long and uses single quotes
+-  console.log('This is a very long log message that will exceed the eighty character limit for sure.');
++  // Fix: Wrapped long line and used double quotes.
++  console.log(
++    "This is a very long log message that will exceed the eighty " +
++      "character limit for sure.",
++  );
+ 
+   return {
+     status: "success",
+   };
+ });
+-// Error: no-trailing-spaces on this line ->  
+-// Error: eol-last (no newline at end of file)
 
-/**
- * Cloud Function untuk menambahkan Custom Claim 'admin' ke seorang pengguna.
- * Harus dipanggil oleh admin yang sudah ada.
- */
-exports.berikanAksesAdmin = functions.https.onCall(async (data, context) => {
-  
-  // Keamanan: Pastikan yang memanggil fungsi ini adalah admin.
-  if (context.auth.token.admin !== true) {
-    throw new functions.https.HttpsError(
-      'permission-denied', 
-      'Gagal. Hanya admin yang bisa menjalankan perintah ini.'
-    );
-  }
-  
-  // Ambil email target dari data yang dikirim.
-  const targetEmail = data.email;
-  
-  try {
-    // Cari pengguna berdasarkan email.
-    const user = await admin.auth().getUserByEmail(targetEmail);
-    
-    // Tambahkan custom claim { admin: true } ke pengguna tersebut.
-    await admin.auth().setCustomUserClaims(user.uid, {
-      admin: true,
-    });
-    
-    // Kirim pesan sukses kembali ke klien.
-    return {
-      message: `Sukses! Pengguna ${targetEmail} sekarang telah menjadi admin.`,
-    };
-  } catch (err) {
-    console.error(err);
-    throw new functions.https.HttpsError('internal', `Terjadi error: ${err.message}`);
-  }
-});
+--- a/home/agustus/agustus/functions/index.js
++++ b/home/agustus/agustus/functions/index.js
+@@ -1,23 +1,24 @@
+ const functions = require("firebase-functions");
+ 
++// Note: This is a hypothetical file to demonstrate fixes.
++
+ exports.myFunction = functions.https.onCall((data, context) => {
+-
+-  // Error: padded-blocks (blank line above)
+-
++  // Fix: Removed blank line at the start of the block.
+   if (!context.auth) {
+-    // Errors: indent, quotes, trailing spaces, and missing comma-dangle
+-    throw new functions.https.HttpsError(
+-      'failed-precondition', 
+-      'The function must be called while authenticated.'
++    // Fix: Indentation, quotes, and trailing comma are now correct.
++    throw new functions.https.HttpsError(
++      "failed-precondition",
++      "The function must be called while authenticated.",
+     );
+   }
+-  
+-  // Error: no-trailing-spaces (on the blank line above)
+-  
++
+   const uid = context.auth.uid;
+-  // Error: This next line is too long and uses single quotes
+-  console.log('This is a very long log message that will exceed the eighty character limit for sure.');
++  // Fix: Wrapped long line and used double quotes.
++  console.log(
++    "This is a very long log message that will exceed the eighty " +
++      "character limit for sure.",
++  );
+ 
+   return {
+     status: "success",
+   };
+ });
+-// Error: no-trailing-spaces on this line ->  
+-// Error: eol-last (no newline at end of file)
+
+--- a/home/agustus/agustus/functions/index.js
++++ b/home/agustus/agustus/functions/index.js
+@@ -1,23 +1,24 @@
+ const functions = require("firebase-functions");
+ 
++// Note: This is a hypothetical file to demonstrate fixes.
++
+ exports.myFunction = functions.https.onCall((data, context) => {
+-
+-  // Error: padded-blocks (blank line above)
+-
++  // Fix: Removed blank line at the start of the block.
+   if (!context.auth) {
+-    // Errors: indent, quotes, trailing spaces, and missing comma-dangle
+-    throw new functions.https.HttpsError(
+-      'failed-precondition', 
+-      'The function must be called while authenticated.'
++    // Fix: Indentation, quotes, and trailing comma are now correct.
++    throw new functions.https.HttpsError(
++      "failed-precondition",
++      "The function must be called while authenticated.",
+     );
+   }
+-  
+-  // Error: no-trailing-spaces (on the blank line above)
+-  
++
+   const uid = context.auth.uid;
+-  // Error: This next line is too long and uses single quotes
+-  console.log('This is a very long log message that will exceed the eighty character limit for sure.');
++  // Fix: Wrapped long line and used double quotes.
++  console.log(
++    "This is a very long log message that will exceed the eighty " +
++      "character limit for sure.",
++  );
+ 
+   return {
+     status: "success",
+   };
+ });
+-// Error: no-trailing-spaces on this line ->  
+-// Error: eol-last (no newline at end of file)
+
+--- a/home/agustus/agustus/functions/index.js
++++ b/home/agustus/agustus/functions/index.js
+@@ -1,23 +1,24 @@
+ const functions = require("firebase-functions");
+ 
++// Note: This is a hypothetical file to demonstrate fixes.
++
+ exports.myFunction = functions.https.onCall((data, context) => {
+-
+-  // Error: padded-blocks (blank line above)
+-
++  // Fix: Removed blank line at the start of the block.
+   if (!context.auth) {
+-    // Errors: indent, quotes, trailing spaces, and missing comma-dangle
+-    throw new functions.https.HttpsError(
+-      'failed-precondition', 
+-      'The function must be called while authenticated.'
++    // Fix: Indentation, quotes, and trailing comma are now correct.
++    throw new functions.https.HttpsError(
++      "failed-precondition",
++      "The function must be called while authenticated.",
+     );
+   }
+-  
+-  // Error: no-trailing-spaces (on the blank line above)
+-  
++
+   const uid = context.auth.uid;
+-  // Error: This next line is too long and uses single quotes
+-  console.log('This is a very long log message that will exceed the eighty character limit for sure.');
++  // Fix: Wrapped long line and used double quotes.
++  console.log(
++    "This is a very long log message that will exceed the eighty " +
++      "character limit for sure.",
++  );
+ 
+   return {
+     status: "success",
+   };
+ });
+-// Error: no-trailing-spaces on this line ->  
+-// Error: eol-last (no newline at end of file)
+
+--- a/home/agustus/agustus/functions/index.js
++++ b/home/agustus/agustus/functions/index.js
+@@ -1,23 +1,24 @@
+ const functions = require("firebase-functions");
+ 
++// Note: This is a hypothetical file to demonstrate fixes.
++
+ exports.myFunction = functions.https.onCall((data, context) => {
+-
+-  // Error: padded-blocks (blank line above)
+-
++  // Fix: Removed blank line at the start of the block.
+   if (!context.auth) {
+-    // Errors: indent, quotes, trailing spaces, and missing comma-dangle
+-    throw new functions.https.HttpsError(
+-      'failed-precondition', 
+-      'The function must be called while authenticated.'
++    // Fix: Indentation, quotes, and trailing comma are now correct.
++    throw new functions.https.HttpsError(
++      "failed-precondition",
++      "The function must be called while authenticated.",
+     );
+   }
+-  
+-  // Error: no-trailing-spaces (on the blank line above)
+-  
++
+   const uid = context.auth.uid;
+-  // Error: This next line is too long and uses single quotes
+-  console.log('This is a very long log message that will exceed the eighty character limit for sure.');
++  // Fix: Wrapped long line and used double quotes.
++  console.log(
++    "This is a very long log message that will exceed the eighty " +
++      "character limit for sure.",
++  );
+ 
+   return {
+     status: "success",
+   };
+ });
+-// Error: no-trailing-spaces on this line ->  
+-// Error: eol-last (no newline at end of file)
+
+k.
+   if (!context.auth) {
+-    // Errors: indent, quotes, trailing spaces, and missing comma-dangle
+-    throw new functions.https.HttpsError(
+-      'failed-precondition', 
+-      'The function must be called while authenticated.'
++    // Fix: Indentation, quotes, and trailing comma are now correct.
++    throw new functions.https.HttpsError(
++      "failed-precondition",
++      "The function must be called while authenticated.",
+     );
+   }
+-  
+-  // Error: no-trailing-spaces (on the blank line above)
+-  
++
+   const uid = context.auth.uid;
+-  // Error: This next line is too long and uses single quotes
+-  console.log('This is a very long log message that will exceed the eighty character limit for sure.');
++  // Fix: Wrapped long line and used double quotes.
++  console.log(
++    "This is a very long log message that will exceed the eighty " +
++      "character limit for sure.",
++  );
+ 
+   return {
+     status: "success",
+   };
+ });
+-// Error: no-trailing-spaces on this line ->  
+-// Error: eol-last (no newline at end of file)
+
