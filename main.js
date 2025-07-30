@@ -1,6 +1,6 @@
 // Impor file CSS untuk penataan gaya
 import './style.css';
-// Impor modul Firebase yang diperlukan: initializeApp untuk inisialisasi aplikasi dan getStorage, ref untuk Firebase Storage
+// Impor modul Firebase yang diperlukan: initializeApp untuk inisialisasi aplikasi dan getStorage, ref for Firebase Storage
 import { initializeApp } from "firebase/app";
 import { getStorage, ref } from "firebase/storage";
 
@@ -8,7 +8,7 @@ import { getStorage, ref } from "firebase/storage";
 // Ini berisi semua kredensial dan pengidentifikasi yang diperlukan untuk proyek Firebase Anda.
 const firebaseConfig = {
   apiKey: "AIzaSyCqXp4cinuCbxM541av2v7OWuZjGaEf1Sc", // Kunci API proyek Firebase Anda
-  authDomain: "civil-empire-461419-f4.firebaseapp.com", // Domain otentikasi proyek Firebase Anda
+  authDomain: "9000-firebase-agustus-1753809413281.cluster-73qgvk7hjjadkrjeyexca5ivva.cloudworkstations.dev", // Domain otentikasi proyek Firebase Anda
   databaseURL: "https://civil-empire-461419-f4-default-rtdb.asia-southeast1.firebasedatabase.app", // URL Realtime Database Firebase Anda
   projectId: "civil-empire-461419-f4", // ID proyek Firebase Anda
   storageBucket: "civil-empire-461419-f4.firebasestorage.app", // URL bucket Firebase Storage Anda
