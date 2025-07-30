@@ -1,32 +1,26 @@
-/**
- * Import function triggers from their respective submodules:
- *
- * const {onCall} = require("firebase-functions/v2/https");
- * const {onDocumentWritten} = require("firebase-functions/v2/firestore");
- *
- * See a full list of supported triggers at https://firebase.google.com/docs/functions
- */
+// Import library yang dibutuhkan
+const functions = require("firebase-functions");
+const admin = require("firebase-admin");
+admin.initializeApp();
 
-const {setGlobalOptions} = require("firebase-functions");
-const {onRequest} = require("firebase-functions/https");
-const logger = require("firebase-functions/logger");
+// Buat sebuah "Callable Function" bernama "addAdminRole"
+exports.addAdminRole = functions.https.onCall(async (data, context) => {
+  // 1. PENTING: Periksa apakah pengguna yang memanggil fungsi ini sudah admin.
+  // Ini mencegah sembarang pengguna menjadikan dirinya sendiri admin.
+  if (context.auth.token.admin !== true) {
+    return { error: "Hanya admin yang dapat menambahkan admin baru." };
+  }
 
-// For cost control, you can set the maximum number of containers that can be
-// running at the same time. This helps mitigate the impact of unexpected
-// traffic spikes by instead downgrading performance. This limit is a
-// per-function limit. You can override the limit for each function using the
-// `maxInstances` option in the function's options, e.g.
-// `onRequest({ maxInstances: 5 }, (req, res) => { ... })`.
-// NOTE: setGlobalOptions does not apply to functions using the v1 API. V1
-// functions should each use functions.runWith({ maxInstances: 10 }) instead.
-// In the v1 API, each function can only serve one request per container, so
-// this will be the maximum concurrent request count.
-setGlobalOptions({ maxInstances: 10 });
+  // 2. Dapatkan email dari data yang dikirim, lalu cari pengguna tersebut.
+  const email = data.email;
+  try {
+    const user = await admin.auth().getUserByEmail(email);
+    // 3. Tetapkan custom claim { admin: true } pada pengguna tersebut.
+    await admin.auth().setCustomUserClaims(user.uid, { admin: true });
 
-// Create and deploy your first functions
-// https://firebase.google.com/docs/functions/get-started
-
-// exports.helloWorld = onRequest((request, response) => {
-//   logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
+    return { message: `Sukses! ${email} sekarang adalah admin.` };
+  } catch (err) {
+    console.error(err);
+    return { error: "Pengguna tidak ditemukan atau terjadi kesalahan." };
+  }
+});
