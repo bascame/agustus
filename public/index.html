@@ -93,6 +93,270 @@
                 height: 50vh;
             }
         }
+
+        /* Gaya untuk ikon sortir tabel */
+        .sortable .sort-icon::after {
+            content: '\f0dc'; /* fa-sort */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            margin-left: 8px;
+            color: #cbd5e1; /* gray-300 */
+            transition: color 0.2s;
+        }
+        .sortable.sorted-asc .sort-icon::after, .sortable.sorted-desc .sort-icon::after {
+            color: #B71C1C;
+        }
+        .sortable.sorted-asc .sort-icon::after {
+            content: '\f0de'; /* fa-sort-up */
+        }
+        .sortable.sorted-desc .sort-icon::after {
+            content: '\f0dd'; /* fa-sort-down */
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div id="login-overlay" class="fixed inset-0 bg-gray-100 z-[100] flex items-center justify-center p-4">
+        <div class="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg text-center">
+            <img src="https://i.ibb.co/zV4HhFq/logo-hut-ri-80.png" alt="Logo HUT RI 80" class="mx-auto mb-4 h-24">
+            <h1 class="text-2xl font-bold text-[#B71C1C] mb-2">Sistem Manajemen Acara</h1>
+            <p class="text-gray-600 mb-6">Peringatan HUT Kemerdekaan RI ke-80</p>
+            <form id="login-form">
+                <div class="mb-4 text-left">
+                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <input type="email" id="email" placeholder="Masukkan email Anda" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D32F2F] focus:border-transparent transition" required>
+                </div>
+                <div class="mb-6 text-left">
+                    <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Kata Sandi</label>
+                    <div class="relative">
+                        <input type="password" id="password" placeholder="Masukkan kata sandi" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D32F2F] focus:border-transparent transition pr-10" required>
+                        <button type="button" id="toggle-password" class="absolute inset-y-0 right-0 px-3 flex items-center text-gray-500 hover:text-gray-700 transition-colors">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="text-right mb-6">
+                    <a href="#" id="forgot-password-link" class="text-sm text-red-600 hover:text-red-800 hover:underline">
+                        Lupa Kata Sandi?
+                    </a>
+                </div>
+                <div id="login-error" class="text-red-500 text-sm mb-4 text-left hidden"></div>
+                <button type="submit" class="w-full bg-[#B71C1C] text-white py-3 rounded-lg font-semibold hover:bg-[#D32F2F] transition-colors shadow-md">Masuk</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="app-container" class="hidden">
+        <div id="sidebar-backdrop" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
+
+        <aside id="sidebar" class="sidebar bg-[#212529] text-white p-4 flex flex-col">
+            <div class="flex items-center justify-between mb-8">
+                <div class="flex items-center gap-3 overflow-hidden">
+                    <img src="https://i.ibb.co/zV4HhFq/logo-hut-ri-80.png" alt="Logo" class="h-10 flex-shrink-0">
+                    <span class="font-bold text-lg whitespace-nowrap">HUT RI ke-80</span>
+                </div>
+            </div>
+
+            <nav class="flex-grow">
+                <ul>
+                    <li><a href="#dashboard" class="nav-link active-nav flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
+                        <i class="fa-solid fa-tachometer-alt fa-fw w-6 text-center"></i><span>Dashboard</span>
+                    </a></li>
+                    <li class="mt-2"><a href="#uang-masuk" class="nav-link flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
+                        <i class="fa-solid fa-arrow-down fa-fw w-6 text-center"></i><span>Uang Masuk</span>
+                    </a></li>
+                    <li class="mt-2"><a href="#uang-keluar" class="nav-link flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
+                        <i class="fa-solid fa-arrow-up fa-fw w-6 text-center"></i><span>Uang Keluar</span>
+                    </a></li>
+                    <li class="mt-2"><a href="#uang-muka" class="nav-link flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
+                        <i class="fa-solid fa-file-invoice-dollar fa-fw w-6 text-center"></i><span>Uang Muka</span>
+                    </a></li>
+                    <li class="mt-2"><a href="#panitia" class="nav-link flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
+                        <i class="fa-solid fa-users-cog fa-fw w-6 text-center"></i><span>Kelola Panitia</span>
+                    </a></li>
+                    <li class="mt-2"><a href="#lomba" class="nav-link flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
+                        <i class="fa-solid fa-trophy fa-fw w-6 text-center"></i><span>Kelola Lomba</span>
+                    </a></li>
+                    <li class="mt-2"><a href="#struktur" class="nav-link flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
+                        <i class="fa-solid fa-sitemap fa-fw w-6 text-center"></i><span>Struktur Panitia</span>
+                    </a></li>
+                    <li class="mt-2 border-t border-gray-700 pt-2"><a href="#profil" class="nav-link flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
+                        <i class="fa-solid fa-user-circle fa-fw w-6 text-center"></i><span>Profil Pengguna</span>
+                    </a></li>
+                    <li id="nav-logs" class="mt-2 border-t border-gray-700 pt-2" style="display: none;"><a href="#logs" class="nav-link flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
+                        <i class="fa-solid fa-history fa-fw w-6 text-center"></i><span>Log Aktivitas</span>
+                    </a></li>
+                </ul>
+            </nav>
+
+            <div>
+                <a href="#" id="logout-button" class="nav-link flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
+                    <i class="fa-solid fa-sign-out-alt fa-fw w-6 text-center"></i><span>Keluar</span>
+                </a>
+            </div>
+        </aside>
+
+        <main id="main-content" class="p-4 md:p-8 transition-all duration-300">
+            <header class="flex items-center mb-8 lg:hidden">
+                <button id="header-toggle-button" class="text-2xl text-gray-600">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </header>
+
+            <section id="dashboard" class="content-section">
+                <h1 class="text-3xl font-bold mb-2">Dashboard</h1>
+                <p class="text-gray-600 mb-8">Ringkasan acara dan data penting perayaan HUT RI ke-80.</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-white p-6 rounded-xl shadow-md flex items-center gap-4">
+                        <div class="bg-red-100 p-3 rounded-full"><i class="fa-solid fa-users text-2xl text-red-600"></i></div>
+                        <div>
+                            <p class="text-gray-500">Total Panitia</p>
+                            <p id="stat-panitia" class="text-2xl font-bold">0</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md flex items-center gap-4">
+                        <div class="bg-yellow-100 p-3 rounded-full"><i class="fa-solid fa-trophy text-2xl text-yellow-600"></i></div>
+                        <div>
+                            <p class="text-gray-500">Jumlah Lomba</p>
+                            <p id="stat-lomba" class="text-2xl font-bold">0</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md flex items-center gap-4">
+                        <div class="bg-green-100 p-3 rounded-full"><i class="fa-solid fa-wallet text-2xl text-green-600"></i></div>
+                        <div>
+                            <p class="text-gray-500">Dana Masuk</p>
+                            <p id="stat-dana-masuk" class="text-2xl font-bold">Rp 0</p>
+                        </div>
+                    </div>
+                     <div class="bg-white p-6 rounded-xl shadow-md flex items-center gap-4">
+                        <div class="bg-blue-100 p-3 rounded-full"><i class="fa-solid fa-receipt text-2xl text-blue-600"></i></div>
+                        <div>
+                            <p class="text-gray-500">Dana Keluar</p>
+                            <p id="stat-dana-keluar" class="text-2xl font-bold">Rp 0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-md mb-8">
+                    <h2 class="text-xl font-bold mb-4">Ringkasan Dana Acara</h2>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <tbody id="ringkasan-dana-dashboard-table-body">
+                                <!-- Baris tabel akan dibuat oleh JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <h2 class="text-xl font-bold mb-4">Grafik Keuangan Acara</h2>
+                    <div class="chart-container">
+                        <canvas id="financeChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="mt-8 bg-white p-6 rounded-xl shadow-md">
+                    <h2 class="text-xl font-bold mb-4">Sisa Pembayaran Uang Muka</h2>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="font-semibold">Pemberi</th>
+                                    <th class="font-semibold">Jumlah Sisa</th>
+                                </tr>
+                            </thead>
+                            <tbody id="sisa-uang-muka-dashboard-table-body">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section id="uang-masuk" class="content-section hidden">
+                <div class="flex flex-wrap justify-between items-center mb-8 gap-4">
+                    <div>
+                        <h1 class="text-3xl font-bold">Data Uang Masuk</h1>
+                        <p class="text-gray-600">Rincian semua pemasukan dana untuk acara.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <button id="export-uang-masuk-btn" class="write-access bg-green-600 text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-green-700 transition-colors shadow-md flex items-center gap-2" style="display: none;">
+                            <i class="fa-solid fa-file-csv"></i> Ekspor CSV
+                        </button>
+                        <button id="add-uang-masuk-btn" class="write-access bg-[#B71C1C] text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-[#D32F2F] transition-colors shadow-md flex items-center gap-2" style="display: none;">
+                            <i class="fa-solid fa-plus"></i> Tambah Uang Masuk
+                        </button>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow-md overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead class="bg-gray-100">
+                            <tr>
+                                <th class="font-semibold">Sumber Dana</th>
+                                <th class="font-semibold">Jumlah</th>
+                                <th class="font-semibold text-center aksi-header" style="display: none;">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="uang-masuk-table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="uang-keluar" class="content-section hidden">
+                <div class="flex flex-wrap justify-between items-center mb-8 gap-4">
+                    <div>
+                        <h1 class="text-3xl font-bold">Data Uang Keluar</h1>
+                        <p class="text-gray-600">Rincian semua pengeluaran dana untuk acara.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <button id="export-uang-keluar-btn" class="write-access bg-green-600 text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-green-700 transition-colors shadow-md flex items-center gap-2" style="display: none;">
+                            <i class="fa-solid fa-file-csv"></i> Ekspor CSV
+                        </button>
+                        <button id="add-uang-keluar-btn" class="write-access bg-[#B71C1C] text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-[#D32F2F] transition-colors shadow-md flex items-center gap-2" style="display: none;">
+                            <i class="fa-solid fa-plus"></i> Tambah Uang Keluar
+                        </button>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow-md overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead class="bg-gray-100">
+                            <tr>
+                                <th class="font-semibold">Alokasi Dana</th>
+                                <th class="font-semibold">Jumlah</th>
+                                <th class="font-semibold text-center aksi-header" style="display: none;">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="uang-keluar-table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="uang-muka" class="content-section hidden">
+                <div class="flex flex-wrap justify-between items-center mb-8 gap-4">
+                    <div>
+                        <h1 class="text-3xl font-bold">Data Uang Muka</h1>
+                        <p class="text-gray-600">Catat dan kelola semua uang muka yang diterima.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <button id="export-uang-muka-btn" class="write-access bg-green-600 text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-green-700 transition-colors shadow-md flex items-center gap-2" style="display: none;">
+                            <i class="fa-solid fa-file-csv"></i> Ekspor CSV
+                        </button>
+                        <button id="add-uang-muka-btn" class="write-access bg-[#B71C1C] text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-[#D32F2F] transition-colors shadow-md flex items-center gap-2" style="display: none;">
+                            <i class="fa-solid fa-plus"></i> Tambah Uang Muka
+                        </button>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow-md overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead class="bg-gray-100">
+                            <tr>
+                                <th class="font-semibold">Pemberi</th>
+                                <th class="font-semibold">Total Harga</th>
+                                <th class="font-semibold">U
+            }
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
@@ -432,8 +696,8 @@
                     <table class="w-full text-left">
                         <thead class="bg-gray-100">
                             <tr>
-                                <th class="font-semibold">Waktu</th>
-                                <th class="font-semibold">Admin</th>
+                                <th class="font-semibold sortable cursor-pointer" data-sort="timestamp">Waktu<span class="sort-icon"></span></th>
+                                <th class="font-semibold sortable cursor-pointer" data-sort="adminEmail">Admin<span class="sort-icon"></span></th>
                                 <th class="font-semibold">Aksi</th>
                                 <th class="font-semibold">Koleksi</th>
                                 <th class="font-semibold">Detail Data</th>
@@ -706,6 +970,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let uangKeluarData = [];
     let uangMukaData = [];
     let logsData = [];
+
+    // State untuk sorting tabel log
+    let logSortConfig = { key: 'timestamp', direction: 'desc' };
 
     const sidebar = document.getElementById('sidebar');
     const backdrop = document.getElementById('sidebar-backdrop');
@@ -984,7 +1251,35 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        logsData.forEach(log => {
+        // --- Logika Pengurutan ---
+        const sortedLogs = [...logsData].sort((a, b) => {
+            let valA = a[logSortConfig.key];
+            let valB = b[logSortConfig.key];
+
+            // Menangani Firestore Timestamps secara khusus
+            if (logSortConfig.key === 'timestamp') {
+                valA = a.timestamp ? a.timestamp.toMillis() : 0;
+                valB = b.timestamp ? b.timestamp.toMillis() : 0;
+            }
+
+            let comparison = 0;
+            if (valA > valB) {
+                comparison = 1;
+            } else if (valA < valB) {
+                comparison = -1;
+            }
+            return logSortConfig.direction === 'desc' ? comparison * -1 : comparison;
+        });
+
+        // --- Perbarui UI Header Tabel ---
+        document.querySelectorAll('#logs .sortable').forEach(header => {
+            header.classList.remove('sorted-asc', 'sorted-desc');
+            if (header.dataset.sort === logSortConfig.key) {
+                header.classList.add(logSortConfig.direction === 'asc' ? 'sorted-asc' : 'sorted-desc');
+            }
+        });
+
+        sortedLogs.forEach(log => {
             const row = document.createElement('tr');
             row.className = 'border-b border-gray-200 hover:bg-gray-50';
 
@@ -1777,6 +2072,23 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             renderLombaTable(); // Render semua data jika pencarian kosong
         }
+    });
+
+    // Event listener untuk mengurutkan tabel log
+    document.querySelector('#logs thead').addEventListener('click', (e) => {
+        const header = e.target.closest('.sortable');
+        if (!header) return;
+
+        const sortKey = header.dataset.sort;
+        if (logSortConfig.key === sortKey) {
+            // Balikkan arah jika kolom yang sama diklik
+            logSortConfig.direction = logSortConfig.direction === 'asc' ? 'desc' : 'asc';
+        } else {
+            // Ganti kolom, default ke arah menaik (asc)
+            logSortConfig.key = sortKey;
+            logSortConfig.direction = 'asc';
+        }
+        renderLogsTable(); // Render ulang tabel dengan urutan baru
     });
 
     // Panggil navigasi awal setelah login disimulasikan (jika ada hash)
