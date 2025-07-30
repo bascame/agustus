@@ -164,6 +164,9 @@
                     <li class="mt-2 border-t border-gray-700 pt-2"><a href="#profil" class="nav-link flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
                         <i class="fa-solid fa-user-circle fa-fw w-6 text-center"></i><span>Profil Pengguna</span>
                     </a></li>
+                    <li id="nav-logs" class="mt-2 border-t border-gray-700 pt-2" style="display: none;"><a href="#logs" class="nav-link flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
+                        <i class="fa-solid fa-history fa-fw w-6 text-center"></i><span>Log Aktivitas</span>
+                    </a></li>
                 </ul>
             </nav>
 
@@ -413,6 +416,25 @@
                  <h1 class="text-3xl font-bold mb-2">Struktur Panitia</h1>
                  <p class="text-gray-600 mb-8">Visualisasi hierarki dan jabatan dalam kepanitiaan.</p>
                  <div id="struktur-container"></div>
+            </section>
+
+            <section id="logs" class="content-section hidden">
+                <h1 class="text-3xl font-bold mb-8">Log Aktivitas Admin</h1>
+                <div class="bg-white rounded-xl shadow-md overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead class="bg-gray-100">
+                            <tr>
+                                <th class="font-semibold">Waktu</th>
+                                <th class="font-semibold">Admin</th>
+                                <th class="font-semibold">Aksi</th>
+                                <th class="font-semibold">Koleksi</th>
+                                <th class="font-semibold">Detail Data</th>
+                            </tr>
+                        </thead>
+                        <tbody id="logs-table-body">
+                        </tbody>
+                    </table>
+                </div>
             </section>
 
             <section id="profil" class="content-section hidden">
@@ -666,6 +688,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const uangMasukCollection = db.collection('uangMasuk');
     const uangKeluarCollection = db.collection('uangKeluar');
     const uangMukaCollection = db.collection('uangMuka');
+    const logsCollection = db.collection('logs');
 
     // Variabel lokal untuk menampung data dari Firebase
     let panitiaData = [];
@@ -674,6 +697,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let uangMasukData = [];
     let uangKeluarData = [];
     let uangMukaData = [];
+    let logsData = [];
 
     const sidebar = document.getElementById('sidebar');
     const backdrop = document.getElementById('sidebar-backdrop');
@@ -686,6 +710,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let unsubscribeUangMasuk = () => {};
     let unsubscribeUangKeluar = () => {};
     let unsubscribeUangMuka = () => {};
+    let unsubscribeLogs = () => {};
 
     const DEFAULT_AVATAR = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2NkY2RjZCI+PHBhdGggZD0iTTEyIDEyYzIuMjEgMCA0LTEuNzkgNC00cy0xLjc5LTQtNC00LTQgMS43OS00IDQgMS43OSA0IDQgNHptMCAyYy0yLjY3IDAtOCAxLjM0LTggNHYyYzAgLjg4Ljc1IDEuNTggMS42NiAxLjU4aDEyLjY4Yy45MSAwIDEuNjYtLjcgMS42Ni0xLjU4di0yYzAtMi42Ni01LjMzLTQtOC00eiIvPjwvc3ZnPg==';
 
@@ -738,8 +763,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
+    const listenToLogsUpdates = () => {
+        return logsCollection.orderBy('timestamp', 'desc').onSnapshot(snapshot => {
+            logsData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            renderLogsTable();
+        });
+    };
+
     const updateUIAccess = (role) => {
         const hasWriteAccess = role === 'admin' || role === 'editor';
+        const isAdmin = role === 'admin';
         const displayStyle = hasWriteAccess ? '' : 'none';
 
         document.querySelectorAll('.write-access').forEach(el => {
@@ -749,6 +782,8 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.aksi-header').forEach(el => {
             el.style.display = displayStyle;
         });
+
+        document.getElementById('nav-logs').style.display = isAdmin ? '' : 'none';
 
         // Panggil ulang render tabel untuk menampilkan/menyembunyikan kolom aksi
         renderPanitiaTable();
@@ -928,6 +963,35 @@ document.addEventListener('DOMContentLoaded', () => {
                         <button class="delete-uang-muka-btn text-red-600 hover:text-red-800 p-2" data-id="${item.id}"><i class="fa-solid fa-trash"></i></button>
                     </td>`;
             }
+            tableBody.appendChild(row);
+        });
+    };
+
+    const renderLogsTable = () => {
+        const tableBody = document.getElementById('logs-table-body');
+        tableBody.innerHTML = '';
+
+        if (logsData.length === 0) {
+            tableBody.innerHTML = `<tr><td colspan="5" class="text-center text-gray-500 py-4">Tidak ada aktivitas log yang tercatat.</td></tr>`;
+            return;
+        }
+
+        logsData.forEach(log => {
+            const row = document.createElement('tr');
+            row.className = 'border-b border-gray-200 hover:bg-gray-50';
+
+            const timestamp = log.timestamp ? log.timestamp.toDate().toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' }) : 'N/A';
+            const deletedDetails = Object.entries(log.deletedData)
+                .map(([key, value]) => `<strong>${key}:</strong> ${value}`)
+                .join('<br>');
+
+            row.innerHTML = `
+                <td class="text-sm text-gray-600 whitespace-nowrap">${timestamp}</td>
+                <td class="text-sm">${log.adminEmail}</td>
+                <td><span class="px-2 py-1 text-xs font-medium rounded-full bg-red-100 text-red-800 capitalize">${log.action}</span></td>
+                <td class="font-mono text-sm">${log.deletedCollection}</td>
+                <td class="text-xs leading-relaxed">${deletedDetails}</td>
+            `;
             tableBody.appendChild(row);
         });
     };
@@ -1610,6 +1674,7 @@ document.addEventListener('DOMContentLoaded', () => {
         unsubscribeUangMasuk();
         unsubscribeUangKeluar();
         unsubscribeUangMuka();
+        unsubscribeLogs();
 
         if (user) {
             // Pengguna sudah login
@@ -1627,6 +1692,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             
             updateUIAccess(currentUserRole);
+
+            if (currentUserRole === 'admin') {
+                unsubscribeLogs = listenToLogsUpdates();
+            }
 
             renderUserProfile(); // Tampilkan data profil saat login
             document.getElementById('login-overlay').classList.add('hidden');

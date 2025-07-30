@@ -161,6 +161,12 @@
                     <li class="mt-2"><a href="#struktur" class="nav-link flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
                         <i class="fa-solid fa-sitemap fa-fw w-6 text-center"></i><span>Struktur Panitia</span>
                     </a></li>
+                    <li class="mt-2 border-t border-gray-700 pt-2"><a href="#profil" class="nav-link flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
+                        <i class="fa-solid fa-user-circle fa-fw w-6 text-center"></i><span>Profil Pengguna</span>
+                    </a></li>
+                    <li id="nav-logs" class="mt-2 border-t border-gray-700 pt-2" style="display: none;"><a href="#logs" class="nav-link flex items-center gap-4 p-3 rounded-lg text-gray-300 hover:bg-[#D32F2F] hover:text-white transition-colors">
+                        <i class="fa-solid fa-history fa-fw w-6 text-center"></i><span>Log Aktivitas</span>
+                    </a></li>
                 </ul>
             </nav>
 
@@ -407,11 +413,65 @@
             </section>
 
             <section id="struktur" class="content-section hidden">
-                    <h1 class="text-3xl font-bold mb-2">Struktur Panitia</h1>
-                    <p class="text-gray-600 mb-8">Visualisasi hierarki dan jabatan dalam kepanitiaan.</p>
-                    <div id="struktur-container"></div>
+                 <h1 class="text-3xl font-bold mb-2">Struktur Panitia</h1>
+                 <p class="text-gray-600 mb-8">Visualisasi hierarki dan jabatan dalam kepanitiaan.</p>
+                 <div id="struktur-container"></div>
             </section>
 
+            <section id="logs" class="content-section hidden">
+                <h1 class="text-3xl font-bold mb-8">Log Aktivitas Admin</h1>
+                <div class="bg-white rounded-xl shadow-md overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead class="bg-gray-100">
+                            <tr>
+                                <th class="font-semibold">Waktu</th>
+                                <th class="font-semibold">Admin</th>
+                                <th class="font-semibold">Aksi</th>
+                                <th class="font-semibold">Koleksi</th>
+                                <th class="font-semibold">Detail Data</th>
+                            </tr>
+                        </thead>
+                        <tbody id="logs-table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="profil" class="content-section hidden">
+                <h1 class="text-3xl font-bold mb-8">Profil Pengguna</h1>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Informasi Profil -->
+                    <div class="bg-white p-6 rounded-xl shadow-md">
+                        <h2 class="text-xl font-bold mb-4">Informasi Akun</h2>
+                        <div class="space-y-4">
+                            <div>
+                                <p class="text-sm font-medium text-gray-500">Alamat Email</p>
+                                <p id="profil-email" class="text-lg text-gray-800"></p>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-gray-500">Peran (Role)</p>
+                                <p id="profil-role" class="text-lg font-bold text-red-700 capitalize"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ubah Kata Sandi -->
+                    <div class="bg-white p-6 rounded-xl shadow-md">
+                        <h2 class="text-xl font-bold mb-4">Ubah Kata Sandi</h2>
+                        <form id="change-password-form">
+                            <div id="change-password-message" class="text-sm mb-4 text-left hidden"></div>
+                            <div class="space-y-4">
+                                <div>
+                                    <label for="new-password" class="block text-sm font-medium text-gray-700 mb-1">Kata Sandi Baru</label>
+                                    <input type="password" id="new-password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D32F2F] focus:border-transparent transition" required>
+                                </div>
+                                <button type="submit" class="w-full bg-[#B71C1C] text-white py-2.5 px-5 rounded-lg font-semibold hover:bg-[#D32F2F] transition-colors shadow-md">Ubah Kata Sandi</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
         </main>
     </div>
 
@@ -472,8 +532,8 @@
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                     <div>
-                           <label for="lomba-schedule" class="block text-sm font-medium text-gray-700 mb-1">Jadwal</label>
-                           <input type="text" id="lomba-schedule" placeholder="cth: 17 Ags, 09:00" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D32F2F] focus:border-transparent transition" required>
+                         <label for="lomba-schedule" class="block text-sm font-medium text-gray-700 mb-1">Jadwal</label>
+                         <input type="text" id="lomba-schedule" placeholder="cth: 17 Ags, 09:00" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D32F2F] focus:border-transparent transition" required>
                     </div>
                      <div>
                         <label for="lomba-pic" class="block text-sm font-medium text-gray-700 mb-1">Penanggung Jawab</label>
@@ -481,14 +541,14 @@
                         </select>
                     </div>
                 </div>
-                     <div class="mb-6">
-                        <label for="lomba-status" class="block text-sm font-medium text-gray-700 mb-1">Status</label>
-                        <select id="lomba-status" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D32F2F] focus:border-transparent transition" required>
-                            <option>Segera</option>
-                            <option>Berlangsung</option>
-                            <option>Selesai</option>
-                        </select>
-                    </div>
+                 <div class="mb-6">
+                    <label for="lomba-status" class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                    <select id="lomba-status" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D32F2F] focus:border-transparent transition" required>
+                        <option>Segera</option>
+                        <option>Berlangsung</option>
+                        <option>Selesai</option>
+                    </select>
+                </div>
                 <div class="flex justify-end gap-4">
                     <button type="button" class="close-modal px-5 py-2.5 rounded-lg bg-gray-200 hover:bg-gray-300 transition">Batal</button>
                     <button type="submit" class="bg-[#B71C1C] text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-[#D32F2F] transition-colors shadow-md">Simpan</button>
@@ -601,47 +661,34 @@
         </div>
     </div>
 
-    <!-- Custom Message Box Modal -->
-    <div id="message-box-modal" class="modal-backdrop fixed inset-0 z-[120] hidden items-center justify-center p-4">
-        <div class="modal-content bg-white w-full max-w-sm p-6 rounded-2xl shadow-lg transform scale-95 text-center">
-            <h3 id="message-box-title" class="text-xl font-bold mb-4 text-gray-800"></h3>
-            <p id="message-box-body" class="text-gray-700 mb-6"></p>
-            <div class="flex justify-center gap-4">
-                <button id="message-box-cancel" class="px-5 py-2.5 rounded-lg bg-gray-200 hover:bg-gray-300 transition hidden">Batal</button>
-                <button id="message-box-ok" class="bg-[#B71C1C] text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-[#D32F2F] transition-colors shadow-md">OK</button>
-            </div>
-        </div>
-    </div>
-
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 
     // --- KONFIGURASI FIREBASE ---
-    // Menggunakan variabel global yang disediakan oleh lingkungan Canvas
-    const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
-        apiKey: "YOUR_API_KEY", // Ganti dengan kunci API Anda jika tidak di lingkungan Canvas
-        authDomain: "YOUR_AUTH_DOMAIN",
-        projectId: "YOUR_PROJECT_ID",
-        storageBucket: "YOUR_STORAGE_BUCKET",
-        messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-        appId: "YOUR_APP_ID"
-    };
+    // GANTI DENGAN KONFIGURASI DARI PROYEK FIREBASE ANDA
+   const firebaseConfig = {
+  apiKey: "AIzaSyBNN2z7BvYUhU4Ws1ezYM5nsQ8S276muvw",
+  authDomain: "semarak-kemerdekaan.firebaseapp.com",
+  projectId: "semarak-kemerdekaan",
+  storageBucket: "semarak-kemerdekaan.appspot.com",
+  messagingSenderId: "543406328573",
+  appId: "1:543406328573:web:bb402da63417a8b2570c94"
+};
 
     // Inisialisasi Firebase
-    const app = firebase.initializeApp(firebaseConfig);
+    firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
     const auth = firebase.auth();
     const storage = firebase.storage();
-
     // Membuat referensi untuk setiap koleksi data di Firestore
-    const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id'; // Get app ID for data isolation
-    const panitiaCollection = db.collection(`artifacts/${appId}/public/data/panitia`);
-    const usersCollection = db.collection(`artifacts/${appId}/public/data/users`); // Users collection for roles
-    const lombaCollection = db.collection(`artifacts/${appId}/public/data/lomba`);
-    const uangMasukCollection = db.collection(`artifacts/${appId}/public/data/uangMasuk`);
-    const uangKeluarCollection = db.collection(`artifacts/${appId}/public/data/uangKeluar`);
-    const uangMukaCollection = db.collection(`artifacts/${appId}/public/data/uangMuka`);
+    const panitiaCollection = db.collection('panitia');
+    const usersCollection = db.collection('users');
+    const lombaCollection = db.collection('lomba');
+    const uangMasukCollection = db.collection('uangMasuk');
+    const uangKeluarCollection = db.collection('uangKeluar');
+    const uangMukaCollection = db.collection('uangMuka');
+    const logsCollection = db.collection('logs');
 
     // Variabel lokal untuk menampung data dari Firebase
     let panitiaData = [];
@@ -650,6 +697,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let uangMasukData = [];
     let uangKeluarData = [];
     let uangMukaData = [];
+    let logsData = [];
 
     const sidebar = document.getElementById('sidebar');
     const backdrop = document.getElementById('sidebar-backdrop');
@@ -662,54 +710,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let unsubscribeUangMasuk = () => {};
     let unsubscribeUangKeluar = () => {};
     let unsubscribeUangMuka = () => {};
+    let unsubscribeLogs = () => {};
 
     const DEFAULT_AVATAR = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2NkY2RjZCI+PHBhdGggZD0iTTEyIDEyYzIuMjEgMCA0LTEuNzkgNC00cy0xLjc5LTQtNC00LTQgMS43OS00IDQgMS43OSA0IDQgNHptMCAyYy0yLjY3IDAtOCAxLjM0LTggNHYyYzAgLjg4Ljc1IDEuNTggMS42NiAxLjU4aDEyLjY4Yy45MSAwIDEuNjYtLjcgMS42Ni0xLjU4di0yYzAtMi42Ni01LjMzLTQtOC00eiIvPjwvc3ZnPg==';
-
-    /**
-     * Shows a custom message box modal.
-     * @param {string} title - The title of the message box.
-     * @param {string} message - The message body.
-     * @param {boolean} isConfirm - If true, shows a "Cancel" button and returns a Promise.
-     * @returns {Promise<boolean>|void} A Promise that resolves to true if OK is clicked, false if Cancel is clicked, or void if not a confirm box.
-     */
-    const showMessageBox = (title, message, isConfirm = false) => {
-        const modal = document.getElementById('message-box-modal');
-        document.getElementById('message-box-title').textContent = title;
-        document.getElementById('message-box-body').textContent = message;
-        
-        const okButton = document.getElementById('message-box-ok');
-        const cancelButton = document.getElementById('message-box-cancel');
-
-        if (isConfirm) {
-            cancelButton.classList.remove('hidden');
-            return new Promise((resolve) => {
-                okButton.onclick = () => {
-                    hideModal('message-box-modal');
-                    resolve(true);
-                };
-                cancelButton.onclick = () => {
-                    hideModal('message-box-modal');
-                    resolve(false);
-                };
-            });
-        } else {
-            cancelButton.classList.add('hidden');
-            okButton.onclick = () => {
-                hideModal('message-box-modal');
-            };
-        }
-
-        showModal('message-box-modal');
-    };
-
-    /**
-     * Displays a confirmation dialog.
-     * @param {string} message - The confirmation message.
-     * @returns {Promise<boolean>} A Promise that resolves to true if confirmed, false otherwise.
-     */
-    const showConfirmBox = (message) => {
-        return showMessageBox('Konfirmasi', message, true);
-    };
 
     // Fungsi baru untuk mendengarkan perubahan data panitia secara real-time
     const listenToPanitiaUpdates = () => {
@@ -723,9 +726,6 @@ document.addEventListener('DOMContentLoaded', () => {
             updatePanitiaStat();
             renderStruktur();
             populatePICDropdown();
-        }, error => {
-            console.error("Error listening to panitia updates:", error);
-            showMessageBox('Error', 'Gagal memuat data panitia. Silakan coba lagi.');
         });
     };
 
@@ -734,9 +734,6 @@ document.addEventListener('DOMContentLoaded', () => {
             lombaData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             renderLombaTable();
             document.getElementById('stat-lomba').textContent = lombaData.length;
-        }, error => {
-            console.error("Error listening to lomba updates:", error);
-            showMessageBox('Error', 'Gagal memuat data lomba. Silakan coba lagi.');
         });
     };
 
@@ -746,9 +743,6 @@ document.addEventListener('DOMContentLoaded', () => {
             renderUangMasukTable();
             updateTotalDana();
             initFinanceChart();
-        }, error => {
-            console.error("Error listening to uang masuk updates:", error);
-            showMessageBox('Error', 'Gagal memuat data uang masuk. Silakan coba lagi.');
         });
     };
 
@@ -758,9 +752,6 @@ document.addEventListener('DOMContentLoaded', () => {
             renderUangKeluarTable();
             updateTotalDana();
             initFinanceChart();
-        }, error => {
-            console.error("Error listening to uang keluar updates:", error);
-            showMessageBox('Error', 'Gagal memuat data uang keluar. Silakan coba lagi.');
         });
     };
 
@@ -769,14 +760,19 @@ document.addEventListener('DOMContentLoaded', () => {
             uangMukaData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             renderUangMukaTable();
             renderSisaUangMukaDashboardTable();
-        }, error => {
-            console.error("Error listening to uang muka updates:", error);
-            showMessageBox('Error', 'Gagal memuat data uang muka. Silakan coba lagi.');
+        });
+    };
+
+    const listenToLogsUpdates = () => {
+        return logsCollection.orderBy('timestamp', 'desc').onSnapshot(snapshot => {
+            logsData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            renderLogsTable();
         });
     };
 
     const updateUIAccess = (role) => {
         const hasWriteAccess = role === 'admin' || role === 'editor';
+        const isAdmin = role === 'admin';
         const displayStyle = hasWriteAccess ? '' : 'none';
 
         document.querySelectorAll('.write-access').forEach(el => {
@@ -787,7 +783,9 @@ document.addEventListener('DOMContentLoaded', () => {
             el.style.display = displayStyle;
         });
 
-        // Re-render tables to show/hide action columns dynamically
+        document.getElementById('nav-logs').style.display = isAdmin ? '' : 'none';
+
+        // Panggil ulang render tabel untuk menampilkan/menyembunyikan kolom aksi
         renderPanitiaTable();
         renderLombaTable();
         renderUangMasukTable();
@@ -795,13 +793,17 @@ document.addEventListener('DOMContentLoaded', () => {
         renderUangMukaTable();
     };
 
+    // Fungsi loadData tidak lagi diperlukan karena data dimuat secara real-time
+    // oleh fungsi-fungsi listenTo...Updates
+
+
     const formatCurrency = (amount) => {
         return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(amount);
     };
 
     const exportToCsv = (filename, data, headers) => {
         if (!data || !data.length) {
-            showMessageBox('Info', 'Tidak ada data untuk diekspor.');
+            alert('Tidak ada data untuk diekspor.');
             return;
         }
 
@@ -893,14 +895,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             tableBody.appendChild(row);
         });
-
-        // Hide/show aksi header based on current user role
-        document.querySelectorAll('#panitia .aksi-header').forEach(header => {
-            header.style.display = (currentUserRole === 'admin' || currentUserRole === 'editor') ? '' : 'none';
-        });
-        document.querySelectorAll('#panitia .aksi-cell').forEach(cell => {
-            cell.style.display = (currentUserRole === 'admin' || currentUserRole === 'editor') ? '' : 'none';
-        });
     };
 
     const renderUangMasukTable = () => {
@@ -922,13 +916,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             tableBody.appendChild(row);
         });
-
-        document.querySelectorAll('#uang-masuk .aksi-header').forEach(header => {
-            header.style.display = (currentUserRole === 'admin' || currentUserRole === 'editor') ? '' : 'none';
-        });
-        document.querySelectorAll('#uang-masuk .aksi-cell').forEach(cell => {
-            cell.style.display = (currentUserRole === 'admin' || currentUserRole === 'editor') ? '' : 'none';
-        });
     };
 
     const renderUangKeluarTable = () => {
@@ -949,13 +936,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     </td>`;
             }
             tableBody.appendChild(row);
-        });
-
-        document.querySelectorAll('#uang-keluar .aksi-header').forEach(header => {
-            header.style.display = (currentUserRole === 'admin' || currentUserRole === 'editor') ? '' : 'none';
-        });
-        document.querySelectorAll('#uang-keluar .aksi-cell').forEach(cell => {
-            cell.style.display = (currentUserRole === 'admin' || currentUserRole === 'editor') ? '' : 'none';
         });
     };
 
@@ -985,12 +965,34 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             tableBody.appendChild(row);
         });
+    };
 
-        document.querySelectorAll('#uang-muka .aksi-header').forEach(header => {
-            header.style.display = (currentUserRole === 'admin' || currentUserRole === 'editor') ? '' : 'none';
-        });
-        document.querySelectorAll('#uang-muka .aksi-cell').forEach(cell => {
-            cell.style.display = (currentUserRole === 'admin' || currentUserRole === 'editor') ? '' : 'none';
+    const renderLogsTable = () => {
+        const tableBody = document.getElementById('logs-table-body');
+        tableBody.innerHTML = '';
+
+        if (logsData.length === 0) {
+            tableBody.innerHTML = `<tr><td colspan="5" class="text-center text-gray-500 py-4">Tidak ada aktivitas log yang tercatat.</td></tr>`;
+            return;
+        }
+
+        logsData.forEach(log => {
+            const row = document.createElement('tr');
+            row.className = 'border-b border-gray-200 hover:bg-gray-50';
+
+            const timestamp = log.timestamp ? log.timestamp.toDate().toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' }) : 'N/A';
+            const deletedDetails = Object.entries(log.deletedData)
+                .map(([key, value]) => `<strong>${key}:</strong> ${value}`)
+                .join('<br>');
+
+            row.innerHTML = `
+                <td class="text-sm text-gray-600 whitespace-nowrap">${timestamp}</td>
+                <td class="text-sm">${log.adminEmail}</td>
+                <td><span class="px-2 py-1 text-xs font-medium rounded-full bg-red-100 text-red-800 capitalize">${log.action}</span></td>
+                <td class="font-mono text-sm">${log.deletedCollection}</td>
+                <td class="text-xs leading-relaxed">${deletedDetails}</td>
+            `;
+            tableBody.appendChild(row);
         });
     };
 
@@ -1046,17 +1048,21 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             tableBody.appendChild(row);
         });
+    };
 
-        document.querySelectorAll('#lomba .aksi-header').forEach(header => {
-            header.style.display = (currentUserRole === 'admin' || currentUserRole === 'editor') ? '' : 'none';
-        });
-        document.querySelectorAll('#lomba .aksi-cell').forEach(cell => {
-            cell.style.display = (currentUserRole === 'admin' || currentUserRole === 'editor') ? '' : 'none';
-        });
+    const renderUserProfile = () => {
+        const user = auth.currentUser;
+        if (user) {
+            document.getElementById('profil-email').textContent = user.email || 'Tidak ada email';
+            const roleElement = document.getElementById('profil-role');
+            roleElement.textContent = currentUserRole;
+            roleElement.className = 'text-lg font-bold text-red-700 capitalize'; // Reset class
+        }
     };
 
     const renderStruktur = () => {
         const createPanitiaCardHTML = (panitia) => {
+            // Added max-w-xs to prevent cards from becoming too wide on flex layouts
             return `
                 <div class="bg-white p-5 rounded-xl shadow-lg text-center flex flex-col items-center transform hover:scale-105 transition-transform duration-300 w-full max-w-xs">
                     <img src="${panitia.avatar || DEFAULT_AVATAR}" alt="Avatar ${panitia.name}" class="w-24 h-24 rounded-full mb-4 object-cover border-4 border-red-200">
@@ -1243,8 +1249,8 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             const hash = new URL(link.href).hash;
             if (window.location.hash === hash && document.querySelector(hash) && !document.querySelector(hash).classList.contains('hidden')) {
-                if(window.innerWidth < 1024) closeSidebar();
-                return;
+                 if(window.innerWidth < 1024) closeSidebar();
+                 return;
             }
             window.location.hash = hash;
         });
@@ -1330,10 +1336,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const id = document.getElementById('panitia-id').value;
         const name = document.getElementById('panitia-name').value.trim();
         const role = document.getElementById('panitia-role').value.trim();
-        if (!name || !role) {
-            showMessageBox('Peringatan', 'Nama dan Jabatan tidak boleh kosong.');
-            return;
-        }
+        if (!name || !role) return;
 
         const fileInput = document.getElementById('panitia-avatar-input');
         const file = fileInput.files[0];
@@ -1360,19 +1363,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             } catch (error) {
                 console.error("Upload failed:", error);
-                showMessageBox('Error', 'Gagal mengunggah foto.');
+                alert("Gagal mengunggah foto.");
                 return; // Hentikan proses jika unggah gagal
             }
-        } else if (id && avatarUrl === DEFAULT_AVATAR && oldAvatarUrl && oldAvatarUrl.includes('firebasestorage')) {
-            // If editing and avatar is reset to default, delete the old one from storage
-            try {
-                await storage.refFromURL(oldAvatarUrl).delete();
-                avatarUrl = DEFAULT_AVATAR;
-            } catch (err) {
-                console.error("Gagal menghapus foto lama saat reset ke default:", err);
-            }
         }
-
 
         // Simpan data ke Firestore dengan URL avatar yang benar
         const panitiaDoc = { name, role, avatar: avatarUrl };
@@ -1380,15 +1374,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const savePromise = id ? panitiaCollection.doc(id).set(panitiaDoc, { merge: true }) : panitiaCollection.add(panitiaDoc);
             await savePromise;
             hideModal('modal-panitia');
-            fileInput.value = ''; // Clear file input
-            showMessageBox('Sukses', `Data panitia berhasil ${id ? 'diperbarui' : 'ditambahkan'}.`);
+            fileInput.value = '';
         } catch (error) {
             console.error("Error saving to Firestore: ", error);
-            showMessageBox('Error', 'Gagal menyimpan data ke server.');
+            alert("Gagal menyimpan data ke server.");
         }
     });
 
-    document.getElementById('lomba-form').addEventListener('submit', async (e) => {
+    document.getElementById('lomba-form').addEventListener('submit', (e) => {
         e.preventDefault();
         const id = document.getElementById('lomba-id').value;
         const name = document.getElementById('lomba-name').value.trim();
@@ -1397,73 +1390,61 @@ document.addEventListener('DOMContentLoaded', () => {
         const pic = document.getElementById('lomba-pic').value;
         const status = document.getElementById('lomba-status').value;
 
-        if (!name || !category || !schedule || !pic || !status) {
-            showMessageBox('Peringatan', 'Semua bidang lomba harus diisi.');
-            return;
-        }
+        if (!name || !category || !schedule || !pic || !status) return;
 
         const lombaDoc = { name, category, schedule, pic, status };
-        try {
-            const savePromise = id ? lombaCollection.doc(id).set(lombaDoc, { merge: true }) : lombaCollection.add(lombaDoc);
-            await savePromise;
+        const savePromise = id ? lombaCollection.doc(id).set(lombaDoc, { merge: true }) : lombaCollection.add(lombaDoc);
+
+        savePromise.then(() => {
             hideModal('modal-lomba');
-            showMessageBox('Sukses', `Data lomba berhasil ${id ? 'diperbarui' : 'ditambahkan'}.`);
-        } catch (error) {
+        }).catch(error => {
             console.error("Error saving lomba: ", error);
-            showMessageBox('Error', 'Gagal menyimpan data lomba ke server.');
-        }
+            alert("Gagal menyimpan data lomba ke server.");
+        });
     });
 
     // Uang Masuk Form Submission
-    document.getElementById('uang-masuk-form').addEventListener('submit', async (e) => {
+    document.getElementById('uang-masuk-form').addEventListener('submit', (e) => {
         e.preventDefault();
         const id = document.getElementById('uang-masuk-id').value;
         const source = document.getElementById('uang-masuk-source').value.trim();
         const amount = parseInt(document.getElementById('uang-masuk-amount').value);
 
-        if (!source || isNaN(amount) || amount < 0) {
-            showMessageBox('Peringatan', 'Sumber dana dan jumlah harus diisi dengan benar.');
-            return;
-        }
+        if (!source || isNaN(amount) || amount < 0) return;
 
         const uangMasukDoc = { source, amount };
-        try {
-            const savePromise = id ? uangMasukCollection.doc(id).set(uangMasukDoc, { merge: true }) : uangMasukCollection.add(uangMasukDoc);
-            await savePromise;
+        const savePromise = id ? uangMasukCollection.doc(id).set(uangMasukDoc, { merge: true }) : uangMasukCollection.add(uangMasukDoc);
+
+        savePromise.then(() => {
             hideModal('modal-uang-masuk');
-            showMessageBox('Sukses', `Data uang masuk berhasil ${id ? 'diperbarui' : 'ditambahkan'}.`);
-        } catch (error) {
+        }).catch(error => {
             console.error("Error saving uang masuk: ", error);
-            showMessageBox('Error', 'Gagal menyimpan data uang masuk ke server.');
-        }
+            alert("Gagal menyimpan data uang masuk ke server.");
+        });
     });
 
     // Uang Keluar Form Submission
-    document.getElementById('uang-keluar-form').addEventListener('submit', async (e) => {
+    document.getElementById('uang-keluar-form').addEventListener('submit', (e) => {
         e.preventDefault();
         const id = document.getElementById('uang-keluar-id').value;
         const allocation = document.getElementById('uang-keluar-allocation').value.trim();
         const amount = parseInt(document.getElementById('uang-keluar-amount').value);
 
-        if (!allocation || isNaN(amount) || amount < 0) {
-            showMessageBox('Peringatan', 'Alokasi dana dan jumlah harus diisi dengan benar.');
-            return;
-        }
+        if (!allocation || isNaN(amount) || amount < 0) return;
 
         const uangKeluarDoc = { allocation, amount };
-        try {
-            const savePromise = id ? uangKeluarCollection.doc(id).set(uangKeluarDoc, { merge: true }) : uangKeluarCollection.add(uangKeluarDoc);
-            await savePromise;
+        const savePromise = id ? uangKeluarCollection.doc(id).set(uangKeluarDoc, { merge: true }) : uangKeluarCollection.add(uangKeluarDoc);
+
+        savePromise.then(() => {
             hideModal('modal-uang-keluar');
-            showMessageBox('Sukses', `Data uang keluar berhasil ${id ? 'diperbarui' : 'ditambahkan'}.`);
-        } catch (error) {
+        }).catch(error => {
             console.error("Error saving uang keluar: ", error);
-            showMessageBox('Error', 'Gagal menyimpan data uang keluar ke server.');
-        }
+            alert("Gagal menyimpan data uang keluar ke server.");
+        });
     });
 
     // Uang Muka Form Submission
-    document.getElementById('uang-muka-form').addEventListener('submit', async (e) => {
+    document.getElementById('uang-muka-form').addEventListener('submit', (e) => {
         e.preventDefault();
         const id = document.getElementById('uang-muka-id').value;
         const provider = document.getElementById('uang-muka-provider').value.trim();
@@ -1471,25 +1452,21 @@ document.addEventListener('DOMContentLoaded', () => {
         const amount = parseInt(document.getElementById('uang-muka-amount').value);
         const status = document.getElementById('uang-muka-status').value;
 
-        if (!provider || isNaN(totalHarga) || totalHarga < 0 || isNaN(amount) || amount < 0) {
-            showMessageBox('Peringatan', 'Semua bidang uang muka harus diisi dengan benar.');
-            return;
-        }
+        if (!provider || isNaN(totalHarga) || totalHarga < 0 || isNaN(amount) || amount < 0) return;
 
         const uangMukaDoc = { provider, totalHarga, amount, status };
-        try {
-            const savePromise = id ? uangMukaCollection.doc(id).set(uangMukaDoc, { merge: true }) : uangMukaCollection.add(uangMukaDoc);
-            await savePromise;
+        const savePromise = id ? uangMukaCollection.doc(id).set(uangMukaDoc, { merge: true }) : uangMukaCollection.add(uangMukaDoc);
+
+        savePromise.then(() => {
             hideModal('modal-uang-muka');
-            showMessageBox('Sukses', `Data uang muka berhasil ${id ? 'diperbarui' : 'ditambahkan'}.`);
-        } catch (error) {
+        }).catch(error => {
             console.error("Error saving uang muka: ", error);
-            showMessageBox('Error', 'Gagal menyimpan data uang muka ke server.');
-        }
+            alert("Gagal menyimpan data uang muka ke server.");
+        });
     });
 
 
-    document.getElementById('panitia-table-body').addEventListener('click', async (e) => {
+    document.getElementById('panitia-table-body').addEventListener('click', (e) => {
         const editBtn = e.target.closest('.edit-panitia-btn');
         const deleteBtn = e.target.closest('.delete-panitia-btn');
 
@@ -1506,24 +1483,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (deleteBtn) {
             const id = deleteBtn.dataset.id;
-            const confirmed = await showConfirmBox('Apakah Anda yakin ingin menghapus anggota panitia ini?');
-            if (confirmed) {
-                try {
-                    const panitiaToDelete = panitiaData.find(p => p.id === id);
-                    if (panitiaToDelete && panitiaToDelete.avatar && panitiaToDelete.avatar.includes('firebasestorage')) {
-                        await storage.refFromURL(panitiaToDelete.avatar).delete();
-                    }
-                    await panitiaCollection.doc(id).delete();
-                    showMessageBox('Sukses', 'Anggota panitia berhasil dihapus.');
-                } catch (error) {
+            if (confirm('Apakah Anda yakin ingin menghapus anggota panitia ini?')) {
+                panitiaCollection.doc(id).delete().catch(error => {
                     console.error("Error deleting document: ", error);
-                    showMessageBox('Error', 'Gagal menghapus data dari server.');
-                }
+                    alert("Gagal menghapus data dari server.");
+                });
             }
         }
     });
 
-    document.getElementById('lomba-table-body').addEventListener('click', async (e) => {
+    document.getElementById('lomba-table-body').addEventListener('click', (e) => {
         const editBtn = e.target.closest('.edit-lomba-btn');
         const deleteBtn = e.target.closest('.delete-lomba-btn');
 
@@ -1543,21 +1512,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (deleteBtn) {
             const id = deleteBtn.dataset.id;
-            const confirmed = await showConfirmBox('Apakah Anda yakin ingin menghapus lomba ini?');
-            if (confirmed) {
-                try {
-                    await lombaCollection.doc(id).delete();
-                    showMessageBox('Sukses', 'Data lomba berhasil dihapus.');
-                } catch (error) {
+            if (confirm('Apakah Anda yakin ingin menghapus lomba ini?')) {
+                lombaCollection.doc(id).delete().catch(error => {
                     console.error("Error deleting lomba: ", error);
-                    showMessageBox('Error', 'Gagal menghapus data lomba dari server.');
-                }
+                });
             }
         }
     });
 
     // Uang Masuk Table Actions
-    document.getElementById('uang-masuk-table-body').addEventListener('click', async (e) => {
+    document.getElementById('uang-masuk-table-body').addEventListener('click', (e) => {
         const editBtn = e.target.closest('.edit-uang-masuk-btn');
         const deleteBtn = e.target.closest('.delete-uang-masuk-btn');
 
@@ -1573,21 +1537,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (deleteBtn) {
             const id = deleteBtn.dataset.id;
-            const confirmed = await showConfirmBox('Apakah Anda yakin ingin menghapus data uang masuk ini?');
-            if (confirmed) {
-                try {
-                    await uangMasukCollection.doc(id).delete();
-                    showMessageBox('Sukses', 'Data uang masuk berhasil dihapus.');
-                } catch (error) {
+            if (confirm('Apakah Anda yakin ingin menghapus data uang masuk ini?')) {
+                uangMasukCollection.doc(id).delete().catch(error => {
                     console.error("Error deleting uang masuk: ", error);
-                    showMessageBox('Error', 'Gagal menghapus data uang masuk dari server.');
-                }
+                });
             }
         }
     });
 
     // Uang Keluar Table Actions
-    document.getElementById('uang-keluar-table-body').addEventListener('click', async (e) => {
+    document.getElementById('uang-keluar-table-body').addEventListener('click', (e) => {
         const editBtn = e.target.closest('.edit-uang-keluar-btn');
         const deleteBtn = e.target.closest('.delete-uang-keluar-btn');
 
@@ -1603,21 +1562,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (deleteBtn) {
             const id = deleteBtn.dataset.id;
-            const confirmed = await showConfirmBox('Apakah Anda yakin ingin menghapus data uang keluar ini?');
-            if (confirmed) {
-                try {
-                    await uangKeluarCollection.doc(id).delete();
-                    showMessageBox('Sukses', 'Data uang keluar berhasil dihapus.');
-                } catch (error) {
+            if (confirm('Apakah Anda yakin ingin menghapus data uang keluar ini?')) {
+                uangKeluarCollection.doc(id).delete().catch(error => {
                     console.error("Error deleting uang keluar: ", error);
-                    showMessageBox('Error', 'Gagal menghapus data uang keluar dari server.');
-                }
+                });
             }
         }
     });
 
     // Uang Muka Table Actions
-    document.getElementById('uang-muka-table-body').addEventListener('click', async (e) => {
+    document.getElementById('uang-muka-table-body').addEventListener('click', (e) => {
         const editBtn = e.target.closest('.edit-uang-muka-btn');
         const deleteBtn = e.target.closest('.delete-uang-muka-btn');
 
@@ -1635,18 +1589,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (deleteBtn) {
             const id = deleteBtn.dataset.id;
-            const confirmed = await showConfirmBox('Apakah Anda yakin ingin menghapus data uang muka ini?');
-            if (confirmed) {
-                try {
-                    await uangMukaCollection.doc(id).delete();
-                    showMessageBox('Sukses', 'Data uang muka berhasil dihapus.');
-                } catch (error) {
+            if (confirm('Apakah Anda yakin ingin menghapus data uang muka ini?')) {
+                uangMukaCollection.doc(id).delete().catch(error => {
                     console.error("Error deleting uang muka: ", error);
-                    showMessageBox('Error', 'Gagal menghapus data uang muka dari server.');
-                }
+                });
             }
         }
     });
+
+
+
 
 
     const passwordInput = document.getElementById('password');
@@ -1687,7 +1639,6 @@ document.addEventListener('DOMContentLoaded', () => {
             // onAuthStateChanged akan menangani tampilan UI
         } catch (error) {
             console.error("Logout failed:", error);
-            showMessageBox('Error', 'Gagal logout. Silakan coba lagi.');
         }
     });
 
@@ -1723,34 +1674,30 @@ document.addEventListener('DOMContentLoaded', () => {
         unsubscribeUangMasuk();
         unsubscribeUangKeluar();
         unsubscribeUangMuka();
+        unsubscribeLogs();
 
         if (user) {
             // Pengguna sudah login
             try {
-                // Try to sign in with custom token if available (for Canvas environment)
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await auth.signInWithCustomToken(__initial_auth_token);
-                } else if (!auth.currentUser) { // Fallback to anonymous if no token and not already signed in
-                     await auth.signInAnonymously();
-                }
-
                 const userDoc = await usersCollection.doc(user.uid).get();
                 if (userDoc.exists) {
                     currentUserRole = userDoc.data().role || 'visitor';
                 } else {
-                    // If user document doesn't exist, create it with a default role (e.g., 'visitor')
-                    // For a real app, you might want to assign roles via an admin panel
-                    await usersCollection.doc(user.uid).set({ role: 'visitor' });
-                    currentUserRole = 'visitor';
-                    console.warn(`User with UID ${user.uid} does not have a role document. Defaulting to 'visitor'.`);
+                    currentUserRole = 'visitor'; // Default jika tidak ada dokumen peran
+                    console.warn(`User with UID ${user.uid} does not have a role document.`);
                 }
             } catch (error) {
-                console.error("Error fetching or setting user role:", error);
-                currentUserRole = 'visitor'; // Ensure a role is set even on error
+                console.error("Error fetching user role:", error);
+                currentUserRole = 'visitor';
             }
             
             updateUIAccess(currentUserRole);
 
+            if (currentUserRole === 'admin') {
+                unsubscribeLogs = listenToLogsUpdates();
+            }
+
+            renderUserProfile(); // Tampilkan data profil saat login
             document.getElementById('login-overlay').classList.add('hidden');
             document.getElementById('app-container').classList.remove('hidden');
             
@@ -1772,6 +1719,31 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    document.getElementById('change-password-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const newPassword = document.getElementById('new-password').value;
+        const messageDiv = document.getElementById('change-password-message');
+        const user = auth.currentUser;
+
+        if (!user) {
+            alert("Sesi Anda telah berakhir. Silakan login kembali.");
+            return;
+        }
+
+        try {
+            await user.updatePassword(newPassword);
+            messageDiv.textContent = 'Kata sandi berhasil diubah.';
+            messageDiv.className = 'text-sm mb-4 text-left text-green-600';
+            messageDiv.classList.remove('hidden');
+            document.getElementById('change-password-form').reset();
+        } catch (error) {
+            console.error("Password update failed:", error);
+            messageDiv.textContent = 'Gagal mengubah kata sandi. Silakan logout dan login kembali untuk mencoba lagi.';
+            messageDiv.className = 'text-sm mb-4 text-left text-red-600';
+            messageDiv.classList.remove('hidden');
+        }
+    });
+
     document.getElementById('search-panitia-input').addEventListener('input', (e) => {
         const searchTerm = e.target.value.toLowerCase();
         if (searchTerm) {
@@ -1785,13 +1757,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Initial navigation call (after auth state is determined)
-    // This will be handled by onAuthStateChanged, which triggers navigate
+    // Panggil navigasi awal setelah login disimulasikan (jika ada hash)
+    if (window.location.hash) {
+        navigate(window.location.hash);
+    }
 });
 
 
 </script>
 
 
+
+
 </body>
+
 </html>
