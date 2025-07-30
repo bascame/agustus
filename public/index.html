@@ -692,6 +692,20 @@
 
             <section id="logs" class="content-section hidden">
                 <h1 class="text-3xl font-bold mb-8">Log Aktivitas Admin</h1>
+                <div class="bg-white p-4 rounded-xl shadow-md mb-6">
+                    <div class="flex flex-wrap items-end gap-4">
+                        <div>
+                            <label for="log-start-date" class="block text-sm font-medium text-gray-700 mb-1">Tanggal Mulai</label>
+                            <input type="date" id="log-start-date" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D32F2F] focus:border-transparent transition">
+                        </div>
+                        <div>
+                            <label for="log-end-date" class="block text-sm font-medium text-gray-700 mb-1">Tanggal Selesai</label>
+                            <input type="date" id="log-end-date" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D32F2F] focus:border-transparent transition">
+                        </div>
+                        <button id="log-filter-btn" class="bg-[#B71C1C] text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-[#D32F2F] transition-colors shadow-md">Filter</button>
+                        <button id="log-reset-btn" class="bg-gray-200 hover:bg-gray-300 px-5 py-2.5 rounded-lg transition">Reset</button>
+                    </div>
+                </div>
                 <div class="bg-white rounded-xl shadow-md overflow-x-auto">
                     <table class="w-full text-left">
                         <thead class="bg-gray-100">
@@ -973,6 +987,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // State untuk sorting tabel log
     let logSortConfig = { key: 'timestamp', direction: 'desc' };
+    let logDateFilter = { start: null, end: null };
 
     const sidebar = document.getElementById('sidebar');
     const backdrop = document.getElementById('sidebar-backdrop');
@@ -1246,13 +1261,23 @@ document.addEventListener('DOMContentLoaded', () => {
         const tableBody = document.getElementById('logs-table-body');
         tableBody.innerHTML = '';
 
-        if (logsData.length === 0) {
+        // --- Logika Filter Tanggal ---
+        let filteredLogs = [...logsData];
+        if (logDateFilter.start && logDateFilter.end) {
+            filteredLogs = filteredLogs.filter(log => {
+                if (!log.timestamp) return false;
+                const logDate = log.timestamp.toDate();
+                return logDate >= logDateFilter.start && logDate <= logDateFilter.end;
+            });
+        }
+
+        if (filteredLogs.length === 0) {
             tableBody.innerHTML = `<tr><td colspan="5" class="text-center text-gray-500 py-4">Tidak ada aktivitas log yang tercatat.</td></tr>`;
             return;
         }
 
         // --- Logika Pengurutan ---
-        const sortedLogs = [...logsData].sort((a, b) => {
+        const sortedLogs = filteredLogs.sort((a, b) => {
             let valA = a[logSortConfig.key];
             let valB = b[logSortConfig.key];
 
@@ -2089,6 +2114,32 @@ document.addEventListener('DOMContentLoaded', () => {
             logSortConfig.direction = 'asc';
         }
         renderLogsTable(); // Render ulang tabel dengan urutan baru
+    });
+
+    // Event listener untuk filter tanggal pada tabel log
+    document.getElementById('log-filter-btn').addEventListener('click', () => {
+        const startDateInput = document.getElementById('log-start-date').value;
+        const endDateInput = document.getElementById('log-end-date').value;
+
+        if (startDateInput && endDateInput) {
+            const startDate = new Date(startDateInput);
+            startDate.setHours(0, 0, 0, 0); // Set ke awal hari
+
+            const endDate = new Date(endDateInput);
+            endDate.setHours(23, 59, 59, 999); // Set ke akhir hari
+
+            logDateFilter = { start: startDate, end: endDate };
+            renderLogsTable();
+        } else {
+            alert("Silakan pilih tanggal mulai dan tanggal selesai.");
+        }
+    });
+
+    document.getElementById('log-reset-btn').addEventListener('click', () => {
+        logDateFilter = { start: null, end: null };
+        document.getElementById('log-start-date').value = '';
+        document.getElementById('log-end-date').value = '';
+        renderLogsTable();
     });
 
     // Panggil navigasi awal setelah login disimulasikan (jika ada hash)
