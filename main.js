@@ -5,7 +5,7 @@ import { getStorage, ref } from "firebase/storage";
 // Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyCqXp4cinuCbxM541av2v7OWuZjGaEf1Sc",
-  authDomain: "civil-empire-461419-f4.firebaseapp.com",
+  authDomain: "9000-firebase-agustus-1753809413281.cluster-73qgvk7hjjadkrjeyexca5ivva.cloudworkstations.dev",
   databaseURL: "https://civil-empire-461419-f4-default-rtdb.asia-southeast1.firebasedatabase.app",
   projectId: "civil-empire-461419-f4",
   storageBucket: "civil-empire-461419-f4.firebasestorage.app",
