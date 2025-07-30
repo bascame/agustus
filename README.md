@@ -3,7 +3,7 @@
   <h1 align="center">Sistem Manajemen Perayaan HUT RI ke-80</h1>
   <p align="center">
     Aplikasi web dasbor untuk mengelola semua aspek acara perayaan Hari Kemerdekaan Republik Indonesia ke-80.
-  </p>
+  </p> 
 </div>
 
 ---
@@ -60,4 +60,3 @@ Aplikasi ini menyediakan platform terpusat bagi panitia untuk mengelola acara se
 4.  **Buka Aplikasi**:
     - Buka file `index.html` di browser Anda.
     - Masuk menggunakan kredensial yang telah Anda daftarkan di langkah sebelumnya.
-
