@@ -1,26 +1,39 @@
-// Import library yang dibutuhkan
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 admin.initializeApp();
 
-// Buat sebuah "Callable Function" bernama "addAdminRole"
-exports.addAdminRole = functions.https.onCall(async (data, context) => {
-  // 1. PENTING: Periksa apakah pengguna yang memanggil fungsi ini sudah admin.
-  // Ini mencegah sembarang pengguna menjadikan dirinya sendiri admin.
+/**
+ * Cloud Function untuk menambahkan Custom Claim 'admin' ke seorang pengguna.
+ * Harus dipanggil oleh admin yang sudah ada.
+ */
+exports.berikanAksesAdmin = functions.https.onCall(async (data, context) => {
+  
+  // Keamanan: Pastikan yang memanggil fungsi ini adalah admin.
   if (context.auth.token.admin !== true) {
-    return { error: "Hanya admin yang dapat menambahkan admin baru." };
+    throw new functions.https.HttpsError(
+      'permission-denied', 
+      'Gagal. Hanya admin yang bisa menjalankan perintah ini.'
+    );
   }
-
-  // 2. Dapatkan email dari data yang dikirim, lalu cari pengguna tersebut.
-  const email = data.email;
+  
+  // Ambil email target dari data yang dikirim.
+  const targetEmail = data.email;
+  
   try {
-    const user = await admin.auth().getUserByEmail(email);
-    // 3. Tetapkan custom claim { admin: true } pada pengguna tersebut.
-    await admin.auth().setCustomUserClaims(user.uid, { admin: true });
-
-    return { message: `Sukses! ${email} sekarang adalah admin.` };
+    // Cari pengguna berdasarkan email.
+    const user = await admin.auth().getUserByEmail(targetEmail);
+    
+    // Tambahkan custom claim { admin: true } ke pengguna tersebut.
+    await admin.auth().setCustomUserClaims(user.uid, {
+      admin: true,
+    });
+    
+    // Kirim pesan sukses kembali ke klien.
+    return {
+      message: `Sukses! Pengguna ${targetEmail} sekarang telah menjadi admin.`,
+    };
   } catch (err) {
     console.error(err);
-    return { error: "Pengguna tidak ditemukan atau terjadi kesalahan." };
+    throw new functions.https.HttpsError('internal', `Terjadi error: ${err.message}`);
   }
 });
