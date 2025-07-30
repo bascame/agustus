@@ -8,12 +8,12 @@ import { getStorage, ref } from "firebase/storage";
 // Ini berisi semua kredensial dan pengidentifikasi yang diperlukan untuk proyek Firebase Anda.
 const firebaseConfig = {
   apiKey: "AIzaSyCqXp4cinuCbxM541av2v7OWuZjGaEf1Sc", // Kunci API proyek Firebase Anda
-  authDomain: "9000-firebase-agustus-1753809413281.cluster-73qgvk7hjjadkrjeyexca5ivva.cloudworkstations.dev", // Domain otentikasi proyek Firebase Anda
+  authDomain: "civil-empire-461419-f4.firebaseapp.com", // Domain otentikasi proyek Firebase Anda
   databaseURL: "https://civil-empire-461419-f4-default-rtdb.asia-southeast1.firebasedatabase.app", // URL Realtime Database Firebase Anda
   projectId: "civil-empire-461419-f4", // ID proyek Firebase Anda
   storageBucket: "civil-empire-461419-f4.firebasestorage.app", // URL bucket Firebase Storage Anda
   messagingSenderId: "129090724195", // ID Pengirim Pesan proyek Firebase Anda
-  appId: "1:129090724195:web:26e6de45e67719dcfa7356" // ID Aplikasi Firebase Anda
+  appId: "1:129090724195:web:a18f5525a12bc1adfa7356" // ID Aplikasi Firebase Anda
 };
 
 // Inisialisasi Firebase dengan konfigurasi yang diberikan.
@@ -25,8 +25,8 @@ const app = initializeApp(firebaseConfig);
 const storage = getStorage(app);
 
 // Sekarang Anda dapat menggunakan objek storage untuk berinteraksi dengan Firebase Storage.
-// Contohnya, untuk membuat reference to a file:
+// Contohnya, untuk membuat referensi ke file atau jalur tertentu di dalam bucket penyimpanan Anda:
 const storageRef = ref(storage, 'images/mountains.jpg');
 
-// You can also export the storage object if you need to use it in other modules
+// Ekspor objek storage agar dapat diimpor dan digunakan di modul JavaScript lainnya.
 export { storage };
